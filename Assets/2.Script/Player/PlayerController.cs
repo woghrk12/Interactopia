@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     }
     private void PlayerMove()
     {
-        rigid2D.MovePosition(rigid2D.position + MoveDirection * moveSpeed);
+        rigid2D.MovePosition(rigid2D.position + moveSpeed * Time.fixedDeltaTime * MoveDirection);
     }
     private void OnMove(InputValue value)
     {
