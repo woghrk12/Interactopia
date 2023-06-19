@@ -4,17 +4,21 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public Vector2 MoveDirection { get; private set; }
-    [SerializeField] float _moveSpeed;
-    Rigidbody2D _rigidbody2D;
-    void Awake()
+    [SerializeField] private float moveSpeed;
+    private Rigidbody2D rigid2D;
+    private void Awake()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        rigid2D = GetComponent<Rigidbody2D>();
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        _rigidbody2D.MovePosition(_rigidbody2D.position + MoveDirection * _moveSpeed);
+        PlayerMove();
     }
-    void OnMove(InputValue value)
+    private void PlayerMove()
+    {
+        rigid2D.MovePosition(rigid2D.position + MoveDirection * moveSpeed);
+    }
+    private void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
         MoveDirection = new Vector2(input.x, input.y);
