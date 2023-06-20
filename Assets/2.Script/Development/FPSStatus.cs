@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FPSStatus : MonoBehaviour
 {
-    [SerializeField, Range(1, 100)] private int fontSize = 25;
+    [SerializeField] private int fontSize;
     [SerializeField] private Color fontColor = Color.green;
 
     private void Awake()
@@ -13,7 +13,7 @@ public class FPSStatus : MonoBehaviour
     }
     private void OnGUI()
     {
-        Rect position = new(0, 0, Screen.width, Screen.height);
+        Rect position = new(30, 30, Screen.width, Screen.height);
         GUIStyle style = new();
 
         style.alignment = TextAnchor.UpperLeft;
