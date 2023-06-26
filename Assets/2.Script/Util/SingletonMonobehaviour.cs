@@ -4,7 +4,7 @@ public class SingletonMonobehaviour<T> : MonoBehaviour where T : Component
 {
     private static T instance = null;
 
-    public static T Instance
+    protected static T Instance
     {
         get 
         {

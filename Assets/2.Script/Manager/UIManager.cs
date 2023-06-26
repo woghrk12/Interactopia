@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public enum EUIBase { NONE = -1, TITLE, INGAME, SETTING, END  }
@@ -23,25 +22,33 @@ public class UIManager : SingletonMonobehaviour<UIManager>
 
     #endregion Unity Events
 
+    #region Static Methods
+
+    public static UIBase GetUIBase(EUIBase idxUIBase) { return Instance.uiBaseList[(int)idxUIBase]; }
+    public static void TurnOn(EUIBase uiBase, bool isTurnOffOther = true) => Instance.TurnOnUIBase((int)uiBase, isTurnOffOther);
+    public static void TurnOff(bool isAll = true, EUIBase uiBase = EUIBase.NONE) => Instance.TurnOffUIBase(isAll, (int)uiBase);
+
+    #endregion Static Methods
+
     #region Methods
 
-    public UIBase GetUIBase(EUIBase idxUIBase) { return this.uiBaseList[(int)idxUIBase]; }
-
-    public void TurnOnUIBase(EUIBase idxUIBase, bool isTurnOffOther = true)
+    private void TurnOnUIBase(int idxUIBase, bool isTurnOffOther)
     {
-        uiBaseList[(int)idxUIBase].gameObject.SetActive(true);
+        if (idxUIBase < 0 || idxUIBase >= uiBaseList.Length) { throw new Exception($"Out of range. Input idx : {idxUIBase}"); }
+
+        uiBaseList[idxUIBase].gameObject.SetActive(true);
 
         if (!isTurnOffOther) { return; }
 
-        for (EUIBase idx = EUIBase.TITLE; idx < EUIBase.END; idx++)
+        for (int cnt = 0; cnt < uiBaseList.Length; cnt++)
         {
-            if (idx == idxUIBase) { continue; }
+            if (cnt == idxUIBase) { continue; }
 
-            uiBaseList[(int)idxUIBase].gameObject.SetActive(false);
+            uiBaseList[cnt].gameObject.SetActive(false);
         }
     }
 
-    public void TurnOffUIBase(bool isAll = true, EUIBase idxUIBase = EUIBase.NONE)
+    private void TurnOffUIBase(bool isAll, int idxUIBase)
     {
         if (isAll)
         {
@@ -50,7 +57,9 @@ public class UIManager : SingletonMonobehaviour<UIManager>
             return;
         }
 
-        uiBaseList[(int)idxUIBase].gameObject.SetActive(false);
+        if (idxUIBase < 0 || idxUIBase >= uiBaseList.Length) { throw new Exception($"Out of range. Input idx : {idxUIBase}"); }
+
+        uiBaseList[idxUIBase].gameObject.SetActive(false);
     }
 
     #endregion Methods
