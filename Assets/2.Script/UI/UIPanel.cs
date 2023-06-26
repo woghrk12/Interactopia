@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public abstract class UIPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Variables
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Action OnActive = null;
+    public Action OnDeactive = null;
+
+    #endregion Variables
+
+    #region Methods
+
+    public virtual void InitPanel() { }
+
+    public virtual void ResetPanel() { }
+
+    #endregion Methods
 }
