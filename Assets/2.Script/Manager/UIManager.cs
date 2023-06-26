@@ -29,7 +29,7 @@ public class UIManager : SingletonMonobehaviour<UIManager>
 
     public void TurnOnUIBase(EUIBase idxUIBase, bool isTurnOffOther = true)
     {
-        this.uiBaseList[(int)idxUIBase].gameObject.SetActive(true);
+        uiBaseList[(int)idxUIBase].gameObject.SetActive(true);
 
         if (!isTurnOffOther) { return; }
 
@@ -50,7 +50,7 @@ public class UIManager : SingletonMonobehaviour<UIManager>
             return;
         }
 
-        this.uiBaseList[(int)idxUIBase].gameObject.SetActive(false);
+        uiBaseList[(int)idxUIBase].gameObject.SetActive(false);
     }
 
     #endregion Methods

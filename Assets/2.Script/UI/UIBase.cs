@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UIBase : MonoBehaviour
+public abstract class UIBase : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Variables
+
+    private UIPanel[] uiPanelList = new UIPanel[0];
+
+    #endregion Variables
+
+    #region Unity Events
+
+    protected virtual void Awake()
     {
-        
+        uiPanelList = transform.GetComponentsInChildren<UIPanel>();
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion Unity Events
+
+    #region Methods
+
+    public virtual void Init()
     {
-        
+        foreach (UIPanel uiPanel in uiPanelList)
+        {
+            // TODO : Initialize each panel
+            uiPanel.gameObject.SetActive(false);
+        }
     }
+
+    #endregion Methods
 }
