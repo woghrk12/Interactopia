@@ -12,8 +12,7 @@ public class TitleUI : UIBase
     {
         base.Start();
 
-        curPanel = (int)ETitleUIPanel.START;
-        TurnOnUIPanel(curPanel);
+        TurnOnUIPanel((int)ETitleUIPanel.START);
     }
 
     #endregion Unity Events

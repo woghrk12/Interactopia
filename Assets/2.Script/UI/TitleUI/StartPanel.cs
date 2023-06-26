@@ -39,7 +39,7 @@ public class StartPanel : UIPanel
 
     public override void DeactivePanel()
     {
-        
+        base.DeactivePanel();
     }
 
     #endregion Methods

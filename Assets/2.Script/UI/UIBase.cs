@@ -38,6 +38,12 @@ public abstract class UIBase : MonoBehaviour
 
         uiPanelList[idx].ActivatePanel();
 
+        if (curPanel < 0) 
+        {
+            curPanel = idx;
+            return; 
+        }
+
         if (uiPanelList[idx].IsPopup) { return; }
 
         uiPanelList[curPanel].DeactivePanel();
