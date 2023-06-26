@@ -14,7 +14,7 @@ public abstract class UIBase : MonoBehaviour
 
     protected virtual void Awake()
     {
-        uiPanelList = transform.GetComponentsInChildren<UIPanel>();
+        uiPanelList = transform.GetComponentsInChildren<UIPanel>(true);
     }
 
     protected virtual void Start()
