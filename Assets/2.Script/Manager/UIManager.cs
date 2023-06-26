@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EUIBase { NONE = -1, TITLE, INGAME, SETTING, TEXTCHATTING, RULESETTING, END  }
+public enum EUIBase { NONE = -1, TITLE, INGAME, SETTING, END  }
 
 public class UIManager : SingletonMonobehaviour<UIManager>
 {
