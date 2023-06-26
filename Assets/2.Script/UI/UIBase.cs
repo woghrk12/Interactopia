@@ -24,7 +24,7 @@ public abstract class UIBase : MonoBehaviour
     {
         foreach (UIPanel uiPanel in uiPanelList)
         {
-            // TODO : Initialize each panel
+            uiPanel.InitPanel();
             uiPanel.gameObject.SetActive(false);
         }
     }
@@ -34,12 +34,14 @@ public abstract class UIBase : MonoBehaviour
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
         uiPanelList[idxUIPanel].gameObject.SetActive(true);
+        uiPanelList[idxUIPanel].OnActive?.Invoke();
     }
 
     public virtual void TurnOffUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
+        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
         uiPanelList[idxUIPanel].gameObject.SetActive(false);
     }
 
