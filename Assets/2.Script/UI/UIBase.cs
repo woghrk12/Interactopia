@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour
@@ -26,6 +27,20 @@ public abstract class UIBase : MonoBehaviour
             // TODO : Initialize each panel
             uiPanel.gameObject.SetActive(false);
         }
+    }
+
+    public virtual void TurnOnUIPanel(int idxUIPanel)
+    { 
+        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+
+        uiPanelList[idxUIPanel].gameObject.SetActive(true);
+    }
+
+    public virtual void TurnOffUIPanel(int idxUIPanel)
+    {
+        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+
+        uiPanelList[idxUIPanel].gameObject.SetActive(false);
     }
 
     #endregion Methods
