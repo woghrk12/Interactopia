@@ -16,33 +16,31 @@ public abstract class UIBase : MonoBehaviour
         uiPanelList = transform.GetComponentsInChildren<UIPanel>();
     }
 
+    protected virtual void Start()
+    {
+        foreach (UIPanel panel in uiPanelList)
+        {
+            panel.InitPanel();
+            panel.gameObject.SetActive(false);
+        }
+    }
+
     #endregion Unity Events
 
     #region Methods
-
-    public virtual void Init()
-    {
-        foreach (UIPanel uiPanel in uiPanelList)
-        {
-            uiPanel.InitPanel();
-            uiPanel.gameObject.SetActive(false);
-        }
-    }
 
     public virtual void TurnOnUIPanel(int idxUIPanel)
     { 
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        uiPanelList[idxUIPanel].gameObject.SetActive(true);
-        uiPanelList[idxUIPanel].OnActive?.Invoke();
+        uiPanelList[idxUIPanel].ActivatePanel();
     }
 
     public virtual void TurnOffUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
-        uiPanelList[idxUIPanel].gameObject.SetActive(false);
+        uiPanelList[idxUIPanel].DeactivePanel();
     }
 
     #endregion Methods
