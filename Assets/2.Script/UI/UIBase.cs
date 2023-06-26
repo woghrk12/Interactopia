@@ -5,7 +5,7 @@ public abstract class UIBase : MonoBehaviour
 {
     #region Variables
 
-    private UIPanel[] uiPanelList = new UIPanel[0];
+    protected UIPanel[] uiPanelList = new UIPanel[0];
 
     #endregion Variables
 
