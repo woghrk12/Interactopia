@@ -21,7 +21,9 @@ public abstract class UIBase : MonoBehaviour
     {
         foreach (UIPanel panel in uiPanelList)
         {
-            panel.InitPanel();
+            if (!panel.gameObject.activeSelf) { panel.gameObject.SetActive(true); }
+
+            panel.InitPanel(this);
             panel.gameObject.SetActive(false);
         }
     }
