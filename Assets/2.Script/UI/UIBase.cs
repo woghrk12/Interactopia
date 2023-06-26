@@ -5,6 +5,7 @@ public abstract class UIBase : MonoBehaviour
 {
     #region Variables
 
+    protected int curPanel = -1;
     protected UIPanel[] uiPanelList = new UIPanel[0];
 
     #endregion Variables
@@ -29,11 +30,16 @@ public abstract class UIBase : MonoBehaviour
 
     #region Methods
 
-    public virtual void TurnOnUIPanel(int idxUIPanel)
+    public virtual void TurnOnUIPanel(int idx)
     { 
-        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+        if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
 
-        uiPanelList[idxUIPanel].ActivatePanel();
+        uiPanelList[idx].ActivatePanel();
+
+        if (uiPanelList[idx].IsPopup) { return; }
+
+        uiPanelList[curPanel].DeactivePanel();
+        curPanel = idx;
     }
 
     public virtual void TurnOffUIPanel(int idxUIPanel)

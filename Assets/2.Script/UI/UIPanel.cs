@@ -8,6 +8,12 @@ public abstract class UIPanel : MonoBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    public bool IsPopup => isPopup;
+
+    #endregion Properties
+
     #region Methods
 
     public abstract void InitPanel();
