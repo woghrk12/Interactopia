@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerArrowInput : MonoBehaviour, IMoveDirection
 {
     private Vector2 moveDirection;
+
     public Vector2 MoveDirection
     {
         get
@@ -11,6 +12,7 @@ public class PlayerArrowInput : MonoBehaviour, IMoveDirection
             return moveDirection;
         }
     }
+
     public void OnMove(InputAction.CallbackContext callbackContext)
     {
         Vector2 input = callbackContext.ReadValue<Vector2>();

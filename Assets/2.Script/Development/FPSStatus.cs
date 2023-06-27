@@ -11,6 +11,7 @@ public class FPSStatus : MonoBehaviour
     {
         Application.targetFrameRate = 60;
     }
+
     private void OnGUI()
     {
         Rect position = new(30, 30, Screen.width, Screen.height);
