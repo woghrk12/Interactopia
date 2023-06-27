@@ -32,7 +32,7 @@ public abstract class UIBase : MonoBehaviour
 
     #region Methods
 
-    public virtual void TurnOnUIPanel(int idx)
+    protected virtual void TurnOnUIPanel(int idx)
     { 
         if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
 
@@ -50,7 +50,7 @@ public abstract class UIBase : MonoBehaviour
         curPanel = idx;
     }
 
-    public virtual void TurnOffUIPanel(int idxUIPanel)
+    protected virtual void TurnOffUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 

@@ -4,15 +4,11 @@ public abstract class UIPanel : MonoBehaviour
 {
     #region Variables
 
-    private UIBase uiBase = null;
-
     [SerializeField] private bool isPopup = false;
 
     #endregion Variables
 
     #region Properties
-
-    public UIBase UIBase => uiBase;
 
     public bool IsPopup => isPopup;
 
@@ -20,10 +16,7 @@ public abstract class UIPanel : MonoBehaviour
 
     #region Methods
 
-    public virtual void InitPanel(UIBase uiBase)
-    {
-        this.uiBase = uiBase;
-    }
+    public abstract void InitPanel(UIBase uiBase);
 
     public virtual void ActivatePanel() { if (!gameObject.activeSelf) gameObject.SetActive(true); }
 

@@ -7,8 +7,11 @@ public class StartPanel : UIPanel
 
     private Animator anim = null;
 
+    private TitleUI titleUI = null;
+
     [SerializeField] private Image titleImg = null;
     [SerializeField] private Button startBtn = null;
+    [SerializeField] private Button settingBtn = null;
 
     #endregion Variables
 
@@ -25,9 +28,10 @@ public class StartPanel : UIPanel
 
     public override void InitPanel(UIBase uiBase)
     {
-        base.InitPanel(uiBase);
+        titleUI = uiBase as TitleUI;
 
-        startBtn.onClick.AddListener(() => UIBase.TurnOnUIPanel((int)ETitleUIPanel.LOBBY));
+        startBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY));
+        settingBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.SETTING));
     }
 
     public override void ActivatePanel()
