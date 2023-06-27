@@ -24,13 +24,21 @@ public class SettingPanel : UIPanel
         if (SceneManager.GetActiveScene().buildIndex == 0) 
         {
             TitleUI titleUI = this.uiBase as TitleUI;
+
+            exitRoomBtn.gameObject.SetActive(false);
+            
             backgroundImg.GetComponent<Button>().onClick.AddListener(() => titleUI.TurnOffPanel(ETitleUIPanel.SETTING));
             closeBtn.onClick.AddListener(() => titleUI.TurnOffPanel(ETitleUIPanel.SETTING));
-            exitRoomBtn.gameObject.SetActive(false);
         }
         else
-        { 
-            
+        {
+            InGameUI inGameUI = this.uiBase as InGameUI;
+
+            exitRoomBtn.gameObject.SetActive(true);
+
+            backgroundImg.GetComponent<Button>().onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.SETTING));
+            closeBtn.onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.SETTING));
+            exitRoomBtn.onClick.AddListener(() => SceneManager.LoadScene(0));
         }
 
         exitGameBtn.onClick.AddListener(() => Application.Quit());
