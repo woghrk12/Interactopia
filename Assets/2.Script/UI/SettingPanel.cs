@@ -43,34 +43,24 @@ public class SettingPanel : UIPanel
 
     public void OnClickCloseBtn() 
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0) { StartCoroutine(((TitleUI)uiBase).TurnOffPanel(ETitleUIPanel.SETTING)); }
-        else { StartCoroutine(((InGameUI)uiBase).TurnOffPanel(EInGamePanel.SETTING)); }
+        if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).TurnOffPanel(ETitleUIPanel.SETTING); }
+        else { ((InGameUI)uiBase).TurnOffPanel(EInGamePanel.SETTING); }
     }
 
     public void OnClickExitRoomBtn() { SceneManager.LoadScene(0); }
 
     public void OnClickExitGameBtn() { Application.Quit(); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

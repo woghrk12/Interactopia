@@ -21,30 +21,18 @@ public class MeetingPanel : UIPanel
         settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
-    public void OnClickSettingBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.SETTING)); }
+    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
+        // TODO : implement panel effects
         yield return MoveToResultPanel();
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     private IEnumerator MoveToResultPanel()
@@ -52,7 +40,7 @@ public class MeetingPanel : UIPanel
         // TODO : need to make function to move to result panel when all the players make decision or discussion time is over
         yield return new WaitForSeconds(10f);
 
-        inGameUI.TurnOnPanel(EInGamePanel.MEETINGRESULT);
+        inGameUI.TurnOnPanel(EInGamePanel.MEETINGRESULT, true);
     }
 
     #endregion Methods

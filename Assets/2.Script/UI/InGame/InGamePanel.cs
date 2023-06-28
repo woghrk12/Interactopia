@@ -23,34 +23,24 @@ public class InGamePanel : UIPanel
         reportBtn.onClick.AddListener(OnClickReportBtn);
     }
 
-    public void OnClickSettingBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.SETTING)); }
+    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
 
     public void OnClickReportBtn() 
     {
         // TODO : only activated when the bodies is around the player
-        StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.MEETING));
+        inGameUI.TurnOnPanel(EInGamePanel.MEETING);
     }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

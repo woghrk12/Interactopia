@@ -23,28 +23,18 @@ public class TextChattingPanel : UIPanel
         closeBtn.onClick.AddListener(OnClickCloseBtn);
     }
 
-    public void OnClickCloseBtn() { StartCoroutine(inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING)); }
+    public void OnClickCloseBtn() { inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

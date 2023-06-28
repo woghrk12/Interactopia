@@ -26,28 +26,18 @@ public class PublicJoinPanel : UIPanel
 
     public void OnClickJoinBtn() { SceneManager.LoadScene(1); }
 
-    public void OnClickCancelBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.LOBBY)); }
+    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

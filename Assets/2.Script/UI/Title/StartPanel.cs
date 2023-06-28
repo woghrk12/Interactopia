@@ -24,33 +24,20 @@ public class StartPanel : UIPanel
         settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
-    public void OnClickStartBtn() 
+    public void OnClickStartBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+
+    public void OnClickSettingBtn() { titleUI.TurnOnPanel(ETitleUIPanel.SETTING); }
+
+    public override IEnumerator OnActivePanel()
     {
-        StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.LOBBY)); 
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public void OnClickSettingBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.SETTING)); }
-
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-    }
-
-    public override IEnumerator DeactivePanel(bool isEffect)
-    {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

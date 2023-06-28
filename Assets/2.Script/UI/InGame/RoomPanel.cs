@@ -27,38 +27,28 @@ public class RoomPanel : UIPanel
         startBtn.onClick.AddListener(OnClickStartBtn);
     }
 
-    public void OnClickSettingBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.SETTING)); }
+    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
 
-    public void OnClickTextChattingBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.TEXTCHATTING)); }
+    public void OnClickTextChattingBtn() { inGameUI.TurnOnPanel(EInGamePanel.TEXTCHATTING); }
 
     public void OnClickRuleSettingBtn()
     {
         // TODO : add condition whether the player is host or guest
-        StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING));
+        inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING);
     }
 
-    public void OnClickStartBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.GAMESTART)); }
+    public void OnClickStartBtn() { inGameUI.TurnOnPanel(EInGamePanel.GAMESTART, true); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

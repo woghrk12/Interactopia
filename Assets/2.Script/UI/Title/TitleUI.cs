@@ -10,7 +10,7 @@ public class TitleUI : UIBase
     {
         base.Start();
 
-        StartCoroutine(TurnOnPanel(ETitleUIPanel.START, true));
+        TurnOnPanel(ETitleUIPanel.START, true);
     }
 
     #endregion Unity Events
@@ -19,11 +19,11 @@ public class TitleUI : UIBase
 
     public UIPanel GetPanel(ETitleUIPanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
-    public IEnumerator TurnOnPanel(ETitleUIPanel panel, bool hasOnEffect = false, bool hasOffEffect = false)
-        => TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect);
+    public void TurnOnPanel(ETitleUIPanel panel, bool hasOnEffect = false, bool hasOffEffect = false)
+        => StartCoroutine(TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect));
 
-    public IEnumerator TurnOffPanel(ETitleUIPanel panel, bool hasOffEffect = false)
-        => TurnOffUIPanel((int)panel, hasOffEffect);
+    public void TurnOffPanel(ETitleUIPanel panel, bool hasOffEffect = false)
+        => StartCoroutine(TurnOffUIPanel((int)panel, hasOffEffect));
 
     #endregion Methods
 }

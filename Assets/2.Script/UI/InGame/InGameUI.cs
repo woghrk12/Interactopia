@@ -10,7 +10,7 @@ public class InGameUI : UIBase
     {
         base.Start();
 
-        StartCoroutine(TurnOnPanel((int)EInGamePanel.ROOM));
+        TurnOnPanel((int)EInGamePanel.ROOM);
     }
 
     #endregion Unity Events
@@ -19,11 +19,11 @@ public class InGameUI : UIBase
 
     public UIPanel GetPanel(EInGamePanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
-    public IEnumerator TurnOnPanel(EInGamePanel panel, bool hasOnEffect = false, bool hasOffEffect = false) 
-        => TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect);
+    public void TurnOnPanel(EInGamePanel panel, bool hasOnEffect = false, bool hasOffEffect = false)
+        => StartCoroutine(TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect));
 
-    public IEnumerator TurnOffPanel(EInGamePanel panel, bool hasOffEffect = false) 
-        => TurnOffUIPanel((int)panel, hasOffEffect);
+    public void TurnOffPanel(EInGamePanel panel, bool hasOffEffect = false)
+        => StartCoroutine(TurnOffUIPanel((int)panel, hasOffEffect));
 
     #endregion Methods
 }

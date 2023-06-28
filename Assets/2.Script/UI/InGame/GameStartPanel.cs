@@ -11,35 +11,25 @@ public class GameStartPanel : UIPanel
 
     #region Methods
 
+    // TODO : need to make function to move to result panel after a certain amount of time
+
     public override void InitPanel(UIBase uiBase)
     {
         inGameUI = uiBase as InGameUI;
     }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : add condition to check player's camp
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        inGameUI.TurnOnPanel(EInGamePanel.INGAME);
+        // TODO : add condition to check player's camp
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
-
+    
     #endregion Methods
 }

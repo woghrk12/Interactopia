@@ -26,30 +26,20 @@ public class PrivateJoinPanel : UIPanel
         enterBtn.onClick.AddListener(OnClickEnterBtn);
     }
 
-    public void OnClickCloseBtn() { StartCoroutine(titleUI.TurnOffPanel(ETitleUIPanel.SETTING)); }
+    public void OnClickCloseBtn() { titleUI.TurnOffPanel(ETitleUIPanel.SETTING); }
 
     public void OnClickEnterBtn() { SceneManager.LoadScene(1); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

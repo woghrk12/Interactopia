@@ -27,34 +27,24 @@ public class LobbyPanel : UIPanel
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public void OnClickCreateRoomBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM)); }
+    public void OnClickCreateRoomBtn() { titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); }
 
-    public void OnClickPublicJoinBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN)); }
+    public void OnClickPublicJoinBtn() { titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); }
 
-    public void OnClickPrivateJoinBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN)); }
+    public void OnClickPrivateJoinBtn() { titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN); }
 
-    public void OnClickCancelBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.START)); }
+    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.START); }
 
-    public override IEnumerator ActivatePanel(bool isEffect)
+    public override IEnumerator OnActivePanel()
     {
-        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override IEnumerator DeactivePanel(bool isEffect)
+    public override IEnumerator OnDeactivePanel()
     {
-        if (isEffect)
-        {
-            // TODO : implement panel effects
-            yield return null;
-        }
-
-        if (gameObject.activeSelf) { gameObject.SetActive(false); }
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods
