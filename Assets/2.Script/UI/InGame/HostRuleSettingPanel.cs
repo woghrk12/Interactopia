@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +19,32 @@ public class HostRuleSettingPanel : UIPanel
     {
         inGameUI = uiBase as InGameUI;
 
-        backgroundImg.GetComponent<Button>().onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING));
-        closeBtn.onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING));
+        backgroundImg.GetComponent<Button>().onClick.AddListener(OnClickCloseBtn);
+        closeBtn.onClick.AddListener(OnClickCloseBtn);
+    }
+
+    public void OnClickCloseBtn() { StartCoroutine(inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING)); }
+
+    public override IEnumerator ActivatePanel(bool isEffect)
+    {
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

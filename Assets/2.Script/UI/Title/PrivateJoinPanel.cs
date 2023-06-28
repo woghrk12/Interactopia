@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -20,19 +21,35 @@ public class PrivateJoinPanel : UIPanel
     {
         titleUI = uiBase as TitleUI;
 
-        backgroundImg.GetComponent<Button>().onClick.AddListener(() => titleUI.TurnOffPanel(ETitleUIPanel.PRIVATEJOIN));
-        closeBtn.onClick.AddListener(() => titleUI.TurnOffPanel(ETitleUIPanel.SETTING));
-        enterBtn.onClick.AddListener(() => SceneManager.LoadScene(1));
+        backgroundImg.GetComponent<Button>().onClick.AddListener(OnClickCloseBtn);
+        closeBtn.onClick.AddListener(OnClickCloseBtn);
+        enterBtn.onClick.AddListener(OnClickEnterBtn);
     }
 
-    public override void ActivatePanel()
+    public void OnClickCloseBtn() { StartCoroutine(titleUI.TurnOffPanel(ETitleUIPanel.SETTING)); }
+
+    public void OnClickEnterBtn() { SceneManager.LoadScene(1); }
+
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.ActivatePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
     }
 
-    public override void DeactivePanel()
+    public override IEnumerator DeactivePanel(bool isEffect)
     {
-        base.DeactivePanel();
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

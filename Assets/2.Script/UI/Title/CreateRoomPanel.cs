@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -19,18 +20,34 @@ public class CreateRoomPanel : UIPanel
     {
         titleUI = uiBase as TitleUI;
 
-        createBtn.onClick.AddListener(() => SceneManager.LoadScene(1));
-        cancelBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY));
+        createBtn.onClick.AddListener(OnClickCreateBtn);
+        cancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public override void ActivatePanel()
+    public void OnClickCreateBtn() { SceneManager.LoadScene(1); }
+
+    public void OnClickCancelBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.LOBBY)); }
+
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.ActivatePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
     }
 
-    public override void DeactivePanel()
+    public override IEnumerator DeactivePanel(bool isEffect)
     {
-        base.DeactivePanel();
+        if (isEffect) 
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+        
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

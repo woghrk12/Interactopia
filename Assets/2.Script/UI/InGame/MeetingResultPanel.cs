@@ -16,11 +16,28 @@ public class MeetingResultPanel : UIPanel
         inGameUI = uiBase as InGameUI;
     }
 
-    public override void ActivatePanel()
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.ActivatePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
 
-        StartCoroutine(MoveToNextPanel());
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        yield return MoveToNextPanel();
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     private IEnumerator MoveToNextPanel()

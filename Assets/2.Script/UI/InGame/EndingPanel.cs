@@ -16,12 +16,28 @@ public class EndingPanel : UIPanel
         inGameUI = uiBase as InGameUI;
     }
 
-    public override void ActivatePanel()
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.ActivatePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
 
-        // TODO : need to be manipulated by InGame Manager
-        StartCoroutine(MoveToRoomPanel());
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        yield return MoveToRoomPanel();
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     private IEnumerator MoveToRoomPanel()

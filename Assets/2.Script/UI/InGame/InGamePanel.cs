@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,12 +19,38 @@ public class InGamePanel : UIPanel
     {
         inGameUI = uiBase as InGameUI;
 
-        settingBtn.onClick.AddListener(() => inGameUI.TurnOnPanel(EInGamePanel.SETTING));
-        reportBtn.onClick.AddListener(() => 
+        settingBtn.onClick.AddListener(OnClickSettingBtn);
+        reportBtn.onClick.AddListener(OnClickReportBtn);
+    }
+
+    public void OnClickSettingBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.SETTING)); }
+
+    public void OnClickReportBtn() 
+    {
+        // TODO : only activated when the bodies is around the player
+        StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.MEETING));
+    }
+
+    public override IEnumerator ActivatePanel(bool isEffect)
+    {
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
         {
-            // TODO : only activated when the bodies is around the player
-            inGameUI.TurnOnPanel(EInGamePanel.MEETING);
-        });
+            // TODO : implement panel effects
+            yield return null;
+        }
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

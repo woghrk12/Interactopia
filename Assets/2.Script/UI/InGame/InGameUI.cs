@@ -1,3 +1,5 @@
+using System.Collections;
+
 public enum EInGamePanel { NONE = -1, ROOM, GAMESTART, INGAME, MEETING, MEETINGRESULT, ENDING, TEXTCHATTING, HOSTRULESETTING, GUESTRULESETTING, SETTING, FADE, END }
 
 public class InGameUI : UIBase
@@ -8,7 +10,7 @@ public class InGameUI : UIBase
     {
         base.Start();
 
-        TurnOnUIPanel((int)EInGamePanel.ROOM);
+        StartCoroutine(TurnOnPanel((int)EInGamePanel.ROOM));
     }
 
     #endregion Unity Events
@@ -17,9 +19,11 @@ public class InGameUI : UIBase
 
     public UIPanel GetPanel(EInGamePanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
-    public void TurnOnPanel(EInGamePanel panel) => TurnOnUIPanel((int)panel);
+    public IEnumerator TurnOnPanel(EInGamePanel panel, bool hasOnEffect = false, bool hasOffEffect = false) 
+        => TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect);
 
-    public void TurnOffPanel(EInGamePanel panel) => TurnOffUIPanel((int)panel);
+    public IEnumerator TurnOffPanel(EInGamePanel panel, bool hasOffEffect = false) 
+        => TurnOffUIPanel((int)panel, hasOffEffect);
 
     #endregion Methods
 }

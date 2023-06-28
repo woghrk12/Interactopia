@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour
@@ -32,29 +33,24 @@ public abstract class UIBase : MonoBehaviour
 
     #region Methods
 
-    protected virtual void TurnOnUIPanel(int idx)
+    protected virtual IEnumerator TurnOnUIPanel(int idx, bool hasOnEffect, bool hasOffEffect)
     { 
         if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
 
-        uiPanelList[idx].ActivatePanel();
-
-        if (curPanel < 0) 
+        if (!uiPanelList[idx].IsPopup && curPanel >= 0)
         {
-            curPanel = idx;
-            return; 
+            yield return uiPanelList[curPanel].DeactivePanel(hasOffEffect);
         }
-
-        if (uiPanelList[idx].IsPopup) { return; }
-
-        uiPanelList[curPanel].DeactivePanel();
+        
+        yield return uiPanelList[idx].ActivatePanel(hasOnEffect);
         curPanel = idx;
     }
 
-    protected virtual void TurnOffUIPanel(int idxUIPanel)
+    protected virtual IEnumerator TurnOffUIPanel(int idxUIPanel, bool hasOffEffect)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        uiPanelList[idxUIPanel].DeactivePanel();
+        yield return uiPanelList[idxUIPanel].DeactivePanel(hasOffEffect);
     }
 
     #endregion Methods

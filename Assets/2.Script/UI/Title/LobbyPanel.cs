@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,20 +21,40 @@ public class LobbyPanel : UIPanel
     {
         titleUI = uiBase as TitleUI;
 
-        createRoomBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM));
-        publicJoinBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN));
-        privateJoinBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN));
-        cancelBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.START));
+        createRoomBtn.onClick.AddListener(OnClickCreateRoomBtn);
+        publicJoinBtn.onClick.AddListener(OnClickPublicJoinBtn);
+        privateJoinBtn.onClick.AddListener(OnClickPrivateJoinBtn);
+        cancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public override void ActivatePanel()
+    public void OnClickCreateRoomBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM)); }
+
+    public void OnClickPublicJoinBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN)); }
+
+    public void OnClickPrivateJoinBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN)); }
+
+    public void OnClickCancelBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.START)); }
+
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.ActivatePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
     }
 
-    public override void DeactivePanel()
+    public override IEnumerator DeactivePanel(bool isEffect)
     {
-        base.DeactivePanel();
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

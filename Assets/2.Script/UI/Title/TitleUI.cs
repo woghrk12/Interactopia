@@ -1,3 +1,5 @@
+using System.Collections;
+
 public enum ETitleUIPanel { NONE = -1, START, LOBBY, CREATEROOM, PUBLICJOIN, PRIVATEJOIN, SETTING, FADE, END }
 
 public class TitleUI : UIBase
@@ -8,7 +10,7 @@ public class TitleUI : UIBase
     {
         base.Start();
 
-        TurnOnUIPanel((int)ETitleUIPanel.START);
+        StartCoroutine(TurnOnPanel(ETitleUIPanel.START, true));
     }
 
     #endregion Unity Events
@@ -17,9 +19,11 @@ public class TitleUI : UIBase
 
     public UIPanel GetPanel(ETitleUIPanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
-    public void TurnOnPanel(ETitleUIPanel panel) => TurnOnUIPanel((int)panel);
+    public IEnumerator TurnOnPanel(ETitleUIPanel panel, bool hasOnEffect = false, bool hasOffEffect = false)
+        => TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect);
 
-    public void TurnOffPanel(ETitleUIPanel panel) => TurnOffUIPanel((int)panel);
+    public IEnumerator TurnOffPanel(ETitleUIPanel panel, bool hasOffEffect = false)
+        => TurnOffUIPanel((int)panel, hasOffEffect);
 
     #endregion Methods
 }

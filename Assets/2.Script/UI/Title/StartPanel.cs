@@ -1,11 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StartPanel : UIPanel
 {
     #region Variables
-
-    private Animator anim = null;
 
     private TitleUI titleUI = null;
 
@@ -15,35 +14,43 @@ public class StartPanel : UIPanel
 
     #endregion Variables
 
-    #region Unity Methods
-
-    private void Awake()
-    {
-        //anim = GetComponent<Animator>();
-    }
-
-    #endregion Unity Methods
-
     #region Methods
 
     public override void InitPanel(UIBase uiBase)
     {
         titleUI = uiBase as TitleUI;
 
-        startBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY));
-        settingBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.SETTING));
+        startBtn.onClick.AddListener(OnClickStartBtn);
+        settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
-    public override void ActivatePanel()
+    public void OnClickStartBtn() 
     {
-        base.ActivatePanel();
-
-        anim?.SetTrigger("On");
+        StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.LOBBY)); 
     }
 
-    public override void DeactivePanel()
+    public void OnClickSettingBtn() { StartCoroutine(titleUI.TurnOnPanel(ETitleUIPanel.SETTING)); }
+
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.DeactivePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

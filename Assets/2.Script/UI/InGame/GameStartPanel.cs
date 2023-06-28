@@ -16,21 +16,29 @@ public class GameStartPanel : UIPanel
         inGameUI = uiBase as InGameUI;
     }
 
-    public override void ActivatePanel()
+    public override IEnumerator ActivatePanel(bool isEffect)
     {
-        base.ActivatePanel();
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
 
-        // TODO : add condition to check player's camp
-
-        // TODO : make ActivatePanel and DeactivatePanel functions Coroutine
-        StartCoroutine(ShowPlayers());
-    }
-
-    private IEnumerator ShowPlayers()
-    {
-        yield return new WaitForSeconds(3f);
+        if (isEffect)
+        {
+            // TODO : add condition to check player's camp
+            // TODO : implement panel effects
+            yield return null;
+        }
 
         inGameUI.TurnOnPanel(EInGamePanel.INGAME);
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     #endregion Methods

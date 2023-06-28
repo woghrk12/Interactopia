@@ -18,14 +18,33 @@ public class MeetingPanel : UIPanel
     {
         inGameUI = uiBase as InGameUI;
 
-        settingBtn.onClick.AddListener(() => inGameUI.TurnOnPanel(EInGamePanel.SETTING));
+        settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
-    public override void ActivatePanel()
-    {
-        base.ActivatePanel();
+    public void OnClickSettingBtn() { StartCoroutine(inGameUI.TurnOnPanel(EInGamePanel.SETTING)); }
 
-        StartCoroutine(MoveToResultPanel());
+    public override IEnumerator ActivatePanel(bool isEffect)
+    {
+        if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        yield return MoveToResultPanel();
+    }
+
+    public override IEnumerator DeactivePanel(bool isEffect)
+    {
+        if (isEffect)
+        {
+            // TODO : implement panel effects
+            yield return null;
+        }
+
+        if (gameObject.activeSelf) { gameObject.SetActive(false); }
     }
 
     private IEnumerator MoveToResultPanel()
