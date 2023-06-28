@@ -1,7 +1,8 @@
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviourPun
 {
     private Rigidbody2D rigid2D;
 
@@ -15,6 +16,9 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!photonView.IsMine)
+            return;
+
         MoveCharacter();
     }
 
