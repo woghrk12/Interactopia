@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class UIPanel : MonoBehaviour
@@ -18,9 +20,9 @@ public abstract class UIPanel : MonoBehaviour
 
     public abstract void InitPanel(UIBase uiBase);
 
-    public virtual void ActivatePanel() { if (!gameObject.activeSelf) gameObject.SetActive(true); }
+    public abstract IEnumerator OnActivePanel();
 
-    public virtual void DeactivePanel() { if (gameObject.activeSelf) gameObject.SetActive(false); }
+    public abstract IEnumerator OnDeactivePanel();
 
     #endregion Methods
 }

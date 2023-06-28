@@ -1,11 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StartPanel : UIPanel
 {
     #region Variables
-
-    private Animator anim = null;
 
     private TitleUI titleUI = null;
 
@@ -15,35 +14,30 @@ public class StartPanel : UIPanel
 
     #endregion Variables
 
-    #region Unity Methods
-
-    private void Awake()
-    {
-        //anim = GetComponent<Animator>();
-    }
-
-    #endregion Unity Methods
-
     #region Methods
 
     public override void InitPanel(UIBase uiBase)
     {
         titleUI = uiBase as TitleUI;
 
-        startBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY));
-        settingBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.SETTING));
+        startBtn.onClick.AddListener(OnClickStartBtn);
+        settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
-    public override void ActivatePanel()
-    {
-        base.ActivatePanel();
+    public void OnClickStartBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
 
-        anim?.SetTrigger("On");
+    public void OnClickSettingBtn() { titleUI.TurnOnPanel(ETitleUIPanel.SETTING); }
+
+    public override IEnumerator OnActivePanel()
+    {
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override void DeactivePanel()
+    public override IEnumerator OnDeactivePanel()
     {
-        base.DeactivePanel();
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

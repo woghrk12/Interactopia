@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -19,18 +20,24 @@ public class PublicJoinPanel : UIPanel
     {
         titleUI = uiBase as TitleUI;
 
-        joinBtn.onClick.AddListener(() => SceneManager.LoadScene(1));
-        cancelBtn.onClick.AddListener(() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY));
+        joinBtn.onClick.AddListener(OnClickJoinBtn);
+        cancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public override void ActivatePanel()
+    public void OnClickJoinBtn() { SceneManager.LoadScene(1); }
+
+    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+
+    public override IEnumerator OnActivePanel()
     {
-        base.ActivatePanel();
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    public override void DeactivePanel()
+    public override IEnumerator OnDeactivePanel()
     {
-        base.DeactivePanel();
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

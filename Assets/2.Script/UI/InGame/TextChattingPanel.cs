@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +19,22 @@ public class TextChattingPanel : UIPanel
     {
         inGameUI = uiBase as InGameUI;
 
-        backgroundImg.GetComponent<Button>().onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING));
-        closeBtn.onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING));
+        backgroundImg.GetComponent<Button>().onClick.AddListener(OnClickCloseBtn);
+        closeBtn.onClick.AddListener(OnClickCloseBtn);
+    }
+
+    public void OnClickCloseBtn() { inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING); }
+
+    public override IEnumerator OnActivePanel()
+    {
+        // TODO : implement panel effects
+        yield return null;
+    }
+
+    public override IEnumerator OnDeactivePanel()
+    {
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

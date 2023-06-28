@@ -1,6 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class SettingPanel : UIPanel
 {
@@ -23,35 +28,50 @@ public class SettingPanel : UIPanel
 
         if (SceneManager.GetActiveScene().buildIndex == 0) 
         {
-            TitleUI titleUI = this.uiBase as TitleUI;
-
             exitRoomBtn.gameObject.SetActive(false);
-            
-            backgroundImg.GetComponent<Button>().onClick.AddListener(() => titleUI.TurnOffPanel(ETitleUIPanel.SETTING));
-            closeBtn.onClick.AddListener(() => titleUI.TurnOffPanel(ETitleUIPanel.SETTING));
+
+            backgroundImg.GetComponent<Button>().onClick.AddListener(OnClickCloseBtn);
+            closeBtn.onClick.AddListener(OnClickCloseBtn);
         }
         else
         {
-            InGameUI inGameUI = this.uiBase as InGameUI;
-
             exitRoomBtn.gameObject.SetActive(true);
 
-            backgroundImg.GetComponent<Button>().onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.SETTING));
-            closeBtn.onClick.AddListener(() => inGameUI.TurnOffPanel(EInGamePanel.SETTING));
-            exitRoomBtn.onClick.AddListener(() => SceneManager.LoadScene(0));
+            backgroundImg.GetComponent<Button>().onClick.AddListener(OnClickCloseBtn);
+            closeBtn.onClick.AddListener(OnClickCloseBtn);
+            exitRoomBtn.onClick.AddListener(OnClickExitRoomBtn);
         }
 
-        exitGameBtn.onClick.AddListener(() => Application.Quit());
+        exitGameBtn.onClick.AddListener(OnClickExitGameBtn);
     }
 
-    public override void ActivatePanel()
+    public void OnClickCloseBtn() 
     {
-        base.ActivatePanel();
+        if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).TurnOffPanel(ETitleUIPanel.SETTING); }
+        else { ((InGameUI)uiBase).TurnOffPanel(EInGamePanel.SETTING); }
     }
 
-    public override void DeactivePanel()
+    public void OnClickExitRoomBtn() { SceneManager.LoadScene(0); }
+
+    public void OnClickExitGameBtn() 
     {
-        base.DeactivePanel();
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
+    }
+
+    public override IEnumerator OnActivePanel()
+    {
+        // TODO : implement panel effects
+        yield return null;
+    }
+
+    public override IEnumerator OnDeactivePanel()
+    {
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

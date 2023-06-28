@@ -11,24 +11,23 @@ public class EndingPanel : UIPanel
 
     #region Methods
 
+    // TODO : need to make function to move to ending panel after a certain amount of time
+
     public override void InitPanel(UIBase uiBase)
     {
         inGameUI = uiBase as InGameUI;
     }
 
-    public override void ActivatePanel()
+    public override IEnumerator OnActivePanel()
     {
-        base.ActivatePanel();
-
-        // TODO : need to be manipulated by InGame Manager
-        StartCoroutine(MoveToRoomPanel());
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    private IEnumerator MoveToRoomPanel()
+    public override IEnumerator OnDeactivePanel()
     {
-        yield return new WaitForSeconds(3f);
-
-        inGameUI.TurnOnPanel(EInGamePanel.ROOM);
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods

@@ -11,24 +11,23 @@ public class MeetingResultPanel : UIPanel
 
     #region Methods
 
+    // TODO : need to make function to move to result panel after a certain amount of time
+
     public override void InitPanel(UIBase uiBase)
     {
         inGameUI = uiBase as InGameUI;
     }
 
-    public override void ActivatePanel()
+    public override IEnumerator OnActivePanel()
     {
-        base.ActivatePanel();
-
-        StartCoroutine(MoveToNextPanel());
+        // TODO : implement panel effects
+        yield return null;
     }
 
-    private IEnumerator MoveToNextPanel()
+    public override IEnumerator OnDeactivePanel()
     {
-        // TODO : add text animation and the function that which panel will be shown (InGame or Ending)
-        yield return new WaitForSeconds(3f);
-
-        inGameUI.TurnOnPanel(EInGamePanel.ENDING);
+        // TODO : implement panel effects
+        yield return null;
     }
 
     #endregion Methods
