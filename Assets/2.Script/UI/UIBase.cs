@@ -37,8 +37,6 @@ public abstract class UIBase : MonoBehaviour
     { 
         if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
 
-        Debug.Log($"hasOnEffect : {hasOnEffect.ToString()}, hasOffEffect : {hasOffEffect.ToString()}");
-
         if (!uiPanelList[idx].IsPopup && curPanel >= 0)
         {
             uiPanelList[curPanel].gameObject.SetActive(false);
@@ -48,7 +46,6 @@ public abstract class UIBase : MonoBehaviour
         uiPanelList[idx].gameObject.SetActive(true);
         if (hasOnEffect) { yield return uiPanelList[idx].OnActivePanel(); }
 
-        Debug.Log($"curPanel : {curPanel.ToString()} idx : {idx.ToString()}");
         curPanel = idx;
     }
 
