@@ -6,6 +6,8 @@ public abstract class UIBase : MonoBehaviour
 {
     #region Variables
 
+    public static UIBase Instance = null;
+
     protected int curPanel = -1;
     protected UIPanel[] uiPanelList = new UIPanel[0];
 
@@ -15,10 +17,16 @@ public abstract class UIBase : MonoBehaviour
 
     protected virtual void Awake()
     {
+        Instance = this;
+
         uiPanelList = transform.GetComponentsInChildren<UIPanel>(true);
     }
 
-    protected virtual void Start()
+    #endregion Unity Events
+
+    #region Methods
+
+    public virtual void InitBase()
     {
         foreach (UIPanel panel in uiPanelList)
         {
@@ -28,10 +36,6 @@ public abstract class UIBase : MonoBehaviour
             panel.gameObject.SetActive(false);
         }
     }
-
-    #endregion Unity Events
-
-    #region Methods
 
     protected virtual IEnumerator TurnOnUIPanel(int idx, bool hasOnEffect, bool hasOffEffect)
     { 
