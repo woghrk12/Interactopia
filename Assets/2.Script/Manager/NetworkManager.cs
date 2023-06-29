@@ -1,6 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
+
+public struct RoomOption
+{
+    public string roomName;
+    public RoomOptions roomOptions;
+
+    public RoomOption(string roomName, RoomOptions roomOptions)
+    {
+        this.roomName = roomName;
+        this.roomOptions = roomOptions;
+    }
+}
 
 public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 {
@@ -31,6 +44,8 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     public static void Connect() => PhotonNetwork.ConnectUsingSettings();
 
+    public static void CreateRooom(RoomOption roomOption) => PhotonNetwork.CreateRoom(roomOption.roomName, roomOption.roomOptions);
+
     #endregion Methods
 
     #region Photon Callbacks
@@ -50,7 +65,8 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     public override void OnJoinedRoom()
     {
-        
+        GameManager.OnJoinedRoom();
     }
+
     #endregion Photon Callbacks
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class CreateRoomPanel : UIPanel
 {
@@ -24,7 +24,12 @@ public class CreateRoomPanel : UIPanel
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public void OnClickCreateBtn() { SceneManager.LoadScene(1); }
+    public void OnClickCreateBtn()
+    {
+        RoomOption roomOption = new RoomOption("test", new RoomOptions { MaxPlayers = 16 });
+
+        NetworkManager.CreateRooom(roomOption);
+    }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
 
