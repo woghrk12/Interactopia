@@ -4,18 +4,14 @@ public enum EInGamePanel { NONE = -1, ROOM, GAMESTART, INGAME, MEETING, MEETINGR
 
 public class InGameUI : UIBase
 {
-    #region Unity Events
+    #region Methods
 
-    protected override void Start()
+    public override void InitBase()
     {
-        base.Start();
+        base.InitBase();
 
         TurnOnPanel((int)EInGamePanel.ROOM);
     }
-
-    #endregion Unity Events
-
-    #region Methods
 
     public UIPanel GetPanel(EInGamePanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 

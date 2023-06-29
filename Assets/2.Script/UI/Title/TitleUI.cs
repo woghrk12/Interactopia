@@ -1,21 +1,18 @@
 using System.Collections;
 
-public enum ETitleUIPanel { NONE = -1, START, LOBBY, CREATEROOM, PUBLICJOIN, PRIVATEJOIN, SETTING, FADE, END }
+public enum ETitleUIPanel { NONE = -1, START, LOBBY, CREATEROOM, PUBLICJOIN, PRIVATEJOIN, SETTING, LOADING, FADE, END }
 
 public class TitleUI : UIBase
 {
-    #region Unity Events
-
-    protected override void Start()
-    {
-        base.Start();
-
-        TurnOnPanel(ETitleUIPanel.START, true);
-    }
-
-    #endregion Unity Events
-
     #region Methods
+
+    public override void InitBase()
+    {
+        base.InitBase();
+
+        if (NetworkManager.IsInitialized) { TurnOnPanel(ETitleUIPanel.START, true); }
+        else { TurnOnPanel(ETitleUIPanel.LOADING); }
+    }
 
     public UIPanel GetPanel(ETitleUIPanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
