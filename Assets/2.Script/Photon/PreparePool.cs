@@ -8,6 +8,7 @@ public class PreparePool : MonoBehaviour
     private void Awake()
     {
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+
         if (pool != null && this.Prefabs!=null) 
         {
             foreach(GameObject prefab in this.Prefabs)

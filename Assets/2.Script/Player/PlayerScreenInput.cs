@@ -1,7 +1,8 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerScreenInput : MonoBehaviour, IMoveDirection
+public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateMagicCallback
 {
     private Camera mainCamera;
 
@@ -20,11 +21,6 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection
     }
     private bool isPressed = false;
 
-    private void Awake()
-    {
-        mainCamera = Camera.main;
-    }
-
     public void OnPosition(InputAction.CallbackContext callbackContext)
     {
         Vector2 input = callbackContext.ReadValue<Vector2>();
@@ -42,5 +38,9 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection
         {
             isPressed = false;
         }
+    }
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        mainCamera = Camera.main;
     }
 }

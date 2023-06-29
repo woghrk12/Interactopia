@@ -1,7 +1,9 @@
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerArrowInput), typeof(PlayerScreenInput), typeof(CharacterMovement))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     private enum EInputMode
     {
@@ -15,18 +17,12 @@ public class PlayerController : MonoBehaviour
 
     CharacterMovement characterMovement;
 
-    private void Awake()
-    {
-        playerArrowInput = GetComponent<PlayerArrowInput>();
-        playerScreenInput = GetComponent<PlayerScreenInput>();
-        characterMovement = GetComponent<CharacterMovement>();
-
-        input = playerArrowInput; //temp maybe change to auto-detect later
-    }
-
     // temp test code
     private void Update()
     {
+        if (!photonView.IsMine)
+            return;
+
         switch (inputMode)
         {
             case EInputMode.Arrow:
@@ -41,4 +37,26 @@ public class PlayerController : MonoBehaviour
         characterMovement.MoveDirection = input.MoveDirection;
     }
 
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        playerArrowInput = GetComponent<PlayerArrowInput>();
+        playerScreenInput = GetComponent<PlayerScreenInput>();
+        characterMovement = GetComponent<CharacterMovement>();
+
+        if (!photonView.IsMine)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            input = playerArrowInput; //temp maybe change to auto-detect later
+        }
+    }
+    private void OnDestroy()
+    {
+        Destroy((PlayerArrowInput)playerArrowInput);
+        Destroy((PlayerScreenInput)playerScreenInput);
+        Destroy(characterMovement);
+        Destroy(GetComponent<PlayerInput>());
+    }
 }
