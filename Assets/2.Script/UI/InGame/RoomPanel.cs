@@ -37,19 +37,7 @@ public class RoomPanel : UIPanel
         inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING);
     }
 
-    public void OnClickStartBtn() { inGameUI.TurnOnPanel(EInGamePanel.GAMESTART, true); }
-
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
+    public void OnClickStartBtn() { inGameUI.TurnOnPanel(EInGamePanel.GAMESTART); }
 
     #endregion Methods
 }

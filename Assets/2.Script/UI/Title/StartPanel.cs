@@ -28,17 +28,5 @@ public class StartPanel : UIPanel
 
     public void OnClickSettingBtn() { titleUI.TurnOnPanel(ETitleUIPanel.SETTING); }
 
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
     #endregion Methods
 }

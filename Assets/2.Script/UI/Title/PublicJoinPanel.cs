@@ -23,6 +23,28 @@ public class PublicJoinPanel : UIPanel
 
     #endregion Variables
 
+    #region Unity Events
+
+    private void OnEnable()
+    {
+        var networkManager = NetworkManager.Instance;
+
+        networkManager.RoomListAdded += AddRoomListObject;
+        networkManager.RoomListRemoved += RemoveRoomlistObject;
+        networkManager.RoomListUpdated += UpdateRoomListObject;
+    }
+
+    private void OnDisable()
+    {
+        var networkManager = NetworkManager.Instance;
+
+        networkManager.RoomListAdded -= AddRoomListObject;
+        networkManager.RoomListRemoved -= RemoveRoomlistObject;
+        networkManager.RoomListUpdated -= UpdateRoomListObject;
+    }
+
+    #endregion Unity Events
+
     #region Methods
 
     public override void InitPanel(UIBase uiBase)
@@ -36,30 +58,6 @@ public class PublicJoinPanel : UIPanel
     public void OnClickJoinBtn() { SceneManager.LoadScene(1); }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
-
-    public override IEnumerator OnActivePanel()
-    {
-        var networkManager = NetworkManager.Instance;
-
-        networkManager.RoomListAdded += AddRoomListObject;
-        networkManager.RoomListRemoved += RemoveRoomlistObject;
-        networkManager.RoomListUpdated += UpdateRoomListObject;
-
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        var networkManager = NetworkManager.Instance;
-
-        networkManager.RoomListAdded -= AddRoomListObject;
-        networkManager.RoomListRemoved -= RemoveRoomlistObject;
-        networkManager.RoomListUpdated -= UpdateRoomListObject;
-
-        // TODO : implement panel effects
-        yield return null;
-    }
 
     private void AddRoomListObject(List<RoomInfo> addedList)
     {

@@ -45,7 +45,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         if (SceneManager.GetActiveScene().buildIndex == (int)EScene.TITLE)
         {
             TitleUI titleUI = UIBase.Instance as TitleUI;
-            titleUI.TurnOnPanel(ETitleUIPanel.START, true);
+            titleUI.TurnOnPanel(ETitleUIPanel.START);
         }
     }
 

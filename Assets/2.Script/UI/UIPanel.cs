@@ -20,9 +20,5 @@ public abstract class UIPanel : MonoBehaviour
 
     public abstract void InitPanel(UIBase uiBase);
 
-    public abstract IEnumerator OnActivePanel();
-
-    public abstract IEnumerator OnDeactivePanel();
-
     #endregion Methods
 }
