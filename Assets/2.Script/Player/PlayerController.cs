@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
                 break;
 
             case EInputMode.GAMEPAD:
-                input = playerScreenInput;
-                playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
+                input = playerArrowInput;
+                playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
                 break;
 
             case EInputMode.TOUCH:
