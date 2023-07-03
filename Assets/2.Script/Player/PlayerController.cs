@@ -1,5 +1,4 @@
 using Photon.Pun;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,7 +36,6 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
                 input = playerScreenInput;
                 break;
         }
-
         characterMovement.MoveDirection = input.MoveDirection;
     }
 
@@ -68,6 +66,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
+        // PC
 #if UNITY_STANDALONE || UNITY_EDITOR
 
         inputMode = EInputMode.Arrow;
@@ -76,20 +75,23 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
         //inputMode = EInputMode.Sceen;
         //input = playerScreenInput;
-        //playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current) ;
+        //playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
 
         //inputMode = EInputMode.Arrow;
         //input = playerArrowInput;
-        //playerInput.SwitchCurrentControlScheme("Joystick",Gamepad.current);
+        //playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
 
+        // Mobile
 #elif UNITY_ANDROID || UNITY_IOS
 
         inputMode = EInputMode.Sceen;
         input = playerScreenInput;
         playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
 
+        //inputMode = EInputMode.Arrow;
+        //input = playerArrowInput;
+        //playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+
 #endif
     }
-    //PC에서도 변경시켜서 가능
-    //
 }
