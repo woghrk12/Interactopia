@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
         inputMode = EInputMode.Arrow;
         input = playerArrowInput;
-        playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current);
+        playerInput.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
 
         //inputMode = EInputMode.Sceen;
         //input = playerScreenInput;
