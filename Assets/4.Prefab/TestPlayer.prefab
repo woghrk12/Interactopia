@@ -38,7 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5728901721198690886
 SpriteRenderer:
@@ -240,7 +240,7 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 37787c8b-1f6d-4aac-b12d-752e49e2bed1
     m_ActionName: Player/Position[/Mouse/position]
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
