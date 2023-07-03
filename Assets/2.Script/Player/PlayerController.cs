@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerArrowInput), typeof(PlayerScreenInput), typeof(CharacterMovement))]
 public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
-    private enum EInputMode
+    public enum EInputMode
     {
-        Arrow,
-        Sceen
+        KEYBOARD,
+        MOUSE,
+        GAMEPAD,
+        TOUCH
     }
-
-    [SerializeField] private EInputMode inputMode;
 
     PlayerInput playerInput;
 
@@ -26,16 +26,6 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         if (!photonView.IsMine)
             return;
 
-        switch (inputMode)
-        {
-            case EInputMode.Arrow:
-                input = playerArrowInput;
-                break;
-
-            case EInputMode.Sceen:
-                input = playerScreenInput;
-                break;
-        }
         characterMovement.MoveDirection = input.MoveDirection;
     }
 
@@ -69,29 +59,39 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         // PC
 #if UNITY_STANDALONE || UNITY_EDITOR
 
-        inputMode = EInputMode.Arrow;
-        input = playerArrowInput;
-        playerInput.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
-
-        //inputMode = EInputMode.Sceen;
-        //input = playerScreenInput;
-        //playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
-
-        //inputMode = EInputMode.Arrow;
-        //input = playerArrowInput;
-        //playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+        SwitchInputMode(EInputMode.KEYBOARD);
 
         // Mobile
 #elif UNITY_ANDROID || UNITY_IOS
 
-        inputMode = EInputMode.Sceen;
-        input = playerScreenInput;
-        playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
-
-        //inputMode = EInputMode.Arrow;
-        //input = playerArrowInput;
-        //playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+        SwitchInputMode(EInputMode.TOUCH);
 
 #endif
+    }
+
+    public void SwitchInputMode(EInputMode inputMode)
+    {
+        switch (inputMode)
+        {
+            case EInputMode.KEYBOARD:
+                input = playerArrowInput;
+                playerInput.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
+                break;
+
+            case EInputMode.MOUSE:
+                input = playerScreenInput;
+                playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
+                break;
+
+            case EInputMode.GAMEPAD:
+                input = playerScreenInput;
+                playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
+                break;
+
+            case EInputMode.TOUCH:
+                input = playerScreenInput;
+                playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
+                break;
+        }
     }
 }
