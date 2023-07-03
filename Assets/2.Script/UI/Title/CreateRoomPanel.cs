@@ -50,7 +50,7 @@ public class CreateRoomPanel : UIPanel
         string[] propertyListForLobby = new string[0];
         propertyListForLobby = ArrayHelper.Add("RoomName", propertyListForLobby);
 
-        string roomName = PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString();
+        string roomName = Utilities.ComputeMD5(PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString(), 3);
         RoomOptions roomOption = new RoomOptions { 
             MaxPlayers = maxPlayer, 
             IsVisible = !privacyModeToggle.isOn, 
