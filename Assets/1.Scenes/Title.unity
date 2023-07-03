@@ -2122,7 +2122,7 @@ GameObject:
   - component: {fileID: 268792154}
   - component: {fileID: 268792153}
   m_Layer: 5
-  m_Name: Player Num Icon
+  m_Name: Max Player Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4801,6 +4801,8 @@ RectTransform:
   - {fileID: 1514834575}
   - {fileID: 658065985}
   - {fileID: 1772920229}
+  - {fileID: 603857705}
+  - {fileID: 1917819554}
   m_Father: {fileID: 1528196473}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5293,7 +5295,7 @@ GameObject:
   - component: {fileID: 603857707}
   - component: {fileID: 603857706}
   m_Layer: 5
-  m_Name: Left Map Btn
+  m_Name: Previous Map Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5312,12 +5314,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1114153861}
-  m_Father: {fileID: 1528196473}
+  m_Father: {fileID: 552209223}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -990, y: 220}
+  m_AnchoredPosition: {x: -990, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &603857706
@@ -12054,7 +12056,7 @@ GameObject:
   - component: {fileID: 1337367694}
   - component: {fileID: 1337367695}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Max Player Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12127,10 +12129,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 31186594}
   m_HandleRect: {fileID: 765666728}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0
+  m_MinValue: 5
+  m_MaxValue: 16
+  m_WholeNumbers: 1
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -12747,7 +12749,7 @@ GameObject:
   - component: {fileID: 1374403119}
   - component: {fileID: 1374403118}
   m_Layer: 5
-  m_Name: Player Num Text
+  m_Name: Max Player Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14206,8 +14208,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 603857705}
-  - {fileID: 1917819554}
   - {fileID: 552209223}
   - {fileID: 1473439394}
   - {fileID: 1281336268}
@@ -14239,6 +14239,9 @@ MonoBehaviour:
   isPopup: 0
   createBtn: {fileID: 1473439395}
   cancelBtn: {fileID: 1281336269}
+  maxPlayerSlider: {fileID: 1337367695}
+  maxPlayerText: {fileID: 1374403118}
+  privacyModeToggle: {fileID: 951022280}
 --- !u!1 &1551380819
 GameObject:
   m_ObjectHideFlags: 0
@@ -15000,7 +15003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1686431122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17581,7 +17584,7 @@ GameObject:
   - component: {fileID: 1917819556}
   - component: {fileID: 1917819555}
   m_Layer: 5
-  m_Name: Right Map Btn
+  m_Name: Post Map Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17600,12 +17603,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2068548673}
-  m_Father: {fileID: 1528196473}
+  m_Father: {fileID: 552209223}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 990, y: 220}
+  m_AnchoredPosition: {x: 990, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1917819555
@@ -17733,7 +17736,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1919332423
 MonoBehaviour:

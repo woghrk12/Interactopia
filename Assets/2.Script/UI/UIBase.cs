@@ -31,18 +31,18 @@ public abstract class UIBase : MonoBehaviour
         foreach (UIPanel panel in uiPanelList)
         {
             panel.InitPanel(this);
-            panel.gameObject.SetActive(false);
+            if(panel.gameObject.activeSelf) panel.gameObject.SetActive(false);
         }
     }
 
-    protected virtual void TurnOnUIPanel(int idx)
+    protected virtual void TurnOnUIPanel(int idxUIPanel)
     {
-        if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
+        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        if (!uiPanelList[idx].IsPopup && curPanel >= 0) { uiPanelList[curPanel].gameObject.SetActive(false); }
+        if (!uiPanelList[idxUIPanel].IsPopup && curPanel >= 0) { uiPanelList[curPanel].gameObject.SetActive(false); }
 
-        uiPanelList[idx].gameObject.SetActive(true);
-        curPanel = idx;
+        uiPanelList[idxUIPanel].gameObject.SetActive(true);
+        curPanel = idxUIPanel;
     }
 
     protected virtual void TurnOffUIPanel(int idxUIPanel)

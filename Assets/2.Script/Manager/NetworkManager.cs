@@ -5,18 +5,6 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public struct RoomOption
-{
-    public string roomName;
-    public RoomOptions roomOptions;
-
-    public RoomOption(string roomName, RoomOptions roomOptions)
-    {
-        this.roomName = roomName;
-        this.roomOptions = roomOptions;
-    }
-}
-
 public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 {
     #region Variables
@@ -37,6 +25,8 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     public static bool IsInitialized => isInitialized;
 
+    public List<RoomInfo> RoomList => roomList;
+
     #endregion Properties
 
     #region Unity Events
@@ -52,7 +42,12 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     public static void Connect() => PhotonNetwork.ConnectUsingSettings();
 
-    public static void CreateRooom(RoomOption roomOption) => PhotonNetwork.CreateRoom(roomOption.roomName, roomOption.roomOptions);
+    public static void CreateRooom(string roomName, RoomOptions roomOption) => PhotonNetwork.CreateRoom(roomName, roomOption);
+
+    public static void JoinRoom(RoomInfo roomInfo)
+    {
+        PhotonNetwork.JoinRoom(roomInfo.Name);
+    }
 
     #endregion Methods
 
@@ -60,8 +55,6 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("OnConnected");
-
         if (!isInitialized) 
         {
             GameManager.OnConnectedServer();
@@ -74,12 +67,10 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
     public override void OnJoinedRoom()
     {
         GameManager.OnJoinedRoom();
-        Debug.Log(PhotonNetwork.CurrentRoom.Name);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("OnRoomListUpdate");
         var addedRoomList = new List<RoomInfo>();
         var removedRoomList = new List<RoomInfo>();
         var updatedRoomList = new List<RoomInfo>();

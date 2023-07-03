@@ -7,6 +7,9 @@ public class RoomItemBtn : MonoBehaviour
 {
     #region Variables
 
+    private RoomInfo roomInfo = null;
+
+    [SerializeField] private Button selectBtn = null;
     [SerializeField] private Image mapIcon = null;
     [SerializeField] private Text roomNameText = null;
     [SerializeField] private Text roomModeText = null;
@@ -14,13 +17,22 @@ public class RoomItemBtn : MonoBehaviour
 
     #endregion Variables
 
+    #region Properties
+
+    public RoomInfo RoomInfo => roomInfo;
+
+    public Button SelectBtn => selectBtn;
+
+    #endregion Properties
+
     #region Methods
 
     public void SetRoomItem(RoomInfo roomInfo)
     {
-        roomNameText.text = roomInfo.Name;
-        playerNumText.text = $"{roomInfo.PlayerCount.ToString()} / {roomInfo.MaxPlayers.ToString()}";
+        this.roomInfo = roomInfo;
+        roomNameText.text = this.roomInfo.Name;
+        playerNumText.text = $"{this.roomInfo.PlayerCount.ToString()} / {this.roomInfo.MaxPlayers.ToString()}";
     }
-    
+
     #endregion Methods
 }

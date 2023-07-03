@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Photon.Realtime;
 
 public class PublicJoinPanel : UIPanel
@@ -15,6 +13,8 @@ public class PublicJoinPanel : UIPanel
 
     [SerializeField] private Button joinBtn = null;
     [SerializeField] private Button cancelBtn = null;
+
+    private RoomInfo selectedRoomInfo = null;
 
     [SerializeField] private GameObject roomObjDictParent = null;
     [SerializeField] private GameObject roomPrefab = null;
@@ -32,6 +32,10 @@ public class PublicJoinPanel : UIPanel
         networkManager.RoomListAdded += AddRoomListObject;
         networkManager.RoomListRemoved += RemoveRoomlistObject;
         networkManager.RoomListUpdated += UpdateRoomListObject;
+
+        selectedRoomInfo = null;
+
+        AddRoomListObject(networkManager.RoomList);
     }
 
     private void OnDisable()
@@ -55,9 +59,14 @@ public class PublicJoinPanel : UIPanel
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
     }
 
-    public void OnClickJoinBtn() { SceneManager.LoadScene(1); }
+    public void OnClickJoinBtn() 
+    {
+        NetworkManager.JoinRoom(selectedRoomInfo);
+    }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+
+    public void OnClickRoomItem(RoomInfo roomInfo) { selectedRoomInfo = roomInfo; }
 
     private void AddRoomListObject(List<RoomInfo> addedList)
     {
@@ -65,9 +74,10 @@ public class PublicJoinPanel : UIPanel
         {
             if (roomObjDict.Count > MAX_ROOM_LIST) break;
 
-            GameObject roomInstance = Instantiate(roomPrefab, roomObjDictParent.transform);
-            roomInstance.GetComponent<RoomItemBtn>().SetRoomItem(room);
-            roomObjDict.Add(room.Name, roomInstance);
+            var roomInstance = Instantiate(roomPrefab, roomObjDictParent.transform).GetComponent<RoomItemBtn>();
+            roomInstance.SetRoomItem(room);
+            roomInstance.SelectBtn.onClick.AddListener(() => OnClickRoomItem(room));
+            roomObjDict.Add(room.Name, roomInstance.gameObject);
         }
     }
 
