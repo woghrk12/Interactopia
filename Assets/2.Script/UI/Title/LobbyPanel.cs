@@ -1,6 +1,7 @@
-using System.Collections;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class LobbyPanel : UIPanel
 {
@@ -8,6 +9,7 @@ public class LobbyPanel : UIPanel
 
     private TitleUI titleUI = null;
 
+    [SerializeField] private InputField nicknameInputField = null;
     [SerializeField] private Button createRoomBtn = null;
     [SerializeField] private Button publicJoinBtn = null;
     [SerializeField] private Button privateJoinBtn = null;
@@ -25,15 +27,52 @@ public class LobbyPanel : UIPanel
         publicJoinBtn.onClick.AddListener(OnClickPublicJoinBtn);
         privateJoinBtn.onClick.AddListener(OnClickPrivateJoinBtn);
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
+
+        nicknameInputField.onValueChanged.AddListener(OnNicknameChanged);
     }
 
-    public void OnClickCreateRoomBtn() { titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); }
+    public void OnClickCreateRoomBtn() 
+    {
+        if (!IsValidNickname()) { return; }
 
-    public void OnClickPublicJoinBtn() { titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); }
+        PhotonNetwork.LocalPlayer.NickName = nicknameInputField.text;
+        titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); 
+    }
 
-    public void OnClickPrivateJoinBtn() { titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN); }
+    public void OnClickPublicJoinBtn() 
+    {
+        if (!IsValidNickname()) { return; }
+
+        PhotonNetwork.LocalPlayer.NickName = nicknameInputField.text;
+        titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); 
+    }
+
+    public void OnClickPrivateJoinBtn() 
+    {
+        if (!IsValidNickname()) { return; }
+
+        PhotonNetwork.LocalPlayer.NickName = nicknameInputField.text;
+        titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN); 
+    }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.START); }
+
+    private void OnNicknameChanged(string value)
+    {
+        nicknameInputField.text = Regex.Replace(value, @"[^0-9a-zA-Z¤¡-ÆR]", "");
+
+        if (System.Text.Encoding.Unicode.GetByteCount(value) > 16)        
+        {
+            nicknameInputField.text = value.Substring(0, value.Length - 1);        
+        }
+    }
+
+    private bool IsValidNickname()
+    {
+        if (nicknameInputField.text.Length == 0) { return false; }
+        
+        return true;
+    }
 
     #endregion Methods
 }
