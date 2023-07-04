@@ -1,16 +1,25 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class PublicJoinPanel : UIPanel
 {
     #region Variables
 
+    private static readonly int MAX_ROOM_LIST = 30;
+
     private TitleUI titleUI = null;
 
     [SerializeField] private Button joinBtn = null;
     [SerializeField] private Button cancelBtn = null;
+
+    private RoomInfo selectedRoomInfo = null;
+
+    [SerializeField] private GameObject roomObjDictParent = null;
+    [SerializeField] private GameObject roomPrefab = null;
+
+    private Dictionary<string, GameObject> roomObjDict = new();
 
     #endregion Variables
 
@@ -22,22 +31,75 @@ public class PublicJoinPanel : UIPanel
 
         joinBtn.onClick.AddListener(OnClickJoinBtn);
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
+
+        OnActive += (() => 
+        {
+            var networkManager = NetworkManager.Instance;
+
+            networkManager.RoomListAdded += AddRoomListObject;
+            networkManager.RoomListRemoved += RemoveRoomlistObject;
+            networkManager.RoomListUpdated += UpdateRoomListObject;
+
+            selectedRoomInfo = null;
+
+            AddRoomListObject(networkManager.RoomList);
+        });
+        OnDeactive += (() => 
+        {
+            var networkManager = NetworkManager.Instance;
+
+            networkManager.RoomListAdded -= AddRoomListObject;
+            networkManager.RoomListRemoved -= RemoveRoomlistObject;
+            networkManager.RoomListUpdated -= UpdateRoomListObject;
+
+            foreach (KeyValuePair<string, GameObject> roomObj in roomObjDict) { Destroy(roomObj.Value); }
+            roomObjDict.Clear();
+        });
     }
 
-    public void OnClickJoinBtn() { SceneManager.LoadScene(1); }
+    public void OnClickJoinBtn() 
+    {
+        NetworkManager.JoinRoom(selectedRoomInfo.Name);
+    }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
 
-    public override IEnumerator OnActivePanel()
+    public void OnClickRoomItem(RoomInfo roomInfo) { selectedRoomInfo = roomInfo; }
+
+    private void AddRoomListObject(List<RoomInfo> addedList)
     {
-        // TODO : implement panel effects
-        yield return null;
+        foreach (RoomInfo room in addedList)
+        {
+            if (roomObjDict.Count > MAX_ROOM_LIST) break;
+
+            var roomInstance = Instantiate(roomPrefab, roomObjDictParent.transform).GetComponent<RoomItemBtn>();
+            roomInstance.SetRoomItem(room);
+            roomInstance.SelectBtn.onClick.AddListener(() => OnClickRoomItem(room));
+            roomObjDict.Add(room.Name, roomInstance.gameObject);
+        }
     }
 
-    public override IEnumerator OnDeactivePanel()
+    private void RemoveRoomlistObject(List<RoomInfo> removedList)
     {
-        // TODO : implement panel effects
-        yield return null;
+        foreach (RoomInfo room in removedList)
+        {
+            if (roomObjDict.TryGetValue(room.Name, out GameObject roomObj))
+            {
+                roomObjDict.Remove(room.Name);
+                Destroy(roomObj);
+            }
+        }
+    }
+
+    private void UpdateRoomListObject(List<RoomInfo> updatedList)
+    {
+        foreach (RoomInfo room in updatedList)
+        {
+            if (roomObjDict.TryGetValue(room.Name, out GameObject roomObj))
+            {
+                roomObj.GetComponent<RoomItemBtn>().SetRoomItem(room);
+            }
+        }
     }
 
     #endregion Methods

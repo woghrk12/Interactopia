@@ -25,17 +25,5 @@ public class HostRuleSettingPanel : UIPanel
 
     public void OnClickCloseBtn() { inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING); }
 
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
     #endregion Methods
 }

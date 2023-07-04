@@ -45,8 +45,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         if (SceneManager.GetActiveScene().buildIndex == (int)EScene.TITLE)
         {
             TitleUI titleUI = UIBase.Instance as TitleUI;
-            titleUI.TurnOnPanel(ETitleUIPanel.START, true);
+            titleUI.TurnOnPanel(ETitleUIPanel.START);
         }
+    }
+
+    public static void OnJoinedRoom()
+    {
+        SceneManager.LoadScene((int)EScene.INGAME);
     }
 
     #endregion Event Callbacks

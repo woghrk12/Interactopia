@@ -30,35 +30,33 @@ public abstract class UIBase : MonoBehaviour
     {
         foreach (UIPanel panel in uiPanelList)
         {
-            if (!panel.gameObject.activeSelf) { panel.gameObject.SetActive(true); }
-
             panel.InitPanel(this);
-            panel.gameObject.SetActive(false);
+            if (panel.gameObject.activeSelf) { panel.gameObject.SetActive(false); }
         }
     }
 
-    protected virtual IEnumerator TurnOnUIPanel(int idx, bool hasOnEffect, bool hasOffEffect)
-    { 
-        if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
-
-        if (!uiPanelList[idx].IsPopup && curPanel >= 0)
-        {
-            uiPanelList[curPanel].gameObject.SetActive(false);
-            if (hasOffEffect) { yield return uiPanelList[curPanel].OnDeactivePanel(); }
-        }
-
-        uiPanelList[idx].gameObject.SetActive(true);
-        if (hasOnEffect) { yield return uiPanelList[idx].OnActivePanel(); }
-
-        curPanel = idx;
-    }
-
-    protected virtual IEnumerator TurnOffUIPanel(int idxUIPanel, bool hasOffEffect)
+    protected virtual void TurnOnUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
+        if (!uiPanelList[idxUIPanel].IsPopup && curPanel >= 0) 
+        {
+            uiPanelList[curPanel].OnDeactive?.Invoke();
+            uiPanelList[curPanel].gameObject.SetActive(false); 
+        }
+
+        uiPanelList[idxUIPanel].gameObject.SetActive(true);
+        uiPanelList[idxUIPanel].OnActive?.Invoke();
+
+        curPanel = idxUIPanel;
+    }
+
+    protected virtual void TurnOffUIPanel(int idxUIPanel)
+    {
+        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+
+        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
         uiPanelList[idxUIPanel].gameObject.SetActive(false);
-        if (hasOffEffect) { yield return uiPanelList[idxUIPanel].OnDeactivePanel(); }
     }
 
     #endregion Methods

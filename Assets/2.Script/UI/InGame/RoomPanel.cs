@@ -1,6 +1,6 @@
-using System.Collections;   
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class RoomPanel : UIPanel
 {
@@ -8,6 +8,7 @@ public class RoomPanel : UIPanel
 
     private InGameUI inGameUI = null;
 
+    [SerializeField] private Text roomCodeText = null;
     [SerializeField] private Button settingBtn = null;
     [SerializeField] private Button textChattingBtn = null;
     [SerializeField] private Button ruleSettingBtn = null;
@@ -25,6 +26,11 @@ public class RoomPanel : UIPanel
         textChattingBtn.onClick.AddListener(OnClickTextChattingBtn);
         ruleSettingBtn.onClick.AddListener(OnClickRuleSettingBtn);
         startBtn.onClick.AddListener(OnClickStartBtn);
+
+        OnActive += (() =>
+        {
+            roomCodeText.text = $"Code\n{PhotonNetwork.CurrentRoom.Name}";
+        });
     }
 
     public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
@@ -37,19 +43,7 @@ public class RoomPanel : UIPanel
         inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING);
     }
 
-    public void OnClickStartBtn() { inGameUI.TurnOnPanel(EInGamePanel.GAMESTART, true); }
-
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
+    public void OnClickStartBtn() { inGameUI.TurnOnPanel(EInGamePanel.GAMESTART); }
 
     #endregion Methods
 }

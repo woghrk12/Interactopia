@@ -13,7 +13,7 @@ public class SingletonMonobehaviourPunCallback<T> : MonoBehaviourPunCallbacks wh
 
     #region Properties
 
-    protected static T Instance
+    public static T Instance
     {
         get
         {

@@ -15,11 +15,9 @@ public class InGameUI : UIBase
 
     public UIPanel GetPanel(EInGamePanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
-    public void TurnOnPanel(EInGamePanel panel, bool hasOnEffect = false, bool hasOffEffect = false)
-        => StartCoroutine(TurnOnUIPanel((int)panel, hasOnEffect, hasOffEffect));
+    public void TurnOnPanel(EInGamePanel panel) => TurnOnUIPanel((int)panel);
 
-    public void TurnOffPanel(EInGamePanel panel, bool hasOffEffect = false)
-        => StartCoroutine(TurnOffUIPanel((int)panel, hasOffEffect));
+    public void TurnOffPanel(EInGamePanel panel) => TurnOffUIPanel((int)panel);
 
     #endregion Methods
 }
