@@ -59,7 +59,7 @@ public class PublicJoinPanel : UIPanel
 
     public void OnClickJoinBtn() 
     {
-        NetworkManager.JoinRoom(selectedRoomInfo);
+        NetworkManager.JoinRoom(selectedRoomInfo.Name);
     }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }

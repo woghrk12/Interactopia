@@ -49,7 +49,8 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     public static void CreateRooom(string roomName, RoomOptions roomOption) => PhotonNetwork.CreateRoom(roomName, roomOption);
 
-    public static void JoinRoom(RoomInfo roomInfo) => PhotonNetwork.JoinRoom(roomInfo.Name);
+    public static void JoinRoom(string roomName) => PhotonNetwork.JoinRoom(roomName);
+
     #endregion Methods
 
     #region Photon Callbacks
