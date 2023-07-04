@@ -29,6 +29,13 @@ public class LobbyPanel : UIPanel
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
 
         nicknameInputField.onValueChanged.AddListener(OnNicknameChanged);
+
+        OnActive += (() =>
+        {
+            if (PhotonNetwork.LocalPlayer.NickName == string.Empty) { return; }
+
+            nicknameInputField.text = PhotonNetwork.LocalPlayer.NickName;
+        });
     }
 
     public void OnClickCreateRoomBtn() 
