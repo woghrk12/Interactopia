@@ -30,7 +30,7 @@ public class RoomItemBtn : MonoBehaviour
     public void SetRoomItem(RoomInfo roomInfo)
     {
         this.roomInfo = roomInfo;
-        roomNameText.text = this.roomInfo.Name;
+        roomNameText.text = this.roomInfo.CustomProperties["RoomName"].ToString();
         playerNumText.text = $"{this.roomInfo.PlayerCount.ToString()} / {this.roomInfo.MaxPlayers.ToString()}";
     }
 
