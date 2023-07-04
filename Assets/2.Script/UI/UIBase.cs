@@ -39,16 +39,26 @@ public abstract class UIBase : MonoBehaviour
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        if (!uiPanelList[idxUIPanel].IsPopup && curPanel >= 0) 
+        if (curPanel < 0)
+        {
+            uiPanelList[idxUIPanel].gameObject.SetActive(true);
+            uiPanelList[idxUIPanel].OnActive?.Invoke();
+
+            curPanel = idxUIPanel;
+            
+            return;
+        }
+
+        if (!uiPanelList[idxUIPanel].IsPopup)
         {
             uiPanelList[curPanel].OnDeactive?.Invoke();
-            uiPanelList[curPanel].gameObject.SetActive(false); 
+            uiPanelList[curPanel].gameObject.SetActive(false);
+
+            curPanel = idxUIPanel;
         }
 
         uiPanelList[idxUIPanel].gameObject.SetActive(true);
         uiPanelList[idxUIPanel].OnActive?.Invoke();
-
-        curPanel = idxUIPanel;
     }
 
     protected virtual void TurnOffUIPanel(int idxUIPanel)
