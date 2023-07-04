@@ -56,15 +56,15 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
-        // PC
-#if UNITY_STANDALONE || UNITY_EDITOR
-
-        SwitchInputMode(EInputMode.KEYBOARD);
-
         // Mobile
-#elif UNITY_ANDROID || UNITY_IOS
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
 
         SwitchInputMode(EInputMode.TOUCH);
+
+        // PC
+#elif UNITY_STANDALONE || UNITY_EDITOR
+
+        SwitchInputMode(EInputMode.KEYBOARD);
 
 #endif
     }
