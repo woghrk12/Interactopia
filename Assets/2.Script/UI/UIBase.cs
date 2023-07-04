@@ -39,9 +39,15 @@ public abstract class UIBase : MonoBehaviour
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        if (!uiPanelList[idxUIPanel].IsPopup && curPanel >= 0) { uiPanelList[curPanel].gameObject.SetActive(false); }
+        if (!uiPanelList[idxUIPanel].IsPopup && curPanel >= 0) 
+        {
+            uiPanelList[curPanel].OnDeactive?.Invoke();
+            uiPanelList[curPanel].gameObject.SetActive(false); 
+        }
 
         uiPanelList[idxUIPanel].gameObject.SetActive(true);
+        uiPanelList[idxUIPanel].OnActive?.Invoke();
+
         curPanel = idxUIPanel;
     }
 
@@ -49,6 +55,7 @@ public abstract class UIBase : MonoBehaviour
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
+        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
         uiPanelList[idxUIPanel].gameObject.SetActive(false);
     }
 

@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class SingletonMonobehaviour<T> : MonoBehaviour where T : Component
 {
+    #region Variables
+
     private static T instance = null;
+
+    #endregion Variables
+
+    #region Properties
 
     protected static T Instance
     {
@@ -18,6 +24,10 @@ public class SingletonMonobehaviour<T> : MonoBehaviour where T : Component
         }
     }
 
+    #endregion Properties
+
+    #region Unity Events
+
     protected virtual void Awake()
     {
         T[] t_objs = FindObjectsOfType<T>();
@@ -31,4 +41,6 @@ public class SingletonMonobehaviour<T> : MonoBehaviour where T : Component
         if (transform.parent != null && transform.root != null) { DontDestroyOnLoad(transform.root.gameObject); }
         else { DontDestroyOnLoad(gameObject); }
     }
+
+    #endregion Unity Events
 }

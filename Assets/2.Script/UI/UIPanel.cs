@@ -13,6 +13,10 @@ public abstract class UIPanel : MonoBehaviour
     #region Properties
 
     public bool IsPopup => isPopup;
+    
+    public Action OnActive { protected set; get; }
+
+    public Action OnDeactive { protected set; get; }
 
     #endregion Properties
 

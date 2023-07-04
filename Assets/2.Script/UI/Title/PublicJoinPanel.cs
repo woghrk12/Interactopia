@@ -23,35 +23,6 @@ public class PublicJoinPanel : UIPanel
 
     #endregion Variables
 
-    #region Unity Events
-
-    private void OnEnable()
-    {
-        var networkManager = NetworkManager.Instance;
-
-        networkManager.RoomListAdded += AddRoomListObject;
-        networkManager.RoomListRemoved += RemoveRoomlistObject;
-        networkManager.RoomListUpdated += UpdateRoomListObject;
-
-        selectedRoomInfo = null;
-
-        AddRoomListObject(networkManager.RoomList);
-    }
-
-    private void OnDisable()
-    {
-        var networkManager = NetworkManager.Instance;
-
-        networkManager.RoomListAdded -= AddRoomListObject;
-        networkManager.RoomListRemoved -= RemoveRoomlistObject;
-        networkManager.RoomListUpdated -= UpdateRoomListObject;
-
-        foreach (KeyValuePair<string, GameObject> roomObj in roomObjDict) { Destroy(roomObj.Value); }
-        roomObjDict.Clear();
-    }
-
-    #endregion Unity Events
-
     #region Methods
 
     public override void InitPanel(UIBase uiBase)
@@ -60,6 +31,30 @@ public class PublicJoinPanel : UIPanel
 
         joinBtn.onClick.AddListener(OnClickJoinBtn);
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
+
+        OnActive += (() => 
+        {
+            var networkManager = NetworkManager.Instance;
+
+            networkManager.RoomListAdded += AddRoomListObject;
+            networkManager.RoomListRemoved += RemoveRoomlistObject;
+            networkManager.RoomListUpdated += UpdateRoomListObject;
+
+            selectedRoomInfo = null;
+
+            AddRoomListObject(networkManager.RoomList);
+        });
+        OnDeactive += (() => 
+        {
+            var networkManager = NetworkManager.Instance;
+
+            networkManager.RoomListAdded -= AddRoomListObject;
+            networkManager.RoomListRemoved -= RemoveRoomlistObject;
+            networkManager.RoomListUpdated -= UpdateRoomListObject;
+
+            foreach (KeyValuePair<string, GameObject> roomObj in roomObjDict) { Destroy(roomObj.Value); }
+            roomObjDict.Clear();
+        });
     }
 
     public void OnClickJoinBtn() 
