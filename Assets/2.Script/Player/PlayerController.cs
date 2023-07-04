@@ -5,13 +5,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerArrowInput), typeof(PlayerScreenInput), typeof(CharacterMovement))]
 public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
-    private enum EInputMode
+    public enum EInputMode
     {
-        Arrow,
-        Sceen
+        KEYBOARD,
+        MOUSE,
+        GAMEPAD,
+        TOUCH
     }
 
-    [SerializeField] private EInputMode inputMode;
+    PlayerInput playerInput;
+
     IMoveDirection input;
     IMoveDirection playerArrowInput, playerScreenInput;
 
@@ -23,18 +26,15 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         if (!photonView.IsMine)
             return;
 
-        switch (inputMode)
-        {
-            case EInputMode.Arrow:
-                input = playerArrowInput;
-                break;
-
-            case EInputMode.Sceen:
-                input = playerScreenInput;
-                break;
-        }
-
         characterMovement.MoveDirection = input.MoveDirection;
+    }
+
+    private void OnDestroy()
+    {
+        Destroy((PlayerArrowInput)playerArrowInput);
+        Destroy((PlayerScreenInput)playerScreenInput);
+        Destroy(characterMovement);
+        Destroy(playerInput);
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         playerArrowInput = GetComponent<PlayerArrowInput>();
         playerScreenInput = GetComponent<PlayerScreenInput>();
         characterMovement = GetComponent<CharacterMovement>();
+        playerInput = GetComponent<PlayerInput>();
 
         if (!photonView.IsMine)
         {
@@ -49,14 +50,48 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         }
         else
         {
-            input = playerArrowInput; //temp maybe change to auto-detect later
+            InitPlayerInput();
         }
     }
-    private void OnDestroy()
+
+    private void InitPlayerInput()
     {
-        Destroy((PlayerArrowInput)playerArrowInput);
-        Destroy((PlayerScreenInput)playerScreenInput);
-        Destroy(characterMovement);
-        Destroy(GetComponent<PlayerInput>());
+        // Mobile
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+
+        SwitchInputMode(EInputMode.TOUCH);
+
+        // PC
+#elif UNITY_STANDALONE || UNITY_EDITOR
+
+        SwitchInputMode(EInputMode.KEYBOARD);
+
+#endif
+    }
+
+    public void SwitchInputMode(EInputMode inputMode)
+    {
+        switch (inputMode)
+        {
+            case EInputMode.KEYBOARD:
+                input = playerArrowInput;
+                playerInput.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
+                break;
+
+            case EInputMode.MOUSE:
+                input = playerScreenInput;
+                playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
+                break;
+
+            case EInputMode.GAMEPAD:
+                input = playerArrowInput;
+                playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+                break;
+
+            case EInputMode.TOUCH:
+                input = playerScreenInput;
+                playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
+                break;
+        }
     }
 }
