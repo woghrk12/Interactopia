@@ -45,6 +45,9 @@ public class PublicJoinPanel : UIPanel
         networkManager.RoomListAdded -= AddRoomListObject;
         networkManager.RoomListRemoved -= RemoveRoomlistObject;
         networkManager.RoomListUpdated -= UpdateRoomListObject;
+
+        foreach (KeyValuePair<string, GameObject> roomObj in roomObjDict) { Destroy(roomObj.Value); }
+        roomObjDict.Clear();
     }
 
     #endregion Unity Events
