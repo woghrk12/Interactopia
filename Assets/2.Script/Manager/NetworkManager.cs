@@ -13,6 +13,8 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     private List<RoomInfo> roomList = new List<RoomInfo>();
 
+    public Action NicknameChanged = null;
+
     public Action<List<RoomInfo>> RoomListAdded = null;
     public Action<List<RoomInfo>> RoomListRemoved = null;
     public Action<List<RoomInfo>> RoomListUpdated = null;
@@ -64,6 +66,11 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
         }
 
         PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        PhotonNetwork.LocalPlayer.NickName = "Test";
     }
 
     public override void OnJoinedRoom()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ETitleUIPanel { NONE = -1, START, LOBBY, CREATEROOM, PUBLICJOIN, PRIVATEJOIN, SETTING, LOADING, FADE, END }
+public enum ETitleUIPanel { NONE = -1, START, LOBBY, CREATEROOM, PUBLICJOIN, PRIVATEJOIN, SETTING, AUTH, LOADING, FADE, END }
 
 public class TitleUI : UIBase
 {
