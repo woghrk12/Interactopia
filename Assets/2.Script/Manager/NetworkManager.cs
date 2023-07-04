@@ -40,15 +40,16 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     #region Methods
 
-    public static void Connect() => PhotonNetwork.ConnectUsingSettings();
+    public static void Connect()
+    {
+        if (PhotonNetwork.IsConnected) { return; }
+
+        PhotonNetwork.ConnectUsingSettings();
+    }
 
     public static void CreateRooom(string roomName, RoomOptions roomOption) => PhotonNetwork.CreateRoom(roomName, roomOption);
 
-    public static void JoinRoom(RoomInfo roomInfo)
-    {
-        PhotonNetwork.JoinRoom(roomInfo.Name);
-    }
-
+    public static void JoinRoom(RoomInfo roomInfo) => PhotonNetwork.JoinRoom(roomInfo.Name);
     #endregion Methods
 
     #region Photon Callbacks
