@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "VoiceChatTriggerButtonDown",
+                    "type": "Button",
+                    "id": "c527b7ec-03ff-4764-9949-08f5b7c90102",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -207,6 +216,17 @@
                     "processors": "",
                     "groups": "Touch",
                     "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5e232f7-6d64-4deb-b82f-38997e0f080d",
+                    "path": "<Keyboard>/#(V)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Gamepad;Touch;Joystick;XR;Mouse",
+                    "action": "VoiceChatTriggerButtonDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

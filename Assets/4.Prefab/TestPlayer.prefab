@@ -343,6 +343,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 37787c8b-1f6d-4aac-b12d-752e49e2bed1
     m_ActionName: Player/Position[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3260903536523464234}
+        m_TargetAssemblyTypeName: CharacterVoiceController, Assembly-CSharp
+        m_MethodName: OnVoiceChatTriggerButtonDown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c527b7ec-03ff-4764-9949-08f5b7c90102
+    m_ActionName: Player/VoiceChatTriggerButtonDown[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -460,6 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba3c01c1c602024d8dd9e98ec71041f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recorder: {fileID: 0}
   recordMark: {fileID: 8540093000499269201}
 --- !u!1 &8540093000499269201
 GameObject:
