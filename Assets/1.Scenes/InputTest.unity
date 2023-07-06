@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73281bdc4168d964495d08fb8442a4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1503761246521942371, guid: bebce8b02ee41d04b98c17f4da7d0e45, type: 3}
+  playerPrefab: {fileID: 5076952734171828119, guid: bebce8b02ee41d04b98c17f4da7d0e45, type: 3}
 --- !u!114 &93702823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefabs:
-  - {fileID: 1503761246521942371, guid: bebce8b02ee41d04b98c17f4da7d0e45, type: 3}
+  - {fileID: 5076952734171828119, guid: bebce8b02ee41d04b98c17f4da7d0e45, type: 3}
 --- !u!4 &93702824
 Transform:
   m_ObjectHideFlags: 0

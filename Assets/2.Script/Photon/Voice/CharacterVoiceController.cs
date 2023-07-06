@@ -3,7 +3,7 @@ using Photon.Voice.PUN;
 using UnityEngine;
 
 [RequireComponent(typeof(PhotonVoiceView))]
-public class CharacterVoiceController : MonoBehaviour, IPunInstantiateMagicCallback
+public class CharacterVoiceController : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     PhotonVoiceView photonVoiceView;
     [SerializeField] GameObject recordMark;
@@ -13,8 +13,18 @@ public class CharacterVoiceController : MonoBehaviour, IPunInstantiateMagicCallb
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        recordMark.SetActive(photonVoiceView.IsRecording);
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+        if (recordMark.activeSelf != photonVoiceView.IsRecording)
+            photonView.RPC("SetRecordMark", RpcTarget.All, photonVoiceView.IsRecording);
+    }
+    [PunRPC]
+    private void SetRecordMark(bool isRecording)
+    {
+        recordMark.SetActive(isRecording);
     }
 }
