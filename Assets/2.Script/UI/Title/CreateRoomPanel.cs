@@ -45,10 +45,13 @@ public class CreateRoomPanel : UIPanel
         // Custom Room Properties
         PhotonHashTable propertyList = new();
         propertyList.Add("RoomName", PhotonNetwork.LocalPlayer.NickName);
+        propertyList.Add("MaxMafias", 1);
+        propertyList.Add("MaxNeutrals", 1);
 
         // Custom Room Properties for Lobby
         string[] propertyListForLobby = new string[0];
         propertyListForLobby = ArrayHelper.Add("RoomName", propertyListForLobby);
+        propertyListForLobby = ArrayHelper.Add("MaxMafias", propertyListForLobby);
 
         string roomName = Utilities.ComputeMD5(PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString(), 3);
         RoomOptions roomOption = new RoomOptions { 

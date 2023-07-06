@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 {
@@ -13,13 +14,17 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     private List<RoomInfo> roomList = new List<RoomInfo>();
 
-    public Action NicknameChanged = null;
+    [SerializeField] private Text statusText = null;
 
     public Action<List<RoomInfo>> RoomListAdded = null;
     public Action<List<RoomInfo>> RoomListRemoved = null;
     public Action<List<RoomInfo>> RoomListUpdated = null;
 
-    [SerializeField] private Text statusText = null;
+    public Action<int> MaxPlayerChanged = null;
+    public Action<int> MaxMafiaChanged = null;
+    public Action<int> MaxNeutralChanged = null;
+
+    public Action<int> CurPlayersChanged = null;
 
     #endregion Variables
 
@@ -109,6 +114,13 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
         RoomListAdded?.Invoke(addedRoomList);
         RoomListRemoved?.Invoke(removedRoomList);
         RoomListUpdated?.Invoke(updatedRoomList);
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        MaxPlayerChanged?.Invoke(PhotonNetwork.CurrentRoom.MaxPlayers);
+        MaxMafiaChanged?.Invoke((int)propertiesThatChanged["MaxMafia"]);
+        MaxNeutralChanged?.Invoke((int)propertiesThatChanged["MaxNeutral"]);
     }
 
     #endregion Photon Callbacks
