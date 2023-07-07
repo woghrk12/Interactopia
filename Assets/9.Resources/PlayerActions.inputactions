@@ -229,6 +229,17 @@
                     "action": "VoiceChatTriggerButtonDown",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5a1d8cb-cdd9-4062-b855-a641248f95bd",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "VoiceChatTriggerButtonDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
