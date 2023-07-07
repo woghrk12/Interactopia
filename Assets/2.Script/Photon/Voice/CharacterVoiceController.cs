@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Voice.PUN;
 using UnityEngine;
 using Photon.Voice.Unity;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PhotonVoiceView))]
 public class CharacterVoiceController : MonoBehaviourPun, IPunInstantiateMagicCallback
@@ -30,8 +31,13 @@ public class CharacterVoiceController : MonoBehaviourPun, IPunInstantiateMagicCa
         recordMark.SetActive(isRecording);
     }
 
-    public void OnVoiceChatTriggerButtonDown()
+    public void OnVoiceChatTriggerButtonDown(InputAction.CallbackContext callbackContext)
     {
+        if (!callbackContext.performed)
+        {
+            return;
+        }
+
         recorder.TransmitEnabled = !recorder.TransmitEnabled;
     }
 
