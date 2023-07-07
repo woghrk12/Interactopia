@@ -1,9 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using Photon.Pun;
-using Photon.Realtime;
-
-using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
 public class TimesGroup : MonoBehaviour
 {

@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
+
+using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
 public class NumOfPlayerGroup : MonoBehaviour
 {
@@ -22,15 +25,18 @@ public class NumOfPlayerGroup : MonoBehaviour
     {
         NetworkManager networkManager = NetworkManager.Instance;
 
-        int maxPlayers = PhotonNetwork.CurrentRoom.MaxPlayers;
+        Room currentRoom = PhotonNetwork.CurrentRoom;
+        PhotonHashTable roomSetting = currentRoom.CustomProperties;
+
+        int maxPlayers = currentRoom.MaxPlayers;
         maxPlayerSlider.value = maxPlayers;
         maxPlayerText.text = maxPlayers.ToString();
 
-        int maxMafias = (int)PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_MAFIAS];
+        int maxMafias = (int)roomSetting[CustomProperties.MAX_MAFIAS];
         maxMafiaSlider.value = maxMafias;
         maxMafiaText.text = maxMafias.ToString();
 
-        int maxNeutrals = (int)PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_NEUTRALS];
+        int maxNeutrals = (int)roomSetting[CustomProperties.MAX_NEUTRALS];
         maxNeutralSlider.value = maxNeutrals;
         maxNeutralText.text = maxNeutrals.ToString();
 

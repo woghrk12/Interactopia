@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
+using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
+
 public class RoomPanel : UIPanel
 {
     #region Variables
@@ -35,21 +37,6 @@ public class RoomPanel : UIPanel
         roomCodeText.text = $"Code\n{currentRoom.Name}";
         curPlayersText.text = currentRoom.PlayerCount.ToString();
         maxPlayersText.text = currentRoom.MaxPlayers.ToString();
-
-        OnActive += (() =>
-        {
-            NetworkManager networkManager = NetworkManager.Instance;
-
-            networkManager.CurPlayersChanged += OnCurPlayerNumChanged;
-            networkManager.MaxPlayerChanged += OnMaxPlayerNumChanged;
-        });
-        OnDeactive += (() =>
-        {
-            NetworkManager networkManager = NetworkManager.Instance;
-
-            networkManager.CurPlayersChanged -= OnCurPlayerNumChanged;
-            networkManager.MaxPlayerChanged -= OnMaxPlayerNumChanged;
-        });
     }
 
     public void OnClickSettingBtn() => inGameUI.TurnOnPanel(EInGamePanel.SETTING); 
@@ -69,4 +56,23 @@ public class RoomPanel : UIPanel
     public void OnMaxPlayerNumChanged(int value) => maxPlayersText.text = value.ToString();
 
     #endregion Methods
+
+    #region Photon Events
+
+    public override void OnRoomPropertiesUpdate(PhotonHashTable propertiesThatChanged)
+    {
+        maxPlayersText.text = PhotonNetwork.CurrentRoom.MaxPlayers.ToString();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        curPlayersText.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        curPlayersText.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+    }
+
+    #endregion Photon Events
 }

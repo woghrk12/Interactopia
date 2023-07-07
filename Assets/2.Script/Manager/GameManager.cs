@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public enum EScene { NONE = -1, TITLE, INGAME, END }
 
-public class GameManager : SingletonMonobehaviour<GameManager>
+public class GameManager : SingletonMonobehaviourPunCallback<GameManager>
 {
+    #region Variables
+
+    private static bool isInitialized = false;
+
+    #endregion Variables
+
     #region Unity Events
 
     private void Start()
@@ -19,7 +26,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             titleUI.InitBase();
         }
 
-        NetworkManager.Connect();
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     #endregion Unity Events
@@ -40,19 +47,25 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
     }
 
-    public static void OnConnectedServer()
+    #endregion Event Callbacks
+
+    #region Photon Callbacks
+
+    public override void OnConnectedToMaster()
     {
-        if (SceneManager.GetActiveScene().buildIndex == (int)EScene.TITLE)
-        {
-            TitleUI titleUI = UIBase.Instance as TitleUI;
-            titleUI.TurnOnPanel(ETitleUIPanel.START);
-        }
+        if (isInitialized) { return; }
+
+        PhotonNetwork.JoinLobby();
+
+        TitleUI titleUI = UIBase.Instance as TitleUI;
+        titleUI.TurnOnPanel(ETitleUIPanel.START);
+        isInitialized = true;
     }
 
-    public static void OnJoinedRoom()
+    public override void OnJoinedRoom()
     {
         SceneManager.LoadScene((int)EScene.INGAME);
     }
 
-    #endregion Event Callbacks
+    #endregion Photon Callbacks
 }

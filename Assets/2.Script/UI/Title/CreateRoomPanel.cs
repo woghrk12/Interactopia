@@ -77,9 +77,9 @@ public class CreateRoomPanel : UIPanel
             IsOpen = true,
             CustomRoomProperties = propertyList, 
             CustomRoomPropertiesForLobby = propertyListForLobby 
-        };            
+        };
 
-        NetworkManager.CreateRooom(roomName, roomOption);
+        PhotonNetwork.CreateRoom(roomName, roomOption);
     }
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
