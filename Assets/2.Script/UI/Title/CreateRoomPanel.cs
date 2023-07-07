@@ -59,6 +59,12 @@ public class CreateRoomPanel : UIPanel
         propertyList.Add("NeutralSight", 0);
         propertyList.Add("MoveSpeed", 0);
 
+        propertyList.Add("KillCooldown", 10);
+        propertyList.Add("SabotageCooldown", 10);
+        propertyList.Add("EmergencyMeetingCooldown", 20);
+        propertyList.Add("MeetingTime", 100);
+        propertyList.Add("VoteTime", 50);
+
         // Custom Room Properties for Lobby
         string[] propertyListForLobby = new string[0];
         propertyListForLobby = ArrayHelper.Add("RoomName", propertyListForLobby);
