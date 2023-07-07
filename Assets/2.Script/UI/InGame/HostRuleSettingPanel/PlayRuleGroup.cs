@@ -27,16 +27,16 @@ public class PlayRuleGroup : MonoBehaviour
     {
         PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
 
-        shortDistanceVoiceToggle.isOn = (bool)roomSetting["ShortDistanceVoice"];
-        randomStartPointToggle.isOn = (bool)roomSetting["RandomStartPoint"];
-        hideEmissionInfoToggle.isOn = (bool)roomSetting["HideEmissionInfo"];
-        blindMafiaModeToggle.isOn = (bool)roomSetting["BlindMafiaMode"];
-        openVoteResultToggle.isOn = (bool)roomSetting["OpenVoteResult"];
+        shortDistanceVoiceToggle.isOn = (bool)roomSetting[CustomProperties.SHORT_DISTANCE_VOICE];
+        randomStartPointToggle.isOn = (bool)roomSetting[CustomProperties.RANDOM_START_POINT];
+        hideEmissionInfoToggle.isOn = (bool)roomSetting[CustomProperties.HIDE_EMISSION_INFO];
+        blindMafiaModeToggle.isOn = (bool)roomSetting[CustomProperties.BLIND_MAFIA_MODE];
+        openVoteResultToggle.isOn = (bool)roomSetting[CustomProperties.OPEN_VOTE_RESULT];
 
-        normalSightDropdown.value = (int)roomSetting["NormalSight"];
-        mafiaSightDropdown.value = (int)roomSetting["MafiaSight"];
-        neutralSightDropdown.value = (int)roomSetting["NeutralSight"];
-        moveSpeedDropdown.value = (int)roomSetting["MoveSpeed"];
+        normalSightDropdown.value = (int)roomSetting[CustomProperties.NORMAL_SIGHT];
+        mafiaSightDropdown.value = (int)roomSetting[CustomProperties.MAFIA_SIGHT];
+        neutralSightDropdown.value = (int)roomSetting[CustomProperties.NEUTRAL_SIGHT];
+        moveSpeedDropdown.value = (int)roomSetting[CustomProperties.MOVE_SPEED];
 
         shortDistanceVoiceToggle.onValueChanged.AddListener(OnShortDistanceVoiceChanged);
         randomStartPointToggle.onValueChanged.AddListener(OnRandomStartPointChanged);
@@ -51,31 +51,31 @@ public class PlayRuleGroup : MonoBehaviour
     }
 
     public void OnShortDistanceVoiceChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties["ShortDistanceVoice"] = value;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.SHORT_DISTANCE_VOICE] = value;
 
     public void OnRandomStartPointChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties["RandomStartPoint"] = value;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.RANDOM_START_POINT] = value;
 
     public void OnHideEmissionInfoChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties["HideEmissionInfo"] = value;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.HIDE_EMISSION_INFO] = value;
 
     public void OnBlindMafiaModeChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties["BlindMafiaMode"] = value;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.BLIND_MAFIA_MODE] = value;
 
     public void OnOpenVoteResultChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties["OpenVoteResult"] = value;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.OPEN_VOTE_RESULT] = value;
 
     public void OnNormalSightChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties["NormalSight"] = idx;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.NORMAL_SIGHT] = idx;
 
     public void OnMafiaSightChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties["MafiaSight"] = idx;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAFIA_SIGHT] = idx;
 
     public void OnNeutralSightChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties["NeutralSight"] = idx;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.NEUTRAL_SIGHT] = idx;
 
     public void OnMoveSpeedChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties["MoveSpeed"] = idx;
+        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MOVE_SPEED] = idx;
 
     #endregion Methods
 }

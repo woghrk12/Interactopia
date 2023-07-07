@@ -130,19 +130,19 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         MaxPlayerChanged?.Invoke(PhotonNetwork.CurrentRoom.MaxPlayers);
-        MaxMafiaChanged?.Invoke((int)propertiesThatChanged["MaxMafia"]);
-        MaxNeutralChanged?.Invoke((int)propertiesThatChanged["MaxNeutral"]);
+        MaxMafiaChanged?.Invoke((int)propertiesThatChanged[CustomProperties.MAX_MAFIAS]);
+        MaxNeutralChanged?.Invoke((int)propertiesThatChanged[CustomProperties.MAX_NEUTRALS]);
 
-        ShortDistanceVoiceChanged?.Invoke((bool)propertiesThatChanged["ShortDistanceVoice"]);
-        RandomStartPointChanged?.Invoke((bool)propertiesThatChanged["RandomStartPoint"]);
-        HideEmissionInfoChanged?.Invoke((bool)propertiesThatChanged["HideEmissionInfo"]);
-        BlindMafiaModeChanged?.Invoke((bool)propertiesThatChanged["BlindMafiaMode"]);
-        OpenVoteResultChanged?.Invoke((bool)propertiesThatChanged["OpenVoteResult"]);
+        ShortDistanceVoiceChanged?.Invoke((bool)propertiesThatChanged[CustomProperties.SHORT_DISTANCE_VOICE]);
+        RandomStartPointChanged?.Invoke((bool)propertiesThatChanged[CustomProperties.RANDOM_START_POINT]);
+        HideEmissionInfoChanged?.Invoke((bool)propertiesThatChanged[CustomProperties.HIDE_EMISSION_INFO]);
+        BlindMafiaModeChanged?.Invoke((bool)propertiesThatChanged[CustomProperties.BLIND_MAFIA_MODE]);
+        OpenVoteResultChanged?.Invoke((bool)propertiesThatChanged[CustomProperties.OPEN_VOTE_RESULT]);
 
-        NormalSightChanged?.Invoke((string)propertiesThatChanged["NormalSight"]);
-        MafiaSightChanged?.Invoke((string)propertiesThatChanged["MafiaSight"]);
-        NeutralSightChanged?.Invoke((string)propertiesThatChanged["NeutralSight"]);
-        MoveSpeedChanged?.Invoke((string)propertiesThatChanged["MoveSpeed"]);
+        NormalSightChanged?.Invoke((string)propertiesThatChanged[CustomProperties.NORMAL_SIGHT]);
+        MafiaSightChanged?.Invoke((string)propertiesThatChanged[CustomProperties.MAFIA_SIGHT]);
+        NeutralSightChanged?.Invoke((string)propertiesThatChanged[CustomProperties.NEUTRAL_SIGHT]);
+        MoveSpeedChanged?.Invoke((string)propertiesThatChanged[CustomProperties.MOVE_SPEED]);
 }
 
     #endregion Photon Callbacks

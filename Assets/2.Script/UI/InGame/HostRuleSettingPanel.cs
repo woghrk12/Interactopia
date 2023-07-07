@@ -42,6 +42,11 @@ public class HostRuleSettingPanel : UIPanel
         numOfPlayerGroup.InitGroup();
         playRuleGroup.InitGroup();
         timesGroup.InitGroup();
+
+        numOfPlayerGroup.gameObject.SetActive(true);
+        playRuleGroup.gameObject.SetActive(false);
+        rolesGroup.SetActive(false);
+        timesGroup.gameObject.SetActive(false);
     }
 
     public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);

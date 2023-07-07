@@ -21,11 +21,11 @@ public class TimesGroup : MonoBehaviour
 
     public void InitGroup()
     {
-        killCooldownOption.InitOption("KillCooldown");
-        sabotageCooldownOption.InitOption("SabotageCooldown");
-        emergencyMeetingCooldownOption.InitOption("EmergencyMeetingCooldown");
-        meetingTimeOption.InitOption("MeetingTime");
-        voteTimeOption.InitOption("VoteTime");
+        killCooldownOption.InitOption(CustomProperties.KILL_COOLDOWN);
+        sabotageCooldownOption.InitOption(CustomProperties.SABOTAGE_COOLDOWN);
+        emergencyMeetingCooldownOption.InitOption(CustomProperties.EMERGENCY_MEETING_COOLDOWN);
+        meetingTimeOption.InitOption(CustomProperties.MEETING_TIME);
+        voteTimeOption.InitOption(CustomProperties.VOTE_TIME);
     }
 
     #endregion Methods

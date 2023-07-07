@@ -26,11 +26,11 @@ public class NumOfPlayerGroup : MonoBehaviour
         maxPlayerSlider.value = maxPlayers;
         maxPlayerText.text = maxPlayers.ToString();
 
-        int maxMafias = (int)PhotonNetwork.CurrentRoom.CustomProperties["MaxMafias"];
+        int maxMafias = (int)PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_MAFIAS];
         maxMafiaSlider.value = maxMafias;
         maxMafiaText.text = maxMafias.ToString();
 
-        int maxNeutrals = (int)PhotonNetwork.CurrentRoom.CustomProperties["MaxNeutrals"];
+        int maxNeutrals = (int)PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_NEUTRALS];
         maxNeutralSlider.value = maxNeutrals;
         maxNeutralText.text = maxNeutrals.ToString();
 
@@ -49,14 +49,14 @@ public class NumOfPlayerGroup : MonoBehaviour
     public void OnMaxMafiasChanged(float value)
     {
         int maxMafias = (int)value;
-        PhotonNetwork.CurrentRoom.CustomProperties["MaxMafias"] = maxMafias;
+        PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_MAFIAS] = maxMafias;
         maxMafiaText.text = maxMafias.ToString();
     }
 
     public void OnMaxNeutralsChanged(float value)
     {
         int maxNeutrals = (int)value;
-        PhotonNetwork.CurrentRoom.CustomProperties["MaxNeutrals"] = maxNeutrals;
+        PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_NEUTRALS] = maxNeutrals;
         maxNeutralText.text = maxNeutrals.ToString();
     }
 

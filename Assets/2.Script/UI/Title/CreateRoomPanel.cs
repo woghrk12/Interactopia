@@ -44,31 +44,31 @@ public class CreateRoomPanel : UIPanel
     {
         // Custom Room Properties
         PhotonHashTable propertyList = new();
-        propertyList.Add("RoomName", PhotonNetwork.LocalPlayer.NickName);
-        propertyList.Add("MaxMafias", 1);
-        propertyList.Add("MaxNeutrals", 1);
+        propertyList.Add(CustomProperties.ROOM_NAME, PhotonNetwork.LocalPlayer.NickName);
+        propertyList.Add(CustomProperties.MAX_MAFIAS, 1);
+        propertyList.Add(CustomProperties.MAX_NEUTRALS, 1);
 
-        propertyList.Add("ShortDistanceVoice", true);
-        propertyList.Add("RandomStartPoint", false);
-        propertyList.Add("HideEmissionInfo", false);
-        propertyList.Add("BlindMafiaMode", false);
-        propertyList.Add("OpenVoteResult", true);
+        propertyList.Add(CustomProperties.SHORT_DISTANCE_VOICE, true);
+        propertyList.Add(CustomProperties.RANDOM_START_POINT, false);
+        propertyList.Add(CustomProperties.HIDE_EMISSION_INFO, false);
+        propertyList.Add(CustomProperties.BLIND_MAFIA_MODE, false);
+        propertyList.Add(CustomProperties.OPEN_VOTE_RESULT, true);
 
-        propertyList.Add("NormalSight", 0);
-        propertyList.Add("MafiaSight", 0);
-        propertyList.Add("NeutralSight", 0);
-        propertyList.Add("MoveSpeed", 0);
+        propertyList.Add(CustomProperties.NORMAL_SIGHT, 0);
+        propertyList.Add(CustomProperties.MAFIA_SIGHT, 0);
+        propertyList.Add(CustomProperties.NEUTRAL_SIGHT, 0);
+        propertyList.Add(CustomProperties.MOVE_SPEED, 0);
 
-        propertyList.Add("KillCooldown", 10);
-        propertyList.Add("SabotageCooldown", 10);
-        propertyList.Add("EmergencyMeetingCooldown", 20);
-        propertyList.Add("MeetingTime", 100);
-        propertyList.Add("VoteTime", 50);
+        propertyList.Add(CustomProperties.KILL_COOLDOWN, 10);
+        propertyList.Add(CustomProperties.SABOTAGE_COOLDOWN, 10);
+        propertyList.Add(CustomProperties.EMERGENCY_MEETING_COOLDOWN, 20);
+        propertyList.Add(CustomProperties.MEETING_TIME, 100);
+        propertyList.Add(CustomProperties.VOTE_TIME, 50);
 
         // Custom Room Properties for Lobby
         string[] propertyListForLobby = new string[0];
-        propertyListForLobby = ArrayHelper.Add("RoomName", propertyListForLobby);
-        propertyListForLobby = ArrayHelper.Add("MaxMafias", propertyListForLobby);
+        propertyListForLobby = ArrayHelper.Add(CustomProperties.ROOM_NAME, propertyListForLobby);
+        propertyListForLobby = ArrayHelper.Add(CustomProperties.MAX_MAFIAS, propertyListForLobby);
 
         string roomName = Utilities.ComputeMD5(PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString(), 3);
         RoomOptions roomOption = new RoomOptions { 
