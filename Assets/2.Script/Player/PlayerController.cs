@@ -1,6 +1,8 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Users;
 
 [RequireComponent(typeof(PlayerArrowInput), typeof(PlayerScreenInput), typeof(CharacterMovement))]
 public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
@@ -20,6 +22,8 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     CharacterMovement characterMovement;
 
+    InputDevice lastUsedDevice;
+
     // temp test code
     private void Update()
     {
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         Destroy((PlayerScreenInput)playerScreenInput);
         Destroy(characterMovement);
         Destroy(playerInput);
+        InputSystem.onEvent -= OnDeviceChanged;
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -43,7 +48,6 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         playerScreenInput = GetComponent<PlayerScreenInput>();
         characterMovement = GetComponent<CharacterMovement>();
         playerInput = GetComponent<PlayerInput>();
-
         if (!photonView.IsMine)
         {
             Destroy(this);
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
+        InputSystem.onEvent += OnDeviceChanged;
         // Mobile
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
 
@@ -93,5 +98,15 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
                 playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
                 break;
         }
+    }
+
+    public void OnDeviceChanged(InputEventPtr inputEventPtr, InputDevice inputDevice)
+    {
+        if (lastUsedDevice == inputDevice || playerInput.devices[0].displayName != inputDevice.displayName)
+        {
+            return;
+        }
+        playerInput.SwitchCurrentControlScheme(inputDevice);
+        lastUsedDevice = inputDevice;
     }
 }
