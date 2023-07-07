@@ -24,6 +24,17 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
     public Action<int> MaxMafiaChanged = null;
     public Action<int> MaxNeutralChanged = null;
 
+    public Action<bool> ShortDistanceVoiceChanged = null;
+    public Action<bool> RandomStartPointChanged = null;
+    public Action<bool> HideEmissionInfoChanged = null;
+    public Action<bool> BlindMafiaModeChanged = null;
+    public Action<bool> OpenVoteResultChanged = null;
+
+    public Action<string> NormalSightChanged = null;
+    public Action<string> MafiaSightChanged = null;
+    public Action<string> NeutralSightChanged = null;
+    public Action<string> MoveSpeedChanged = null;
+
     public Action<int> CurPlayersChanged = null;
 
     #endregion Variables
@@ -121,7 +132,18 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
         MaxPlayerChanged?.Invoke(PhotonNetwork.CurrentRoom.MaxPlayers);
         MaxMafiaChanged?.Invoke((int)propertiesThatChanged["MaxMafia"]);
         MaxNeutralChanged?.Invoke((int)propertiesThatChanged["MaxNeutral"]);
-    }
+
+        ShortDistanceVoiceChanged?.Invoke((bool)propertiesThatChanged["ShortDistanceVoice"]);
+        RandomStartPointChanged?.Invoke((bool)propertiesThatChanged["RandomStartPoint"]);
+        HideEmissionInfoChanged?.Invoke((bool)propertiesThatChanged["HideEmissionInfo"]);
+        BlindMafiaModeChanged?.Invoke((bool)propertiesThatChanged["BlindMafiaMode"]);
+        OpenVoteResultChanged?.Invoke((bool)propertiesThatChanged["OpenVoteResult"]);
+
+        NormalSightChanged?.Invoke((string)propertiesThatChanged["NormalSight"]);
+        MafiaSightChanged?.Invoke((string)propertiesThatChanged["MafiaSight"]);
+        NeutralSightChanged?.Invoke((string)propertiesThatChanged["NeutralSight"]);
+        MoveSpeedChanged?.Invoke((string)propertiesThatChanged["MoveSpeed"]);
+}
 
     #endregion Photon Callbacks
 }

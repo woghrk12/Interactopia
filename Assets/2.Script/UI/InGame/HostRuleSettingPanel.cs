@@ -19,7 +19,7 @@ public class HostRuleSettingPanel : UIPanel
     [SerializeField] private Button timesBtn = null;
 
     [SerializeField] private NumOfPlayerGroup numOfPlayerGroup = null;
-    [SerializeField] private GameObject playRuleGroup = null;
+    [SerializeField] private PlayRuleGroup playRuleGroup = null;
     [SerializeField] private GameObject rolesGroup = null;
     [SerializeField] private GameObject timesGroup = null;
 
@@ -40,6 +40,7 @@ public class HostRuleSettingPanel : UIPanel
         timesBtn.onClick.AddListener(OnClickTimesBtn);
 
         numOfPlayerGroup.InitGroup();
+        playRuleGroup.InitGroup();
     }
 
     public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
@@ -48,14 +49,14 @@ public class HostRuleSettingPanel : UIPanel
     {
         numOfPlayerGroup.gameObject.SetActive(true);
 
-        playRuleGroup.SetActive(false);
+        playRuleGroup.gameObject.SetActive(false);
         rolesGroup.SetActive(false);
         timesGroup.SetActive(false);
     }
 
     public void OnClickPlayRuleBtn()
     {
-        playRuleGroup.SetActive(true);
+        playRuleGroup.gameObject.SetActive(true);
 
         numOfPlayerGroup.gameObject.SetActive(false);
         rolesGroup.SetActive(false);
@@ -67,7 +68,7 @@ public class HostRuleSettingPanel : UIPanel
         rolesGroup.SetActive(true);
 
         numOfPlayerGroup.gameObject.SetActive(false);
-        playRuleGroup.SetActive(false);
+        playRuleGroup.gameObject.SetActive(false);
         timesGroup.SetActive(false);
     }
 
@@ -76,8 +77,8 @@ public class HostRuleSettingPanel : UIPanel
         timesGroup.SetActive(true);
 
         numOfPlayerGroup.gameObject.SetActive(false);
-        playRuleGroup.SetActive(false);
-        timesGroup.SetActive(false);
+        playRuleGroup.gameObject.SetActive(false);
+        rolesGroup.SetActive(false);
     }
 
     #endregion Methods

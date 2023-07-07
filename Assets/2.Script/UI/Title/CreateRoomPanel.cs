@@ -48,6 +48,17 @@ public class CreateRoomPanel : UIPanel
         propertyList.Add("MaxMafias", 1);
         propertyList.Add("MaxNeutrals", 1);
 
+        propertyList.Add("ShortDistanceVoice", true);
+        propertyList.Add("RandomStartPoint", false);
+        propertyList.Add("HideEmissionInfo", false);
+        propertyList.Add("BlindMafiaMode", false);
+        propertyList.Add("OpenVoteResult", true);
+
+        propertyList.Add("NormalSight", 0);
+        propertyList.Add("MafiaSight", 0);
+        propertyList.Add("NeutralSight", 0);
+        propertyList.Add("MoveSpeed", 0);
+
         // Custom Room Properties for Lobby
         string[] propertyListForLobby = new string[0];
         propertyListForLobby = ArrayHelper.Add("RoomName", propertyListForLobby);
