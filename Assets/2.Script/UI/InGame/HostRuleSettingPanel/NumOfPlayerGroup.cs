@@ -55,14 +55,22 @@ public class NumOfPlayerGroup : MonoBehaviour
     public void OnMaxMafiasChanged(float value)
     {
         int maxMafias = (int)value;
-        PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_MAFIAS] = maxMafias;
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+
+        roomSetting[CustomProperties.MAX_MAFIAS] = maxMafias;
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
         maxMafiaText.text = maxMafias.ToString();
     }
 
     public void OnMaxNeutralsChanged(float value)
     {
         int maxNeutrals = (int)value;
-        PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAX_NEUTRALS] = maxNeutrals;
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+
+        roomSetting[CustomProperties.MAX_NEUTRALS] = maxNeutrals;
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
         maxNeutralText.text = maxNeutrals.ToString();
     }
 

@@ -51,31 +51,67 @@ public class PlayRuleGroup : MonoBehaviour
     }
 
     public void OnShortDistanceVoiceChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.SHORT_DISTANCE_VOICE] = value;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.SHORT_DISTANCE_VOICE] = value;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnRandomStartPointChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.RANDOM_START_POINT] = value;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.RANDOM_START_POINT] = value;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnHideEmissionInfoChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.HIDE_EMISSION_INFO] = value;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.HIDE_EMISSION_INFO] = value;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnBlindMafiaModeChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.BLIND_MAFIA_MODE] = value;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.BLIND_MAFIA_MODE] = value;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnOpenVoteResultChanged(bool value)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.OPEN_VOTE_RESULT] = value;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.OPEN_VOTE_RESULT] = value;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnNormalSightChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.NORMAL_SIGHT] = idx;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.NORMAL_SIGHT] = idx;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnMafiaSightChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MAFIA_SIGHT] = idx;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.MAFIA_SIGHT] = idx;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnNeutralSightChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.NEUTRAL_SIGHT] = idx;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.NEUTRAL_SIGHT] = idx;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     public void OnMoveSpeedChanged(int idx)
-        => PhotonNetwork.CurrentRoom.CustomProperties[CustomProperties.MOVE_SPEED] = idx;
+    {
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomSetting[CustomProperties.MOVE_SPEED] = idx;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
+    }
 
     #endregion Methods
 }

@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
+using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
+
 public class TimesOption : MonoBehaviour
 {
     #region Variables
 
-    private int timesValue = 0;
     private string optionKey = string.Empty;
 
     [SerializeField] private int stepValue = 0;
@@ -21,17 +22,7 @@ public class TimesOption : MonoBehaviour
 
     #region Properties
 
-    public int TimesValue
-    {
-        private set
-        {
-            timesValue = value;
-
-            valueText.text = timesValue.ToString();
-            PhotonNetwork.CurrentRoom.CustomProperties[optionKey] = timesValue;
-        }
-        get => timesValue;
-    }
+    public int TimesValue => (int)PhotonNetwork.CurrentRoom.CustomProperties[optionKey];
 
     #endregion Properties
 
@@ -41,7 +32,7 @@ public class TimesOption : MonoBehaviour
     {
         optionKey = key;
 
-        timesValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[optionKey];
+        int timesValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[optionKey];
         valueText.text = timesValue.ToString();
 
         plusBtn.onClick.AddListener(OnClickPlusBtn);
@@ -53,7 +44,12 @@ public class TimesOption : MonoBehaviour
 
     public void OnClickPlusBtn()
     {
-        TimesValue += stepValue;
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        int timesValue = (int)roomSetting[optionKey];
+
+        timesValue += stepValue;
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
 
         if (timesValue >= maxValue) { plusBtn.interactable = false; }
         if (!minusBtn.interactable) { minusBtn.interactable = true; }
@@ -61,7 +57,12 @@ public class TimesOption : MonoBehaviour
 
     public void OnClickMinusBtn()
     {
-        TimesValue -= stepValue;
+        PhotonHashTable roomSetting = PhotonNetwork.CurrentRoom.CustomProperties;
+        int timesValue = (int)roomSetting[optionKey];
+
+        timesValue += stepValue;
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
 
         if (timesValue <= minValue) { minusBtn.interactable = false; }
         if (!plusBtn.interactable) { plusBtn.interactable = true; }
