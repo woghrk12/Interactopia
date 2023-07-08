@@ -40,7 +40,17 @@ public class CreateRoomPanel : UIPanel
         privacyModeToggle.isOn = false;
     }
 
-    public void OnClickCreateBtn()
+    public void OnClickCreateBtn() => CreateRoom();
+
+    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+
+    public void OnMaxPlayerChanged(float value) 
+    {
+        maxPlayer = (int)value;
+        maxPlayerText.text = maxPlayer.ToString(); 
+    }
+
+    private void CreateRoom()
     {
         // Custom Room Properties
         PhotonHashTable propertyList = new();
@@ -71,24 +81,33 @@ public class CreateRoomPanel : UIPanel
         propertyListForLobby = ArrayHelper.Add(CustomProperties.MAX_MAFIAS, propertyListForLobby);
 
         string roomName = Utilities.ComputeMD5(PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString(), 3);
-        RoomOptions roomOption = new RoomOptions { 
-            MaxPlayers = maxPlayer, 
-            IsVisible = !privacyModeToggle.isOn, 
+        RoomOptions roomOption = new RoomOptions
+        {
+            MaxPlayers = maxPlayer,
+            IsVisible = !privacyModeToggle.isOn,
             IsOpen = true,
-            CustomRoomProperties = propertyList, 
-            CustomRoomPropertiesForLobby = propertyListForLobby 
+            CustomRoomProperties = propertyList,
+            CustomRoomPropertiesForLobby = propertyListForLobby
         };
 
         PhotonNetwork.CreateRoom(roomName, roomOption);
     }
 
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+    #endregion Methods
 
-    public void OnMaxPlayerChanged(float value) 
+    #region Photon Events
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        maxPlayer = (int)value;
-        maxPlayerText.text = maxPlayer.ToString(); 
+        switch (returnCode)
+        {
+            case ErrorCode.GameIdAlreadyExists:
+                {
+                    CreateRoom();
+                    break;
+                }
+        }
     }
 
-    #endregion Methods
+    #endregion Photon Events
 }
