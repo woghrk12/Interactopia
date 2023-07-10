@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
         foreach (InputDevice device in InputSystem.devices)
         {
-            if (device.displayName.ToUpper() == inputMode.ToString())
+            if (device.displayName.ToUpper().Contains(inputMode.ToString()))
             {
                 devices.Add(device);
             }
