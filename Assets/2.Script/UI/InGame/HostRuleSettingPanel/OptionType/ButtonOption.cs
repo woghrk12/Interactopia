@@ -37,6 +37,10 @@ public class ButtonOption : MonoBehaviour
             optionValue = minValue;
             minusBtn.interactable = false;
         }
+        else
+        {
+            optionValue = initValue;
+        }
 
         valueText.text = optionValue.ToString();
 
@@ -47,6 +51,7 @@ public class ButtonOption : MonoBehaviour
     public void OnClickPlusBtn()
     {
         optionValue += stepValue;
+        valueText.text = optionValue.ToString();
 
         if (optionValue >= maxValue) { plusBtn.interactable = false; }
         if (!minusBtn.interactable) { minusBtn.interactable = true; }
@@ -54,7 +59,8 @@ public class ButtonOption : MonoBehaviour
 
     public void OnClickMinusBtn()
     {
-        optionValue += stepValue;
+        optionValue -= stepValue;
+        valueText.text = optionValue.ToString();
 
         if (optionValue <= minValue) { minusBtn.interactable = false; }
         if (!plusBtn.interactable) { plusBtn.interactable = true; }

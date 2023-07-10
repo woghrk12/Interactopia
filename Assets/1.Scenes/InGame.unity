@@ -19865,7 +19865,7 @@ GameObject:
   - component: {fileID: 732548360}
   - component: {fileID: 732548359}
   m_Layer: 5
-  m_Name: Confirm Btn
+  m_Name: Cancel Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45289,8 +45289,8 @@ MonoBehaviour:
   playRuleGroup: {fileID: 1021400393}
   rolesGroup: {fileID: 764358916}
   timesGroup: {fileID: 551144964}
-  cancelBtn: {fileID: 1933890855}
-  confirmBtn: {fileID: 732548359}
+  cancelBtn: {fileID: 732548359}
+  confirmBtn: {fileID: 1933890855}
 --- !u!1 &1686365770
 GameObject:
   m_ObjectHideFlags: 0
@@ -52098,7 +52098,7 @@ GameObject:
   - component: {fileID: 1933890856}
   - component: {fileID: 1933890855}
   m_Layer: 5
-  m_Name: Cancel Btn
+  m_Name: Confirm Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
