@@ -1,8 +1,8 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.Users;
 
 [RequireComponent(typeof(PlayerArrowInput), typeof(PlayerScreenInput), typeof(CharacterMovement))]
 public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         Destroy((PlayerScreenInput)playerScreenInput);
         Destroy(characterMovement);
         Destroy(playerInput);
-        InputSystem.onEvent -= OnDeviceChanged;
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -60,7 +59,6 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
-        InputSystem.onEvent += OnDeviceChanged;
         // Mobile
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
 
@@ -76,37 +74,39 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void SwitchInputMode(EInputMode inputMode)
     {
+        List<InputDevice> devices = new();
+
+        foreach (InputDevice device in InputSystem.devices)
+        {
+            if (device.displayName.ToUpper() == inputMode.ToString())
+            {
+                devices.Add(device);
+            }
+        }
+
+        InputDevice[] deviceArray = devices.ToArray();
+
         switch (inputMode)
         {
             case EInputMode.KEYBOARD:
                 input = playerArrowInput;
-                playerInput.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
+                playerInput.SwitchCurrentControlScheme("Keyboard", deviceArray);
                 break;
 
             case EInputMode.MOUSE:
                 input = playerScreenInput;
-                playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
+                playerInput.SwitchCurrentControlScheme("Mouse", deviceArray);
                 break;
 
             case EInputMode.GAMEPAD:
                 input = playerArrowInput;
-                playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+                playerInput.SwitchCurrentControlScheme("Gamepad", deviceArray);
                 break;
 
             case EInputMode.TOUCH:
                 input = playerScreenInput;
-                playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
+                playerInput.SwitchCurrentControlScheme("Touch", deviceArray);
                 break;
         }
-    }
-
-    public void OnDeviceChanged(InputEventPtr inputEventPtr, InputDevice inputDevice)
-    {
-        if (lastUsedDevice == inputDevice || playerInput.devices[0].displayName != inputDevice.displayName)
-        {
-            return;
-        }
-        playerInput.SwitchCurrentControlScheme(inputDevice);
-        lastUsedDevice = inputDevice;
     }
 }
