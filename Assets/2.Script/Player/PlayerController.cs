@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 
 [RequireComponent(typeof(PlayerArrowInput), typeof(PlayerScreenInput), typeof(CharacterMovement))]
 public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
@@ -59,17 +58,20 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
-        // Mobile
-#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+        SwitchInputMode(
+#if !UNITY_EDITOR
 
-        SwitchInputMode(EInputMode.TOUCH);
+// Mobile
+#if (UNITY_ANDROID || UNITY_IOS)
+EInputMode.TOUCH
+#endif
 
-        // PC
-#elif UNITY_STANDALONE || UNITY_EDITOR
-
-        SwitchInputMode(EInputMode.KEYBOARD);
+#else
+// PC
+EInputMode.KEYBOARD
 
 #endif
+            );
     }
 
     public void SwitchInputMode(EInputMode inputMode)
