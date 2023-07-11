@@ -31,6 +31,11 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     #region Unity Events
 
+    private void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     private void Update()
     {
         statusText.text = PhotonNetwork.NetworkClientState.ToString();
@@ -39,6 +44,11 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
     #endregion Unity Events
 
     #region Photon Callbacks
+
+    public override void OnConnectedToMaster()
+    {
+        isInitialized = true;
+    }
 
     public override void OnJoinedLobby()
     {

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum ETitleUIPanel { NONE = -1, START, LOBBY, CREATEROOM, PUBLICJOIN, PRIVATEJOIN, SETTING, AUTH, LOADING, FADE, END }
 
 public class TitleUI : UIBase
@@ -10,8 +8,7 @@ public class TitleUI : UIBase
     {
         base.InitBase();
 
-        if (NetworkManager.IsInitialized) { TurnOnPanel(ETitleUIPanel.START); }
-        else { TurnOnPanel(ETitleUIPanel.LOADING); }
+        TurnOnPanel(ETitleUIPanel.START);
     }
 
     public UIPanel GetPanel(ETitleUIPanel idxPanel) { return uiPanelList[(int)idxPanel]; }

@@ -1,32 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Realtime;
 
 public enum EScene { NONE = -1, TITLE, INGAME, END }
 
 public class GameManager : SingletonMonobehaviourPunCallback<GameManager>
 {
-    #region Variables
-
-    private static bool isInitialized = false;
-
-    #endregion Variables
-
     #region Unity Events
 
     private void Start()
     {
         SceneManager.sceneLoaded += OnLoadedScene;
-
-        if (SceneManager.GetActiveScene().buildIndex == (int)EScene.TITLE)
-        {
-            TitleUI titleUI = UIBase.Instance as TitleUI;
-            titleUI.InitBase();
-        }
-
-        PhotonNetwork.ConnectUsingSettings();
     }
 
     #endregion Unity Events
@@ -53,13 +37,42 @@ public class GameManager : SingletonMonobehaviourPunCallback<GameManager>
 
     public override void OnConnectedToMaster()
     {
-        if (isInitialized) { return; }
-
         PhotonNetwork.JoinLobby();
 
-        TitleUI titleUI = UIBase.Instance as TitleUI;
-        titleUI.TurnOnPanel(ETitleUIPanel.START);
-        isInitialized = true;
+        if (NetworkManager.IsInitialized) { return; }
+
+        EScene curScene = (EScene)SceneManager.GetActiveScene().buildIndex;
+
+        if (curScene == EScene.TITLE)
+        {
+            TitleUI titleUI = UIBase.Instance as TitleUI;
+            titleUI.TurnOffPanel(ETitleUIPanel.LOADING);
+            titleUI.InitBase();
+        }
+        else if (curScene == EScene.INGAME)
+        {
+            InGameUI inGameUI = UIBase.Instance as InGameUI;
+            inGameUI.TurnOffPanel(EInGamePanel.LOADING);
+            inGameUI.InitBase();
+        }
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        EScene curScene = (EScene)SceneManager.GetActiveScene().buildIndex;
+
+        if (curScene == EScene.TITLE)
+        {
+            TitleUI titleUI = UIBase.Instance as TitleUI;
+            titleUI.TurnOnPanel(ETitleUIPanel.LOADING);
+        }
+        else if (curScene == EScene.INGAME)
+        {
+            InGameUI inGameUI = UIBase.Instance as InGameUI;
+            inGameUI.TurnOnPanel(EInGamePanel.LOADING);
+        }
+
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnJoinedRoom()

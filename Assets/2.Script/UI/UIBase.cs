@@ -36,6 +36,7 @@ public abstract class UIBase : MonoBehaviour
 
     public virtual void InitBase()
     {
+        Debug.Log(this.gameObject.name + " Init");
         yesBtn.onClick.AddListener(OnClickYesBtn);
         noBtn.onClick.AddListener(OnClickNoBtn);
 
@@ -49,6 +50,8 @@ public abstract class UIBase : MonoBehaviour
     protected virtual void TurnOnUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+
+        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
 
         if (curPanel < 0)
         {
@@ -75,7 +78,9 @@ public abstract class UIBase : MonoBehaviour
     protected virtual void TurnOffUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
-
+        
+        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+        
         uiPanelList[idxUIPanel].OnDeactive?.Invoke();
         uiPanelList[idxUIPanel].gameObject.SetActive(false);
     }
