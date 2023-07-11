@@ -8,7 +8,9 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateM
 {
     private Camera mainCamera;
 
-    private Vector2 targetPosition, targetDirection, screenPosition;
+    private Vector2 targetPosition;
+    private Vector2 targetDirection;
+    private Vector2 screenPosition = Vector2.positiveInfinity;
     public Vector2 MoveDirection
     {
         get
@@ -32,7 +34,7 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateM
 
     public void OnPress(InputAction.CallbackContext callbackContext)
     {
-        if (IsPointerOverUI()|| callbackContext.canceled)
+        if (IsPointerOverUI() || callbackContext.canceled)
         {
             isPressed = false;
         }
