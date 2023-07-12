@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Collections;
 
 public class AuthPanel : UIPanel
 {
@@ -41,6 +42,24 @@ public class AuthPanel : UIPanel
         });
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;        
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.AUTH);
 
     public void OnClickSetNicknameBtn() => setNicknamePanel.SetActive(true);
@@ -56,5 +75,5 @@ public class AuthPanel : UIPanel
     public void OnNicknameEndEdit(string value) => nicknameInputfield.text = value.Substring(0, 10);
     
 
-    #endregion Methods
+    #endregion Event Methods
 }

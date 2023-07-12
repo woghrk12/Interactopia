@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Collections;
 
 public class LobbyPanel : UIPanel
 {
@@ -29,6 +30,24 @@ public class LobbyPanel : UIPanel
         authBtn.onClick.AddListener(OnClickAuthBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickCreateRoomBtn() => titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); 
 
     public void OnClickPublicJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); 
@@ -39,5 +58,5 @@ public class LobbyPanel : UIPanel
 
     public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
 
-    #endregion Methods
+    #endregion Event Methods
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Collections;
 
 public class PrivateJoinPanel : UIPanel
 {
@@ -26,9 +27,27 @@ public class PrivateJoinPanel : UIPanel
         enterBtn.onClick.AddListener(OnClickEnterBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.PRIVATEJOIN);
 
     public void OnClickEnterBtn() => PhotonNetwork.JoinRoom(roomCodeInputField.text);
 
-    #endregion Methods
+    #endregion Event Methods
 }

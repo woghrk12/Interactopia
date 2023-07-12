@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 
 public class PublicJoinPanel : UIPanel
 {
@@ -58,12 +59,6 @@ public class PublicJoinPanel : UIPanel
         });
     }
 
-    public void OnClickJoinBtn() => PhotonNetwork.JoinRoom(selectedRoomInfo.Name);
-
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
-
-    public void OnClickRoomItem(RoomInfo roomInfo) { selectedRoomInfo = roomInfo; }
-
     private void AddRoomListObject(List<RoomInfo> addedList)
     {
         foreach (RoomInfo room in addedList)
@@ -101,4 +96,29 @@ public class PublicJoinPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickJoinBtn() => PhotonNetwork.JoinRoom(selectedRoomInfo.Name);
+
+    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+
+    public void OnClickRoomItem(RoomInfo roomInfo) { selectedRoomInfo = roomInfo; }
+
+
+    #endregion Event Methods
 }

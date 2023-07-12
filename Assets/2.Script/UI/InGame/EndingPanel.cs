@@ -17,4 +17,18 @@ public class EndingPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
 }

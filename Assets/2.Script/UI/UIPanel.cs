@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 
@@ -23,6 +24,10 @@ public abstract class UIPanel : MonoBehaviourPunCallbacks
     #region Methods
 
     public abstract void InitPanel(UIBase uiBase);
+
+    public abstract IEnumerator ActiveAnimation();
+
+    public abstract IEnumerator DeactiveAnimation();
 
     #endregion Methods
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,6 @@ public abstract class UIBase : MonoBehaviour
 
     public virtual void InitBase()
     {
-        Debug.Log(this.gameObject.name + " Init");
         yesBtn.onClick.AddListener(OnClickYesBtn);
         noBtn.onClick.AddListener(OnClickNoBtn);
 
@@ -47,24 +47,26 @@ public abstract class UIBase : MonoBehaviour
         }
     }
 
-    protected virtual void TurnOnUIPanel(int idxUIPanel)
+    protected virtual IEnumerator TurnOnUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
-        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { yield break; }
 
         if (curPanel < 0)
         {
             uiPanelList[idxUIPanel].gameObject.SetActive(true);
             uiPanelList[idxUIPanel].OnActive?.Invoke();
+            yield return uiPanelList[idxUIPanel].ActiveAnimation();
 
             curPanel = idxUIPanel;
-            
-            return;
+
+            yield break;
         }
 
         if (!uiPanelList[idxUIPanel].IsPopup)
         {
+            yield return uiPanelList[curPanel].DeactiveAnimation();
             uiPanelList[curPanel].OnDeactive?.Invoke();
             uiPanelList[curPanel].gameObject.SetActive(false);
 
@@ -73,14 +75,16 @@ public abstract class UIBase : MonoBehaviour
 
         uiPanelList[idxUIPanel].gameObject.SetActive(true);
         uiPanelList[idxUIPanel].OnActive?.Invoke();
+        yield return uiPanelList[idxUIPanel].ActiveAnimation();
     }
 
-    protected virtual void TurnOffUIPanel(int idxUIPanel)
+    protected virtual IEnumerator TurnOffUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
         
-        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
-        
+        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { yield break; }
+
+        yield return uiPanelList[idxUIPanel].DeactiveAnimation();
         uiPanelList[idxUIPanel].OnDeactive?.Invoke();
         uiPanelList[idxUIPanel].gameObject.SetActive(false);
     }
@@ -123,5 +127,5 @@ public abstract class UIBase : MonoBehaviour
         alertPanel.gameObject.SetActive(false);
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }

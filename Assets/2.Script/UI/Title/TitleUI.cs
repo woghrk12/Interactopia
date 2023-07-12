@@ -13,9 +13,9 @@ public class TitleUI : UIBase
 
     public UIPanel GetPanel(ETitleUIPanel idxPanel) { return uiPanelList[(int)idxPanel]; }
 
-    public void TurnOnPanel(ETitleUIPanel panel) => TurnOnUIPanel((int)panel);
+    public void TurnOnPanel(ETitleUIPanel panel) => StartCoroutine(TurnOnUIPanel((int)panel));
 
-    public void TurnOffPanel(ETitleUIPanel panel) => TurnOffUIPanel((int)panel);
+    public void TurnOffPanel(ETitleUIPanel panel) => StartCoroutine(TurnOffUIPanel((int)panel));
 
     #endregion Methods
 }

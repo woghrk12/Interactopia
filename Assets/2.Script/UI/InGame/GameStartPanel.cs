@@ -17,6 +17,20 @@ public class GameStartPanel : UIPanel
     {
         inGameUI = uiBase as InGameUI;
     }
-    
+
     #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
 }

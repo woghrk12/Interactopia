@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -47,8 +48,6 @@ public class GuestRuleSettingPanel : UIPanel
         OnActive += (() => SetOptionText(PhotonNetwork.CurrentRoom.CustomProperties));
     }
 
-    public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.GUESTRULESETTING);
-
     private void SetOptionText(PhotonHashTable roomProperties)
     {
         maxMafiaText.text = ((int)roomProperties[CustomProperties.MAX_MAFIAS]).ToString();
@@ -73,6 +72,26 @@ public class GuestRuleSettingPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Event Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Event Methods
+
+    #region Event Methods
+
+    public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.GUESTRULESETTING);
+
+    #endregion Event Methods
 
     #region Photon Events
 

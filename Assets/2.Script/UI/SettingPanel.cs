@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using System.Collections;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -45,6 +46,24 @@ public class SettingPanel : UIPanel
         exitGameBtn.onClick.AddListener(OnClickExitGameBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickCloseBtn() 
     {
         if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).TurnOffPanel(ETitleUIPanel.SETTING); }
@@ -66,5 +85,5 @@ public class SettingPanel : UIPanel
 #endif
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }

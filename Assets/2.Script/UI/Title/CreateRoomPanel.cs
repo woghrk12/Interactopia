@@ -40,16 +40,6 @@ public class CreateRoomPanel : UIPanel
         privacyModeToggle.isOn = false;
     }
 
-    public void OnClickCreateBtn() => CreateRoom();
-
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
-
-    public void OnMaxPlayerChanged(float value) 
-    {
-        maxPlayer = (int)value;
-        maxPlayerText.text = maxPlayer.ToString(); 
-    }
-
     private void CreateRoom()
     {
         // Custom Room Properties
@@ -94,6 +84,34 @@ public class CreateRoomPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickCreateBtn() => CreateRoom();
+
+    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+
+    public void OnMaxPlayerChanged(float value) 
+    {
+        maxPlayer = (int)value;
+        maxPlayerText.text = maxPlayer.ToString(); 
+    }
+
+    #endregion Event Methods
 
     #region Photon Events
 

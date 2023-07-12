@@ -23,7 +23,25 @@ public class TextChattingPanel : UIPanel
         closeBtn.onClick.AddListener(OnClickCloseBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickCloseBtn() { inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING); }
 
-    #endregion Methods
+    #endregion Event Methods
 }

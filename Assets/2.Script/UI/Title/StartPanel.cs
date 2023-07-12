@@ -26,11 +26,29 @@ public class StartPanel : UIPanel
         authBtn.onClick.AddListener(OnClickAuthBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickStartBtn() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY);
 
     public void OnClickSettingBtn() => titleUI.TurnOnPanel(ETitleUIPanel.SETTING); 
 
     public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
 
-    #endregion Methods
+    #endregion Event Methods
 }

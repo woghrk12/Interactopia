@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -67,6 +68,24 @@ public class HostRuleSettingPanel : UIPanel
             roomSetting = null;
         });
     }
+
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
 
     public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
 
@@ -154,5 +173,5 @@ public class HostRuleSettingPanel : UIPanel
         inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }

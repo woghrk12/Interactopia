@@ -21,7 +21,25 @@ public class MeetingPanel : UIPanel
         settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
 
-    #endregion Methods
+    #endregion Event Methods
 }

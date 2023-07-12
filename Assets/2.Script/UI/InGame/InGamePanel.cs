@@ -23,6 +23,24 @@ public class InGamePanel : UIPanel
         reportBtn.onClick.AddListener(OnClickReportBtn);
     }
 
+    #endregion Methods
+
+    #region Override Methods
+
+    public override IEnumerator ActiveAnimation()
+    {
+        yield break;
+    }
+
+    public override IEnumerator DeactiveAnimation()
+    {
+        yield break;
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
     public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
 
     public void OnClickReportBtn() 
@@ -31,5 +49,5 @@ public class InGamePanel : UIPanel
         inGameUI.TurnOnPanel(EInGamePanel.MEETING);
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }
