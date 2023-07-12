@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
-using System.Collections;
+using DG.Tweening;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -50,14 +50,14 @@ public class SettingPanel : UIPanel
 
     #region Override Methods
 
-    public override IEnumerator ActiveAnimation()
+    public override Sequence ActiveAnimation()
     {
-        yield break;
+        return DOTween.Sequence();
     }
 
-    public override IEnumerator DeactiveAnimation()
+    public override Sequence DeactiveAnimation()
     {
-        yield break;
+        return DOTween.Sequence();
     }
 
     #endregion Override Methods

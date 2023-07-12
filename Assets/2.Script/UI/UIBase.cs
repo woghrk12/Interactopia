@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public abstract class UIBase : MonoBehaviour
 {
@@ -47,46 +47,60 @@ public abstract class UIBase : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator TurnOnUIPanel(int idxUIPanel)
+    protected virtual void TurnOnUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
 
-        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { yield break; }
+        int openPanel = idxUIPanel;
+        int closePanel = curPanel;
+
+        Sequence activeTween = uiPanelList[openPanel].ActiveAnimation();
+        activeTween.OnStart(() =>
+        {
+            uiPanelList[openPanel].gameObject.SetActive(true);
+            uiPanelList[openPanel].OnActive?.Invoke();
+        });
 
         if (curPanel < 0)
         {
-            uiPanelList[idxUIPanel].gameObject.SetActive(true);
-            uiPanelList[idxUIPanel].OnActive?.Invoke();
-            yield return uiPanelList[idxUIPanel].ActiveAnimation();
-
-            curPanel = idxUIPanel;
-
-            yield break;
+            curPanel = openPanel;
+            activeTween.Play();
+            return;
         }
 
-        if (!uiPanelList[idxUIPanel].IsPopup)
+        Sequence sequence = DOTween.Sequence();
+
+        if (!uiPanelList[openPanel].IsPopup)
         {
-            yield return uiPanelList[curPanel].DeactiveAnimation();
-            uiPanelList[curPanel].OnDeactive?.Invoke();
-            uiPanelList[curPanel].gameObject.SetActive(false);
+            Sequence deactiveTween = uiPanelList[closePanel].DeactiveAnimation();
+            deactiveTween.OnComplete(() =>
+            {
+                uiPanelList[closePanel].OnDeactive?.Invoke();
+                uiPanelList[closePanel].gameObject.SetActive(false);
+            });
+            sequence.Append(deactiveTween);
 
-            curPanel = idxUIPanel;
+            curPanel = openPanel;
         }
 
-        uiPanelList[idxUIPanel].gameObject.SetActive(true);
-        uiPanelList[idxUIPanel].OnActive?.Invoke();
-        yield return uiPanelList[idxUIPanel].ActiveAnimation();
+        sequence.Append(activeTween);
+        sequence.Play();
     }
 
-    protected virtual IEnumerator TurnOffUIPanel(int idxUIPanel)
+    protected virtual void TurnOffUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
-        
-        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { yield break; }
+        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
 
-        yield return uiPanelList[idxUIPanel].DeactiveAnimation();
-        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
-        uiPanelList[idxUIPanel].gameObject.SetActive(false);
+        Sequence sequence = uiPanelList[idxUIPanel].DeactiveAnimation();
+        sequence.OnComplete(() =>
+        {
+            uiPanelList[idxUIPanel].OnDeactive?.Invoke();
+            uiPanelList[idxUIPanel].gameObject.SetActive(false);
+        });
+
+        sequence.Play();
     }
 
     public void Alert(string message, Action yesEvent = null, Action noEvent = null)

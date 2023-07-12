@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using DG.Tweening;
 
 public abstract class UIPanel : MonoBehaviourPunCallbacks
 {
@@ -25,9 +26,9 @@ public abstract class UIPanel : MonoBehaviourPunCallbacks
 
     public abstract void InitPanel(UIBase uiBase);
 
-    public abstract IEnumerator ActiveAnimation();
+    public abstract Sequence ActiveAnimation();
 
-    public abstract IEnumerator DeactiveAnimation();
+    public abstract Sequence DeactiveAnimation();
 
     #endregion Methods
 }

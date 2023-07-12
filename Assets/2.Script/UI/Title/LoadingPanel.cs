@@ -1,7 +1,4 @@
-using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class LoadingPanel : UIPanel
 {
@@ -22,14 +19,14 @@ public class LoadingPanel : UIPanel
 
     #region Override Methods
 
-    public override IEnumerator ActiveAnimation()
+    public override Sequence ActiveAnimation()
     {
-        yield break;
+        return DOTween.Sequence();
     }
 
-    public override IEnumerator DeactiveAnimation()
+    public override Sequence DeactiveAnimation()
     {
-        yield break;
+        return DOTween.Sequence();
     }
 
     #endregion Override Methods

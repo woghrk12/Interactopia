@@ -1,7 +1,7 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using DG.Tweening;
 
 using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
@@ -73,14 +73,14 @@ public class HostRuleSettingPanel : UIPanel
 
     #region Override Methods
 
-    public override IEnumerator ActiveAnimation()
+    public override Sequence ActiveAnimation()
     {
-        yield break;
+        return DOTween.Sequence();
     }
 
-    public override IEnumerator DeactiveAnimation()
+    public override Sequence DeactiveAnimation()
     {
-        yield break;
+        return DOTween.Sequence();
     }
 
     #endregion Override Methods
