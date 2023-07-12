@@ -476,7 +476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba3c01c1c602024d8dd9e98ec71041f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recorder: {fileID: 0}
   recordMark: {fileID: 8540093000499269201}
 --- !u!1 &8540093000499269201
 GameObject:

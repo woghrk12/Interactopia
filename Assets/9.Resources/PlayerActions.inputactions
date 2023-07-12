@@ -240,6 +240,17 @@
                     "action": "VoiceChatTriggerButtonDown",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dedc0a5-41c7-4920-b593-7576566f44a1",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "VoiceChatTriggerButtonDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
