@@ -33,12 +33,12 @@ public class StartPanel : UIPanel
 
     public override Sequence ActiveAnimation()
     {
-        return DOTween.Sequence();
+        return DOTween.Sequence().Append(titleUI.FadeIn(0.5f));
     }
 
     public override Sequence DeactiveAnimation()
     {
-        return DOTween.Sequence();
+        return DOTween.Sequence().Append(titleUI.FadeOut(0.5f));
     }
 
     #endregion Override Methods

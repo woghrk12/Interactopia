@@ -19,6 +19,7 @@ public abstract class UIBase : MonoBehaviour
     [SerializeField] private Text alertText = null;
     [SerializeField] private Button yesBtn = null;
     [SerializeField] private Button noBtn = null;
+    [SerializeField] private Image fadeImg = null; 
 
     #endregion Variables
 
@@ -119,6 +120,28 @@ public abstract class UIBase : MonoBehaviour
         {
             noBtn.gameObject.SetActive(false);
         }
+    }
+
+    public Tween FadeIn(float duration)
+    {
+        if (!fadeImg.gameObject.activeSelf) { fadeImg.gameObject.SetActive(true); }
+        Tween fadeInTween = fadeImg.DOColor(new Color(0f, 0f, 0f, 0f), duration);
+        fadeInTween.OnStart(() => fadeImg.color = new Color(0f, 0f, 0f, 1f));
+        fadeInTween.OnComplete(() => fadeImg.gameObject.SetActive(false));
+
+        return fadeInTween;
+    }
+
+    public Tween FadeOut(float duration)
+    {
+        Tween fadeOutTween = fadeImg.DOColor(new Color(0f, 0f, 0f, 1f), duration);
+        fadeOutTween.OnStart(() => 
+        {
+            fadeImg.gameObject.SetActive(true);
+            fadeImg.color = new Color(0f, 0f, 0f, 0f);
+        });
+
+        return fadeOutTween;
     }
 
     public void OnClickYesBtn()
