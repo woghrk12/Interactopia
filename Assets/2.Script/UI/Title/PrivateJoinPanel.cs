@@ -26,9 +26,9 @@ public class PrivateJoinPanel : UIPanel
         enterBtn.onClick.AddListener(OnClickEnterBtn);
     }
 
-    public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.SETTING); 
+    public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.PRIVATEJOIN);
 
-    public void OnClickEnterBtn() => NetworkManager.JoinRoom(roomCodeInputField.text);
+    public void OnClickEnterBtn() => PhotonNetwork.JoinRoom(roomCodeInputField.text);
 
     #endregion Methods
 }

@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public abstract class UIPanel : MonoBehaviour
+public abstract class UIPanel : MonoBehaviourPunCallbacks
 {
     #region Variables
 

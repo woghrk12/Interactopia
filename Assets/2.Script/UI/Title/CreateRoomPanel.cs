@@ -40,27 +40,7 @@ public class CreateRoomPanel : UIPanel
         privacyModeToggle.isOn = false;
     }
 
-    public void OnClickCreateBtn()
-    {
-        // Custom Room Properties
-        PhotonHashTable propertyList = new();
-        propertyList.Add("RoomName", PhotonNetwork.LocalPlayer.NickName);
-
-        // Custom Room Properties for Lobby
-        string[] propertyListForLobby = new string[0];
-        propertyListForLobby = ArrayHelper.Add("RoomName", propertyListForLobby);
-
-        string roomName = Utilities.ComputeMD5(PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString(), 3);
-        RoomOptions roomOption = new RoomOptions { 
-            MaxPlayers = maxPlayer, 
-            IsVisible = !privacyModeToggle.isOn, 
-            IsOpen = true,
-            CustomRoomProperties = propertyList, 
-            CustomRoomPropertiesForLobby = propertyListForLobby 
-        };            
-
-        NetworkManager.CreateRooom(roomName, roomOption);
-    }
+    public void OnClickCreateBtn() => CreateRoom();
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
 
@@ -70,5 +50,64 @@ public class CreateRoomPanel : UIPanel
         maxPlayerText.text = maxPlayer.ToString(); 
     }
 
+    private void CreateRoom()
+    {
+        // Custom Room Properties
+        PhotonHashTable propertyList = new();
+        propertyList.Add(CustomProperties.ROOM_NAME, PhotonNetwork.LocalPlayer.NickName);
+        propertyList.Add(CustomProperties.MAX_MAFIAS, 1);
+        propertyList.Add(CustomProperties.MAX_NEUTRALS, 1);
+
+        propertyList.Add(CustomProperties.SHORT_DISTANCE_VOICE, true);
+        propertyList.Add(CustomProperties.RANDOM_START_POINT, false);
+        propertyList.Add(CustomProperties.HIDE_EMISSION_INFO, false);
+        propertyList.Add(CustomProperties.BLIND_MAFIA_MODE, false);
+        propertyList.Add(CustomProperties.OPEN_VOTE_RESULT, true);
+
+        propertyList.Add(CustomProperties.NORMAL_SIGHT, 0);
+        propertyList.Add(CustomProperties.MAFIA_SIGHT, 0);
+        propertyList.Add(CustomProperties.NEUTRAL_SIGHT, 0);
+        propertyList.Add(CustomProperties.MOVE_SPEED, 0);
+
+        propertyList.Add(CustomProperties.KILL_COOLDOWN, 10);
+        propertyList.Add(CustomProperties.SABOTAGE_COOLDOWN, 10);
+        propertyList.Add(CustomProperties.EMERGENCY_MEETING_COOLDOWN, 20);
+        propertyList.Add(CustomProperties.MEETING_TIME, 100);
+        propertyList.Add(CustomProperties.VOTE_TIME, 50);
+
+        // Custom Room Properties for Lobby
+        string[] propertyListForLobby = new string[0];
+        propertyListForLobby = ArrayHelper.Add(CustomProperties.ROOM_NAME, propertyListForLobby);
+        propertyListForLobby = ArrayHelper.Add(CustomProperties.MAX_MAFIAS, propertyListForLobby);
+
+        string roomName = Utilities.ComputeMD5(PhotonNetwork.LocalPlayer.UserId + "_" + System.DateTime.UtcNow.ToFileTime().ToString(), 3);
+        RoomOptions roomOption = new RoomOptions
+        {
+            MaxPlayers = maxPlayer,
+            IsVisible = !privacyModeToggle.isOn,
+            IsOpen = true,
+            CustomRoomProperties = propertyList,
+            CustomRoomPropertiesForLobby = propertyListForLobby
+        };
+
+        PhotonNetwork.CreateRoom(roomName, roomOption);
+    }
+
     #endregion Methods
+
+    #region Photon Events
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        switch (returnCode)
+        {
+            case ErrorCode.GameIdAlreadyExists:
+                {
+                    CreateRoom();
+                    break;
+                }
+        }
+    }
+
+    #endregion Photon Events
 }

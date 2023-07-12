@@ -10,6 +10,4 @@ public class Test : MonoBehaviour
     {
         inGameUI.TurnOnPanel((EInGamePanel)idx);
     }
-
-    public void Connect() => NetworkManager.Connect();
 }

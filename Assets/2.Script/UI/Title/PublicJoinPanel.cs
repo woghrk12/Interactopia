@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 using Photon.Realtime;
 
 public class PublicJoinPanel : UIPanel
@@ -57,10 +58,7 @@ public class PublicJoinPanel : UIPanel
         });
     }
 
-    public void OnClickJoinBtn() 
-    {
-        NetworkManager.JoinRoom(selectedRoomInfo.Name);
-    }
+    public void OnClickJoinBtn() => PhotonNetwork.JoinRoom(selectedRoomInfo.Name);
 
     public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
 
