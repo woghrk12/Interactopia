@@ -8,9 +8,7 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateM
 {
     private Camera mainCamera;
 
-    private Vector2 targetPosition;
-    private Vector2 targetDirection;
-    private Vector2 screenPosition = Vector2.positiveInfinity;
+    private Vector2 targetPosition, targetDirection, screenPosition;
     public Vector2 MoveDirection
     {
         get
@@ -34,7 +32,9 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateM
 
     public void OnPress(InputAction.CallbackContext callbackContext)
     {
-        if (IsPointerOverUI() || callbackContext.canceled)
+        Vector2 pressPosition = callbackContext.ReadValue<Vector2>();
+
+        if (IsPointerOverUI(pressPosition) || callbackContext.canceled)
         {
             isPressed = false;
         }
@@ -47,10 +47,10 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateM
     {
         mainCamera = Camera.main;
     }
-    public bool IsPointerOverUI()
+    public bool IsPointerOverUI(Vector2 pressPosition)
     {
         PointerEventData pointerEventData = new(EventSystem.current);
-        pointerEventData.position = screenPosition;
+        pointerEventData.position = pressPosition;
 
         List<RaycastResult> raycastResultsList = new();
         EventSystem.current.RaycastAll(pointerEventData, raycastResultsList);
