@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
-        playerStickInput = GameObject.FindObjectOfType<PlayerStickInput>();
+        playerStickInput = GameObject.FindObjectOfType<PlayerStickInput>(true);
 
         SwitchInputMode(
 #if !UNITY_EDITOR
