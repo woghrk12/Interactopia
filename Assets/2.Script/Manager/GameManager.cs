@@ -59,6 +59,8 @@ public class GameManager : SingletonMonobehaviourPunCallback<GameManager>
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        if (cause == DisconnectCause.ApplicationQuit) { return; }
+
         EScene curScene = (EScene)SceneManager.GetActiveScene().buildIndex;
 
         if (curScene == EScene.TITLE)
