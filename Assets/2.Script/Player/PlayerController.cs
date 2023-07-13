@@ -17,11 +17,9 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
     PlayerInput playerInput;
 
     IMoveDirection input;
-    IMoveDirection playerArrowInput, playerScreenInput;
+    IMoveDirection playerArrowInput, playerScreenInput, playerStickInput;
 
     CharacterMovement characterMovement;
-
-    InputDevice lastUsedDevice;
 
     // temp test code
     private void Update()
@@ -58,6 +56,8 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
+        playerStickInput = GameObject.FindObjectOfType<PlayerStickInput>();
+
         SwitchInputMode(
 #if !UNITY_EDITOR
 
@@ -101,7 +101,7 @@ EInputMode.KEYBOARD
                 break;
 
             case EInputMode.GAMEPAD:
-                input = playerArrowInput;
+                input = playerStickInput;
                 playerInput.SwitchCurrentControlScheme("Gamepad", deviceArray);
                 break;
 
