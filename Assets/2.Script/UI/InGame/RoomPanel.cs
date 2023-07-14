@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
+
+using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomPanel : UIPanel
 {
@@ -9,6 +12,8 @@ public class RoomPanel : UIPanel
     private InGameUI inGameUI = null;
 
     [SerializeField] private Text roomCodeText = null;
+    [SerializeField] private Text maxPlayersText = null;
+    [SerializeField] private Text curPlayersText = null;
     [SerializeField] private Button settingBtn = null;
     [SerializeField] private Button textChattingBtn = null;
     [SerializeField] private Button ruleSettingBtn = null;
@@ -27,23 +32,47 @@ public class RoomPanel : UIPanel
         ruleSettingBtn.onClick.AddListener(OnClickRuleSettingBtn);
         startBtn.onClick.AddListener(OnClickStartBtn);
 
-        OnActive += (() =>
-        {
-            roomCodeText.text = $"Code\n{PhotonNetwork.CurrentRoom.Name}";
-        });
+        Room currentRoom = PhotonNetwork.CurrentRoom;
+
+        roomCodeText.text = $"Code\n{currentRoom.Name}";
+        curPlayersText.text = currentRoom.PlayerCount.ToString();
+        maxPlayersText.text = currentRoom.MaxPlayers.ToString();
     }
 
-    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
+    public void OnClickSettingBtn() => inGameUI.TurnOnPanel(EInGamePanel.SETTING); 
 
-    public void OnClickTextChattingBtn() { inGameUI.TurnOnPanel(EInGamePanel.TEXTCHATTING); }
+    public void OnClickTextChattingBtn() => inGameUI.TurnOnPanel(EInGamePanel.TEXTCHATTING); 
 
     public void OnClickRuleSettingBtn()
     {
-        // TODO : add condition whether the player is host or guest
-        inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING);
+        if (PhotonNetwork.IsMasterClient) { inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING); }
+        else { inGameUI.TurnOnPanel(EInGamePanel.GUESTRULESETTING); }
     }
 
-    public void OnClickStartBtn() { inGameUI.TurnOnPanel(EInGamePanel.GAMESTART); }
+    public void OnClickStartBtn() => inGameUI.TurnOnPanel(EInGamePanel.GAMESTART); 
+
+    public void OnCurPlayerNumChanged(int value) => curPlayersText.text = value.ToString();
+
+    public void OnMaxPlayerNumChanged(int value) => maxPlayersText.text = value.ToString();
 
     #endregion Methods
+
+    #region Photon Events
+
+    public override void OnRoomPropertiesUpdate(PhotonHashTable propertiesThatChanged)
+    {
+        maxPlayersText.text = PhotonNetwork.CurrentRoom.MaxPlayers.ToString();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        curPlayersText.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        curPlayersText.text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+    }
+
+    #endregion Photon Events
 }

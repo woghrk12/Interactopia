@@ -1,12 +1,14 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateMagicCallback
 {
     private Camera mainCamera;
 
-    private Vector2 targetPosition, targetDirection;
+    private Vector2 targetPosition, targetDirection, screenPosition;
     public Vector2 MoveDirection
     {
         get
@@ -23,24 +25,36 @@ public class PlayerScreenInput : MonoBehaviour, IMoveDirection, IPunInstantiateM
 
     public void OnPosition(InputAction.CallbackContext callbackContext)
     {
-        Vector2 input = callbackContext.ReadValue<Vector2>();
-        targetPosition = mainCamera.ScreenToWorldPoint(input);
+        screenPosition = callbackContext.ReadValue<Vector2>();
+        targetPosition = mainCamera.ScreenToWorldPoint(screenPosition);
         targetDirection = (targetPosition - (Vector2)transform.position).normalized;
     }
 
     public void OnPress(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed || callbackContext.started)
-        {
-            isPressed = true;
-        }
-        else if (callbackContext.canceled)
+        Vector2 pressPosition = callbackContext.ReadValue<Vector2>();
+
+        if (IsPointerOverUI(pressPosition) || callbackContext.canceled)
         {
             isPressed = false;
+        }
+        else if (callbackContext.performed || callbackContext.started)
+        {
+            isPressed = true;
         }
     }
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         mainCamera = Camera.main;
+    }
+    public bool IsPointerOverUI(Vector2 pressPosition)
+    {
+        PointerEventData pointerEventData = new(EventSystem.current);
+        pointerEventData.position = pressPosition;
+
+        List<RaycastResult> raycastResultsList = new();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResultsList);
+
+        return raycastResultsList.Count > 0;
     }
 }

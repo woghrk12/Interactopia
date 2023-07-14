@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "VoiceChatTriggerButtonDown",
+                    "type": "Button",
+                    "id": "c527b7ec-03ff-4764-9949-08f5b7c90102",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -167,26 +176,70 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "a7950c1f-1cf1-4e76-9f5f-f31d4fdc6666",
-                    "path": "<Mouse>/leftButton",
+                    "name": "Mouse",
+                    "id": "a78f9d02-a769-4333-9157-5a7fe9697a09",
+                    "path": "OneModifier",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mouse",
+                    "groups": "",
                     "action": "Press",
-                    "isComposite": false,
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "5531c358-7abd-4c00-a434-75978e7d5341",
+                    "name": "modifier",
+                    "id": "9ec76f2d-8aca-4b3b-b78a-f3f6a0c9c2f7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "87f804d6-c30a-4889-81fa-83b3b65e8aee",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "TouchScreen",
+                    "id": "3a3e32ae-9519-45ef-9747-9fcdd2fcefed",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "b178eedc-4456-40d8-aa30-315b363320bf",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Touch",
+                    "groups": "",
                     "action": "Press",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "911b3f89-ea95-4e1b-afbc-561f7040927b",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -207,6 +260,39 @@
                     "processors": "",
                     "groups": "Touch",
                     "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5e232f7-6d64-4deb-b82f-38997e0f080d",
+                    "path": "<Keyboard>/#(V)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Gamepad;Touch;Joystick;XR;Mouse",
+                    "action": "VoiceChatTriggerButtonDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5a1d8cb-cdd9-4062-b855-a641248f95bd",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "VoiceChatTriggerButtonDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9dedc0a5-41c7-4920-b593-7576566f44a1",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "VoiceChatTriggerButtonDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

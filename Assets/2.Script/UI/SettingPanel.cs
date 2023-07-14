@@ -1,7 +1,7 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -51,7 +51,11 @@ public class SettingPanel : UIPanel
         else { ((InGameUI)uiBase).TurnOffPanel(EInGamePanel.SETTING); }
     }
 
-    public void OnClickExitRoomBtn() { SceneManager.LoadScene(0); }
+    public void OnClickExitRoomBtn() 
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(0); 
+    }
 
     public void OnClickExitGameBtn() 
     {

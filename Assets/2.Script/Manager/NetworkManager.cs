@@ -13,11 +13,11 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     private List<RoomInfo> roomList = new List<RoomInfo>();
 
+    [SerializeField] private Text statusText = null;
+
     public Action<List<RoomInfo>> RoomListAdded = null;
     public Action<List<RoomInfo>> RoomListRemoved = null;
     public Action<List<RoomInfo>> RoomListUpdated = null;
-
-    [SerializeField] private Text statusText = null;
 
     #endregion Variables
 
@@ -31,6 +31,11 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     #region Unity Events
 
+    private void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     private void Update()
     {
         statusText.text = PhotonNetwork.NetworkClientState.ToString();
@@ -38,37 +43,16 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
 
     #endregion Unity Events
 
-    #region Methods
-
-    public static void Connect()
-    {
-        if (PhotonNetwork.IsConnected) { return; }
-
-        PhotonNetwork.ConnectUsingSettings();
-    }
-
-    public static void CreateRooom(string roomName, RoomOptions roomOption) => PhotonNetwork.CreateRoom(roomName, roomOption);
-
-    public static void JoinRoom(string roomName) => PhotonNetwork.JoinRoom(roomName);
-
-    #endregion Methods
-
     #region Photon Callbacks
 
     public override void OnConnectedToMaster()
     {
-        if (!isInitialized) 
-        {
-            GameManager.OnConnectedServer();
-            isInitialized = true;
-        }
-
-        PhotonNetwork.JoinLobby();
+        isInitialized = true;
     }
 
-    public override void OnJoinedRoom()
+    public override void OnJoinedLobby()
     {
-        GameManager.OnJoinedRoom();
+        PhotonNetwork.LocalPlayer.NickName = "Test";
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

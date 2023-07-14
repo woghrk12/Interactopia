@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
     PlayerInput playerInput;
 
     IMoveDirection input;
-    IMoveDirection playerArrowInput, playerScreenInput;
+    IMoveDirection playerArrowInput, playerScreenInput, playerStickInput;
 
     CharacterMovement characterMovement;
 
@@ -43,7 +44,6 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
         playerScreenInput = GetComponent<PlayerScreenInput>();
         characterMovement = GetComponent<CharacterMovement>();
         playerInput = GetComponent<PlayerInput>();
-
         if (!photonView.IsMine)
         {
             Destroy(this);
@@ -56,41 +56,62 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     private void InitPlayerInput()
     {
-        // Mobile
-#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+        playerStickInput = GameObject.FindObjectOfType<PlayerStickInput>(true);
 
-        SwitchInputMode(EInputMode.TOUCH);
+        SwitchInputMode(
+#if !UNITY_EDITOR
 
-        // PC
-#elif UNITY_STANDALONE || UNITY_EDITOR
+// Mobile
+#if (UNITY_ANDROID || UNITY_IOS)
+EInputMode.TOUCH
 
-        SwitchInputMode(EInputMode.KEYBOARD);
+// PC
+#elif (UNITY_STANDALONE)
+EInputMode.KEYBOARD
 
 #endif
+
+#else
+EInputMode.KEYBOARD
+
+#endif
+            );
     }
 
     public void SwitchInputMode(EInputMode inputMode)
     {
+        List<InputDevice> devices = new();
+
+        foreach (InputDevice device in InputSystem.devices)
+        {
+            if (device.displayName.ToUpper().Contains(inputMode.ToString()))
+            {
+                devices.Add(device);
+            }
+        }
+
+        InputDevice[] deviceArray = devices.ToArray();
+
         switch (inputMode)
         {
             case EInputMode.KEYBOARD:
                 input = playerArrowInput;
-                playerInput.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
+                playerInput.SwitchCurrentControlScheme("Keyboard", deviceArray);
                 break;
 
             case EInputMode.MOUSE:
                 input = playerScreenInput;
-                playerInput.SwitchCurrentControlScheme("Mouse", Mouse.current);
+                playerInput.SwitchCurrentControlScheme("Mouse", deviceArray);
                 break;
 
             case EInputMode.GAMEPAD:
-                input = playerArrowInput;
-                playerInput.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+                input = playerStickInput;
+                playerInput.SwitchCurrentControlScheme("Gamepad", deviceArray);
                 break;
 
             case EInputMode.TOUCH:
                 input = playerScreenInput;
-                playerInput.SwitchCurrentControlScheme("Touch", Touchscreen.current);
+                playerInput.SwitchCurrentControlScheme("Touch", deviceArray);
                 break;
         }
     }
