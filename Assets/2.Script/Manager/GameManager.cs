@@ -46,13 +46,13 @@ public class GameManager : SingletonMonobehaviourPunCallback<GameManager>
         if (curScene == EScene.TITLE)
         {
             TitleUI titleUI = UIBase.Instance as TitleUI;
-            titleUI.TurnOffPanel(ETitleUIPanel.LOADING);
+            titleUI.ClosePanel(ETitleUIPanel.LOADING);
             titleUI.InitBase();
         }
         else if (curScene == EScene.INGAME)
         {
             InGameUI inGameUI = UIBase.Instance as InGameUI;
-            inGameUI.TurnOffPanel(EInGamePanel.LOADING);
+            inGameUI.ClosePanel(EInGamePanel.LOADING);
             inGameUI.InitBase();
         }
     }
@@ -66,12 +66,12 @@ public class GameManager : SingletonMonobehaviourPunCallback<GameManager>
         if (curScene == EScene.TITLE)
         {
             TitleUI titleUI = UIBase.Instance as TitleUI;
-            titleUI.TurnOnPanel(ETitleUIPanel.LOADING);
+            titleUI.PopupPanel(ETitleUIPanel.LOADING);
         }
         else if (curScene == EScene.INGAME)
         {
             InGameUI inGameUI = UIBase.Instance as InGameUI;
-            inGameUI.TurnOnPanel(EInGamePanel.LOADING);
+            inGameUI.PopupPanel(EInGamePanel.LOADING);
         }
 
         PhotonNetwork.ConnectUsingSettings();
