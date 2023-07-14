@@ -71,7 +71,15 @@ public class PrivateJoinPanel : UIPanel
 
     public void OnClickCloseBtn() => titleUI.ClosePanel(ETitleUIPanel.PRIVATEJOIN);
 
-    public void OnClickEnterBtn() => PhotonNetwork.JoinRoom(roomCodeInputField.text);
+    public void OnClickEnterBtn()
+    {
+        if (roomCodeInputField.text == string.Empty)
+        {
+            titleUI.Alert("Room code cannot be empty!!");
+            return;
+        }
+        PhotonNetwork.JoinRoom(roomCodeInputField.text);
+    }
 
     #endregion Event Methods
 }
