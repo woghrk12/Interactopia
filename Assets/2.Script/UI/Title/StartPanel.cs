@@ -11,6 +11,7 @@ public class StartPanel : UIPanel
     [SerializeField] private Image titleImg = null;
     [SerializeField] private Button startBtn = null;
     [SerializeField] private Button settingBtn = null;
+    [SerializeField] private Button authBtn = null;
 
     #endregion Variables
 
@@ -22,23 +23,14 @@ public class StartPanel : UIPanel
 
         startBtn.onClick.AddListener(OnClickStartBtn);
         settingBtn.onClick.AddListener(OnClickSettingBtn);
+        authBtn.onClick.AddListener(OnClickAuthBtn);
     }
 
-    public void OnClickStartBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+    public void OnClickStartBtn() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY);
 
-    public void OnClickSettingBtn() { titleUI.TurnOnPanel(ETitleUIPanel.SETTING); }
+    public void OnClickSettingBtn() => titleUI.TurnOnPanel(ETitleUIPanel.SETTING); 
 
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
+    public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
 
     #endregion Methods
 }

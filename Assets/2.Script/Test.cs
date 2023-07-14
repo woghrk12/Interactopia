@@ -8,6 +8,6 @@ public class Test : MonoBehaviour
 
     public void OnClick(int idx)
     {
-        inGameUI.TurnOnPanel((EInGamePanel)idx, true);
+        inGameUI.TurnOnPanel((EInGamePanel)idx);
     }
 }

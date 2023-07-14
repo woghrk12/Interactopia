@@ -18,17 +18,5 @@ public class MeetingResultPanel : UIPanel
         inGameUI = uiBase as InGameUI;
     }
 
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
     #endregion Methods
 }

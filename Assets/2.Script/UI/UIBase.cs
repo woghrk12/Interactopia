@@ -1,13 +1,23 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class UIBase : MonoBehaviour
 {
     #region Variables
 
+    public static UIBase Instance = null;
+
     protected int curPanel = -1;
     protected UIPanel[] uiPanelList = new UIPanel[0];
+
+    private Action yesBtnClicked = null;
+    private Action noBtnClicked = null;
+
+    [SerializeField] private GameObject alertPanel = null;
+    [SerializeField] private Text alertText = null;
+    [SerializeField] private Button yesBtn = null;
+    [SerializeField] private Button noBtn = null;
 
     #endregion Variables
 
@@ -15,46 +25,102 @@ public abstract class UIBase : MonoBehaviour
 
     protected virtual void Awake()
     {
+        Instance = this;
+
         uiPanelList = transform.GetComponentsInChildren<UIPanel>(true);
-    }
-
-    protected virtual void Start()
-    {
-        foreach (UIPanel panel in uiPanelList)
-        {
-            if (!panel.gameObject.activeSelf) { panel.gameObject.SetActive(true); }
-
-            panel.InitPanel(this);
-            panel.gameObject.SetActive(false);
-        }
     }
 
     #endregion Unity Events
 
     #region Methods
 
-    protected virtual IEnumerator TurnOnUIPanel(int idx, bool hasOnEffect, bool hasOffEffect)
-    { 
-        if (idx < 0 || idx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idx}"); }
+    public virtual void InitBase()
+    {
+        Debug.Log(this.gameObject.name + " Init");
+        yesBtn.onClick.AddListener(OnClickYesBtn);
+        noBtn.onClick.AddListener(OnClickNoBtn);
 
-        if (!uiPanelList[idx].IsPopup && curPanel >= 0)
+        foreach (UIPanel panel in uiPanelList)
         {
-            uiPanelList[curPanel].gameObject.SetActive(false);
-            if (hasOffEffect) { yield return uiPanelList[curPanel].OnDeactivePanel(); }
+            panel.InitPanel(this);
+            if (panel.gameObject.activeSelf) { panel.gameObject.SetActive(false); }
         }
-
-        uiPanelList[idx].gameObject.SetActive(true);
-        if (hasOnEffect) { yield return uiPanelList[idx].OnActivePanel(); }
-
-        curPanel = idx;
     }
 
-    protected virtual IEnumerator TurnOffUIPanel(int idxUIPanel, bool hasOffEffect)
+    protected virtual void TurnOnUIPanel(int idxUIPanel)
     {
         if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
 
+        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+
+        if (curPanel < 0)
+        {
+            uiPanelList[idxUIPanel].gameObject.SetActive(true);
+            uiPanelList[idxUIPanel].OnActive?.Invoke();
+
+            curPanel = idxUIPanel;
+            
+            return;
+        }
+
+        if (!uiPanelList[idxUIPanel].IsPopup)
+        {
+            uiPanelList[curPanel].OnDeactive?.Invoke();
+            uiPanelList[curPanel].gameObject.SetActive(false);
+
+            curPanel = idxUIPanel;
+        }
+
+        uiPanelList[idxUIPanel].gameObject.SetActive(true);
+        uiPanelList[idxUIPanel].OnActive?.Invoke();
+    }
+
+    protected virtual void TurnOffUIPanel(int idxUIPanel)
+    {
+        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+        
+        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+        
+        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
         uiPanelList[idxUIPanel].gameObject.SetActive(false);
-        if (hasOffEffect) { yield return uiPanelList[idxUIPanel].OnDeactivePanel(); }
+    }
+
+    public void Alert(string message, Action yesEvent = null, Action noEvent = null)
+    {
+        alertPanel.gameObject.SetActive(true);
+
+        alertText.text = message;
+        if (yesEvent != null) { yesBtnClicked += yesEvent; }
+
+        if (noEvent != null)
+        {
+            noBtnClicked += noEvent;
+            noBtn.gameObject.SetActive(true);
+        }
+        else
+        {
+            noBtn.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnClickYesBtn()
+    {
+        yesBtnClicked?.Invoke();
+
+        yesBtnClicked = null;
+        noBtnClicked = null;
+
+        alertPanel.gameObject.SetActive(false);
+    }
+
+    public void OnClickNoBtn()
+    {
+        noBtnClicked?.Invoke();
+
+        yesBtnClicked = null;
+        noBtnClicked = null;
+
+        alertPanel.gameObject.SetActive(false);
     }
 
     #endregion Methods

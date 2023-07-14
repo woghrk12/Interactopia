@@ -31,17 +31,5 @@ public class InGamePanel : UIPanel
         inGameUI.TurnOnPanel(EInGamePanel.MEETING);
     }
 
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
     #endregion Methods
 }

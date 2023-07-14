@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class LobbyPanel : UIPanel
 {
@@ -12,6 +12,7 @@ public class LobbyPanel : UIPanel
     [SerializeField] private Button publicJoinBtn = null;
     [SerializeField] private Button privateJoinBtn = null;
     [SerializeField] private Button cancelBtn = null;
+    [SerializeField] private Button authBtn = null;
 
     #endregion Varibles
 
@@ -25,27 +26,18 @@ public class LobbyPanel : UIPanel
         publicJoinBtn.onClick.AddListener(OnClickPublicJoinBtn);
         privateJoinBtn.onClick.AddListener(OnClickPrivateJoinBtn);
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
+        authBtn.onClick.AddListener(OnClickAuthBtn);
     }
 
-    public void OnClickCreateRoomBtn() { titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); }
+    public void OnClickCreateRoomBtn() => titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); 
 
-    public void OnClickPublicJoinBtn() { titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); }
+    public void OnClickPublicJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); 
 
-    public void OnClickPrivateJoinBtn() { titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN); }
+    public void OnClickPrivateJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN);
 
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.START); }
+    public void OnClickCancelBtn() => titleUI.TurnOnPanel(ETitleUIPanel.START);
 
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
+    public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
 
     #endregion Methods
 }

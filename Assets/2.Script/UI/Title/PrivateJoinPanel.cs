@@ -1,7 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class PrivateJoinPanel : UIPanel
 {
@@ -9,6 +8,7 @@ public class PrivateJoinPanel : UIPanel
 
     private TitleUI titleUI = null;
 
+    [SerializeField] private InputField roomCodeInputField = null;
     [SerializeField] private Image backgroundImg = null;
     [SerializeField] private Button closeBtn = null;
     [SerializeField] private Button enterBtn = null;
@@ -26,21 +26,9 @@ public class PrivateJoinPanel : UIPanel
         enterBtn.onClick.AddListener(OnClickEnterBtn);
     }
 
-    public void OnClickCloseBtn() { titleUI.TurnOffPanel(ETitleUIPanel.SETTING); }
+    public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.PRIVATEJOIN);
 
-    public void OnClickEnterBtn() { SceneManager.LoadScene(1); }
-
-    public override IEnumerator OnActivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
-
-    public override IEnumerator OnDeactivePanel()
-    {
-        // TODO : implement panel effects
-        yield return null;
-    }
+    public void OnClickEnterBtn() => PhotonNetwork.JoinRoom(roomCodeInputField.text);
 
     #endregion Methods
 }

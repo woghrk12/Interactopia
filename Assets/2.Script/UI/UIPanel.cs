@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public abstract class UIPanel : MonoBehaviour
+public abstract class UIPanel : MonoBehaviourPunCallbacks
 {
     #region Variables
 
@@ -13,16 +13,16 @@ public abstract class UIPanel : MonoBehaviour
     #region Properties
 
     public bool IsPopup => isPopup;
+    
+    public Action OnActive { protected set; get; }
+
+    public Action OnDeactive { protected set; get; }
 
     #endregion Properties
 
     #region Methods
 
     public abstract void InitPanel(UIBase uiBase);
-
-    public abstract IEnumerator OnActivePanel();
-
-    public abstract IEnumerator OnDeactivePanel();
 
     #endregion Methods
 }
