@@ -10,10 +10,12 @@ public class AuthPanel : UIPanel
     private TitleUI titleUI = null;
 
     [SerializeField] private Image backgroundImg = null;
-    [SerializeField] private Button closeBtn = null;
+    [SerializeField] private RectTransform infoPanelRect = null;
     [SerializeField] private Button setNicknameBtn = null;
     [SerializeField] private Text nicknameValueText = null;
 
+    [SerializeField] private GameObject setNicknameBackgroundImg = null;
+    [SerializeField] private RectTransform setNicknamePanelRect = null;
     [SerializeField] private GameObject setNicknamePanel = null;
     [SerializeField] private InputField nicknameInputfield = null;
     [SerializeField] private Button cancelBtn = null;
@@ -27,19 +29,20 @@ public class AuthPanel : UIPanel
     {
         titleUI = uiBase as TitleUI;
 
+        nicknameValueText.text = PhotonNetwork.LocalPlayer.NickName;
+
         backgroundImg.GetComponent<Button>().onClick.AddListener(OnClickCloseBtn);
-        closeBtn.onClick.AddListener(OnClickCloseBtn);
         setNicknameBtn.onClick.AddListener(OnClickSetNicknameBtn);
         cancelBtn.onClick.AddListener(OnClickCancelBtn);
         confirmBtn.onClick.AddListener(OnClickConfirmBtn);
 
         nicknameInputfield.onEndEdit.AddListener(OnNicknameEndEdit);
 
-        OnActive += (() => 
-        {
-            nicknameValueText.text = PhotonNetwork.LocalPlayer.NickName;
-            if (setNicknamePanel.activeSelf) setNicknamePanel.SetActive(false); 
-        });
+        infoPanelRect.anchoredPosition = new Vector2(-infoPanelRect.sizeDelta.x, infoPanelRect.anchoredPosition.y);
+        setNicknamePanelRect.localScale = Vector3.zero;
+
+        setNicknamePanel.SetActive(false);
+        setNicknameBackgroundImg.SetActive(false);
     }
 
     #endregion Methods
@@ -48,12 +51,18 @@ public class AuthPanel : UIPanel
 
     public override Sequence ActiveAnimation()
     {
-        return DOTween.Sequence();
+        Tween panelTween = infoPanelRect.DOAnchorPosX(0f, 0.5f)
+            .SetEase(Ease.OutExpo);
+
+        return DOTween.Sequence().Append(panelTween);
     }
 
     public override Sequence DeactiveAnimation()
     {
-        return DOTween.Sequence();
+        Tween panelTween = infoPanelRect.DOAnchorPosX(-infoPanelRect.sizeDelta.x, 0.5f)
+            .SetEase(Ease.InExpo);
+
+        return DOTween.Sequence().Append(panelTween);
     }
 
     #endregion Override Methods
@@ -62,9 +71,29 @@ public class AuthPanel : UIPanel
 
     public void OnClickCloseBtn() => titleUI.ClosePanel(ETitleUIPanel.AUTH);
 
-    public void OnClickSetNicknameBtn() => setNicknamePanel.SetActive(true);
+    public void OnClickSetNicknameBtn()
+    {
+        Tween panelTween = setNicknamePanelRect.DOScale(1f, 0.5f)
+            .SetEase(Ease.OutExpo)
+            .OnStart(() =>
+                {
+                    setNicknameBackgroundImg.SetActive(true);
+                    setNicknamePanel.SetActive(true);
+                })
+            .Play();
+    }
 
-    public void OnClickCancelBtn() => setNicknamePanel.SetActive(false);
+    public void OnClickCancelBtn()
+    {
+        Tween panelTween = setNicknamePanelRect.DOScale(0f, 0.5f)
+            .SetEase(Ease.OutExpo)
+            .OnComplete(() =>
+                {
+                    setNicknameBackgroundImg.SetActive(false);
+                    setNicknamePanel.SetActive(false);
+                })
+            .Play();
+    }
 
     public void OnClickConfirmBtn()
     {

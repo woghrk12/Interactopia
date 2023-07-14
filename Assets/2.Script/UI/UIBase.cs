@@ -29,6 +29,11 @@ public abstract class UIBase : MonoBehaviour
         Instance = this;
 
         uiPanelList = transform.GetComponentsInChildren<UIPanel>(true);
+
+        foreach (UIPanel panel in uiPanelList)
+        {
+            if (panel.gameObject.activeSelf) { panel.gameObject.SetActive(false); }
+        }
     }
 
     #endregion Unity Events
@@ -43,7 +48,6 @@ public abstract class UIBase : MonoBehaviour
         foreach (UIPanel panel in uiPanelList)
         {
             panel.InitPanel(this);
-            if (panel.gameObject.activeSelf) { panel.gameObject.SetActive(false); }
         }
     }
 
@@ -97,7 +101,6 @@ public abstract class UIBase : MonoBehaviour
         uiPanelList[popupIdx].ActiveAnimation()
             .OnStart(() =>
                 {
-                    Debug.Log("Popup Panel");
                     uiPanelList[popupIdx].gameObject.SetActive(true);
                     uiPanelList[popupIdx].OnActive?.Invoke();
                 })
