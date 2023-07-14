@@ -1,8 +1,8 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using DG.Tweening;
 
 using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
@@ -38,16 +38,6 @@ public class CreateRoomPanel : UIPanel
         maxPlayerSlider.onValueChanged.AddListener(OnMaxPlayerChanged);
 
         privacyModeToggle.isOn = false;
-    }
-
-    public void OnClickCreateBtn() => CreateRoom();
-
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
-
-    public void OnMaxPlayerChanged(float value) 
-    {
-        maxPlayer = (int)value;
-        maxPlayerText.text = maxPlayer.ToString(); 
     }
 
     private void CreateRoom()
@@ -94,6 +84,34 @@ public class CreateRoomPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence().Append(titleUI.FadeIn(0.5f));
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence().Append(titleUI.FadeOut(0.5f));
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickCreateBtn() => CreateRoom();
+
+    public void OnClickCancelBtn() => titleUI.OpenPanel(ETitleUIPanel.LOBBY, ETitleUIPanel.CREATEROOM);
+
+    public void OnMaxPlayerChanged(float value) 
+    {
+        maxPlayer = (int)value;
+        maxPlayerText.text = maxPlayer.ToString(); 
+    }
+
+    #endregion Event Methods
 
     #region Photon Events
 

@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TextChattingPanel : UIPanel
 {
@@ -23,7 +23,25 @@ public class TextChattingPanel : UIPanel
         closeBtn.onClick.AddListener(OnClickCloseBtn);
     }
 
-    public void OnClickCloseBtn() { inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING); }
-
     #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickCloseBtn() => inGameUI.ClosePanel(EInGamePanel.TEXTCHATTING); 
+
+    #endregion Event Methods
 }

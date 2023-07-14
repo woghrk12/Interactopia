@@ -1,5 +1,4 @@
-using System.Collections;
-using UnityEngine;
+using DG.Tweening;
 
 public class MeetingResultPanel : UIPanel
 {
@@ -19,4 +18,18 @@ public class MeetingResultPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Override Methods
 }

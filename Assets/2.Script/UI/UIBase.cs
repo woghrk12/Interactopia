@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public abstract class UIBase : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public abstract class UIBase : MonoBehaviour
 
     public static UIBase Instance = null;
 
-    protected int curPanel = -1;
     protected UIPanel[] uiPanelList = new UIPanel[0];
 
     private Action yesBtnClicked = null;
@@ -18,6 +18,7 @@ public abstract class UIBase : MonoBehaviour
     [SerializeField] private Text alertText = null;
     [SerializeField] private Button yesBtn = null;
     [SerializeField] private Button noBtn = null;
+    [SerializeField] private Image fadeImg = null;
 
     #endregion Variables
 
@@ -28,6 +29,11 @@ public abstract class UIBase : MonoBehaviour
         Instance = this;
 
         uiPanelList = transform.GetComponentsInChildren<UIPanel>(true);
+
+        foreach (UIPanel panel in uiPanelList)
+        {
+            if (panel.gameObject.activeSelf) { panel.gameObject.SetActive(false); }
+        }
     }
 
     #endregion Unity Events
@@ -36,53 +42,69 @@ public abstract class UIBase : MonoBehaviour
 
     public virtual void InitBase()
     {
-        Debug.Log(this.gameObject.name + " Init");
         yesBtn.onClick.AddListener(OnClickYesBtn);
         noBtn.onClick.AddListener(OnClickNoBtn);
 
         foreach (UIPanel panel in uiPanelList)
         {
             panel.InitPanel(this);
-            if (panel.gameObject.activeSelf) { panel.gameObject.SetActive(false); }
         }
     }
 
-    protected virtual void TurnOnUIPanel(int idxUIPanel)
+    protected void OpenPanel(int openIdx, int closeIdx)
     {
-        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
+        if (openIdx < 0 || openIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {openIdx}"); }
+        if (closeIdx < 0 || closeIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {closeIdx}"); }
 
-        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+        if (uiPanelList[openIdx].gameObject.activeSelf) { return; }
 
-        if (curPanel < 0)
+        Sequence sequence = DOTween.Sequence();
+
+        Sequence deactiveAnim = uiPanelList[closeIdx].DeactiveAnimation();
+        deactiveAnim.OnComplete(() =>
         {
-            uiPanelList[idxUIPanel].gameObject.SetActive(true);
-            uiPanelList[idxUIPanel].OnActive?.Invoke();
+            uiPanelList[closeIdx].OnDeactive?.Invoke();
+            uiPanelList[closeIdx].gameObject.SetActive(false);
+        });
+        sequence.Append(deactiveAnim);
 
-            curPanel = idxUIPanel;
-            
-            return;
-        }
-
-        if (!uiPanelList[idxUIPanel].IsPopup)
+        Sequence activeAnim = uiPanelList[openIdx].ActiveAnimation();
+        activeAnim.OnStart(() =>
         {
-            uiPanelList[curPanel].OnDeactive?.Invoke();
-            uiPanelList[curPanel].gameObject.SetActive(false);
+            uiPanelList[openIdx].gameObject.SetActive(true);
+            uiPanelList[openIdx].OnActive?.Invoke();
+        });
+        sequence.Append(activeAnim);
 
-            curPanel = idxUIPanel;
-        }
-
-        uiPanelList[idxUIPanel].gameObject.SetActive(true);
-        uiPanelList[idxUIPanel].OnActive?.Invoke();
+        sequence.Play();
     }
 
-    protected virtual void TurnOffUIPanel(int idxUIPanel)
+    protected void ClosePanel(int closeIdx)
     {
-        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
-        
-        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
-        
-        uiPanelList[idxUIPanel].OnDeactive?.Invoke();
-        uiPanelList[idxUIPanel].gameObject.SetActive(false);
+        if (closeIdx < 0 || closeIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {closeIdx}"); }
+        if (!uiPanelList[closeIdx].gameObject.activeSelf) { return; }
+
+        uiPanelList[closeIdx].DeactiveAnimation()
+            .OnComplete(() =>
+                {
+                    uiPanelList[closeIdx].OnDeactive?.Invoke();
+                    uiPanelList[closeIdx].gameObject.SetActive(false);
+                })
+            .Play();
+    }
+
+    protected void PopupPanel(int popupIdx)
+    {
+        if (popupIdx < 0 || popupIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {popupIdx}"); }
+        if (uiPanelList[popupIdx].gameObject.activeSelf) { return; }
+
+        uiPanelList[popupIdx].ActiveAnimation()
+            .OnStart(() =>
+                {
+                    uiPanelList[popupIdx].gameObject.SetActive(true);
+                    uiPanelList[popupIdx].OnActive?.Invoke();
+                })
+            .Play();
     }
 
     public void Alert(string message, Action yesEvent = null, Action noEvent = null)
@@ -101,6 +123,23 @@ public abstract class UIBase : MonoBehaviour
         {
             noBtn.gameObject.SetActive(false);
         }
+    }
+
+    public Tween FadeIn(float duration)
+    {
+        return fadeImg.DOColor(new Color(0f, 0f, 0f, 0f), duration)
+            .OnStart(() => fadeImg.color = new Color(0f, 0f, 0f, 1f))
+            .OnComplete(() => fadeImg.gameObject.SetActive(false));
+    }
+
+    public Tween FadeOut(float duration)
+    {
+        return fadeImg.DOColor(new Color(0f, 0f, 0f, 1f), duration)
+            .OnStart(() =>
+                {
+                    fadeImg.gameObject.SetActive(true);
+                    fadeImg.color = new Color(0f, 0f, 0f, 0f);
+                });
     }
 
     public void OnClickYesBtn()
@@ -123,5 +162,5 @@ public abstract class UIBase : MonoBehaviour
         alertPanel.gameObject.SetActive(false);
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using DG.Tweening;
 
 using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
@@ -47,8 +48,6 @@ public class GuestRuleSettingPanel : UIPanel
         OnActive += (() => SetOptionText(PhotonNetwork.CurrentRoom.CustomProperties));
     }
 
-    public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.GUESTRULESETTING);
-
     private void SetOptionText(PhotonHashTable roomProperties)
     {
         maxMafiaText.text = ((int)roomProperties[CustomProperties.MAX_MAFIAS]).ToString();
@@ -73,6 +72,26 @@ public class GuestRuleSettingPanel : UIPanel
     }
 
     #endregion Methods
+
+    #region Event Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Event Methods
+
+    #region Event Methods
+
+    public void OnClickCloseBtn() => inGameUI.ClosePanel(EInGamePanel.GUESTRULESETTING);
+
+    #endregion Event Methods
 
     #region Photon Events
 

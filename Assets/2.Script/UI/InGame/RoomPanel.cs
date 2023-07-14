@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using DG.Tweening;
 
 using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
@@ -39,23 +40,41 @@ public class RoomPanel : UIPanel
         maxPlayersText.text = currentRoom.MaxPlayers.ToString();
     }
 
-    public void OnClickSettingBtn() => inGameUI.TurnOnPanel(EInGamePanel.SETTING); 
+    #endregion Methods
 
-    public void OnClickTextChattingBtn() => inGameUI.TurnOnPanel(EInGamePanel.TEXTCHATTING); 
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickSettingBtn() => inGameUI.PopupPanel(EInGamePanel.SETTING); 
+
+    public void OnClickTextChattingBtn() => inGameUI.PopupPanel(EInGamePanel.TEXTCHATTING); 
 
     public void OnClickRuleSettingBtn()
     {
-        if (PhotonNetwork.IsMasterClient) { inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING); }
-        else { inGameUI.TurnOnPanel(EInGamePanel.GUESTRULESETTING); }
+        if (PhotonNetwork.IsMasterClient) { inGameUI.PopupPanel(EInGamePanel.HOSTRULESETTING); }
+        else { inGameUI.PopupPanel(EInGamePanel.GUESTRULESETTING); }
     }
 
-    public void OnClickStartBtn() => inGameUI.TurnOnPanel(EInGamePanel.GAMESTART); 
+    public void OnClickStartBtn() => inGameUI.OpenPanel(EInGamePanel.GAMESTART, EInGamePanel.ROOM); 
 
     public void OnCurPlayerNumChanged(int value) => curPlayersText.text = value.ToString();
 
     public void OnMaxPlayerNumChanged(int value) => maxPlayersText.text = value.ToString();
 
-    #endregion Methods
+    #endregion Event Methods
 
     #region Photon Events
 

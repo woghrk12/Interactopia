@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MeetingPanel : UIPanel
 {
@@ -21,7 +21,25 @@ public class MeetingPanel : UIPanel
         settingBtn.onClick.AddListener(OnClickSettingBtn);
     }
 
-    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
-
     #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickSettingBtn() => inGameUI.PopupPanel(EInGamePanel.SETTING); 
+
+    #endregion Event Methods
 }

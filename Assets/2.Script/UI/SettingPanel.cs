@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using DG.Tweening;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,6 +15,7 @@ public class SettingPanel : UIPanel
     private UIBase uiBase = null;
 
     [SerializeField] private Image backgroundImg = null;
+    [SerializeField] private RectTransform panelRect = null;
     [SerializeField] private Button closeBtn = null;
     [SerializeField] private Button exitRoomBtn = null;
     [SerializeField] private Button exitGameBtn = null;
@@ -43,12 +45,38 @@ public class SettingPanel : UIPanel
         }
 
         exitGameBtn.onClick.AddListener(OnClickExitGameBtn);
+
+        panelRect.localScale = Vector3.zero;
     }
+
+    #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        Tween panelTween = panelRect.DOScale(1f, 0.5f)
+            .SetEase(Ease.OutExpo);
+
+        return DOTween.Sequence().Append(panelTween);
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        Tween panelTween = panelRect.DOScale(0f, 0.5f)
+            .SetEase(Ease.OutExpo);
+
+        return DOTween.Sequence().Append(panelTween);
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
 
     public void OnClickCloseBtn() 
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).TurnOffPanel(ETitleUIPanel.SETTING); }
-        else { ((InGameUI)uiBase).TurnOffPanel(EInGamePanel.SETTING); }
+        if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).ClosePanel(ETitleUIPanel.SETTING); }
+        else { ((InGameUI)uiBase).ClosePanel(EInGamePanel.SETTING); }
     }
 
     public void OnClickExitRoomBtn() 
@@ -66,5 +94,5 @@ public class SettingPanel : UIPanel
 #endif
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }

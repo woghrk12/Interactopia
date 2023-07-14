@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
+using DG.Tweening;
 
 public class LobbyPanel : UIPanel
 {
@@ -29,15 +29,33 @@ public class LobbyPanel : UIPanel
         authBtn.onClick.AddListener(OnClickAuthBtn);
     }
 
-    public void OnClickCreateRoomBtn() => titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); 
-
-    public void OnClickPublicJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); 
-
-    public void OnClickPrivateJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN);
-
-    public void OnClickCancelBtn() => titleUI.TurnOnPanel(ETitleUIPanel.START);
-
-    public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
-
     #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence().Append(titleUI.FadeIn(0.5f));
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence().Append(titleUI.FadeOut(0.5f));
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickCreateRoomBtn() => titleUI.OpenPanel(ETitleUIPanel.CREATEROOM, ETitleUIPanel.LOBBY); 
+
+    public void OnClickPublicJoinBtn() => titleUI.OpenPanel(ETitleUIPanel.PUBLICJOIN, ETitleUIPanel.LOBBY); 
+
+    public void OnClickPrivateJoinBtn() => titleUI.PopupPanel(ETitleUIPanel.PRIVATEJOIN);
+
+    public void OnClickCancelBtn() => titleUI.OpenPanel(ETitleUIPanel.START, ETitleUIPanel.LOBBY);
+
+    public void OnClickAuthBtn() => titleUI.PopupPanel(ETitleUIPanel.AUTH);
+
+    #endregion Event Methods
 }

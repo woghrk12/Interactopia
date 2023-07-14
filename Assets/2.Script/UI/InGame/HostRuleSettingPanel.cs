@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using DG.Tweening;
 
 using PhotonHashTable = ExitGames.Client.Photon.Hashtable;
 
@@ -68,7 +69,25 @@ public class HostRuleSettingPanel : UIPanel
         });
     }
 
-    public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
+    #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickCloseBtn() => inGameUI.ClosePanel(EInGamePanel.HOSTRULESETTING);
 
     public void OnClickNumOfPlayerBtn()
     {
@@ -108,7 +127,7 @@ public class HostRuleSettingPanel : UIPanel
 
     public void OnClickCancelBtn()
     {
-        inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
+        inGameUI.ClosePanel(EInGamePanel.HOSTRULESETTING);
     }
 
     public void OnClickConfirmBtn()
@@ -151,8 +170,8 @@ public class HostRuleSettingPanel : UIPanel
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
 
-        inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
+        inGameUI.ClosePanel(EInGamePanel.HOSTRULESETTING);
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }

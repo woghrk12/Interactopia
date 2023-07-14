@@ -48,10 +48,7 @@ public class NetworkManager : SingletonMonobehaviourPunCallback<NetworkManager>
     public override void OnConnectedToMaster()
     {
         isInitialized = true;
-    }
 
-    public override void OnJoinedLobby()
-    {
         PhotonNetwork.LocalPlayer.NickName = "Test";
     }
 

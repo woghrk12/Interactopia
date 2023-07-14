@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class InGamePanel : UIPanel
 {
@@ -23,13 +23,31 @@ public class InGamePanel : UIPanel
         reportBtn.onClick.AddListener(OnClickReportBtn);
     }
 
-    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
+    #endregion Methods
+
+    #region Override Methods
+
+    public override Sequence ActiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    public override Sequence DeactiveAnimation()
+    {
+        return DOTween.Sequence();
+    }
+
+    #endregion Override Methods
+
+    #region Event Methods
+
+    public void OnClickSettingBtn() => inGameUI.PopupPanel(EInGamePanel.SETTING); 
 
     public void OnClickReportBtn() 
     {
         // TODO : only activated when the bodies is around the player
-        inGameUI.TurnOnPanel(EInGamePanel.MEETING);
+        inGameUI.PopupPanel(EInGamePanel.MEETING);
     }
 
-    #endregion Methods
+    #endregion Event Methods
 }
