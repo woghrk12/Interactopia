@@ -64,10 +64,14 @@ public class PlayerController : MonoBehaviourPun, IPunInstantiateMagicCallback
 // Mobile
 #if (UNITY_ANDROID || UNITY_IOS)
 EInputMode.TOUCH
+
+// PC
+#elif (UNITY_STANDALONE)
+EInputMode.KEYBOARD
+
 #endif
 
 #else
-// PC
 EInputMode.KEYBOARD
 
 #endif
