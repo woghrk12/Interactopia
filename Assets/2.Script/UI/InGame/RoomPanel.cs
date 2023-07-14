@@ -58,17 +58,17 @@ public class RoomPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickSettingBtn() => inGameUI.TurnOnPanel(EInGamePanel.SETTING); 
+    public void OnClickSettingBtn() => inGameUI.PopupPanel(EInGamePanel.SETTING); 
 
-    public void OnClickTextChattingBtn() => inGameUI.TurnOnPanel(EInGamePanel.TEXTCHATTING); 
+    public void OnClickTextChattingBtn() => inGameUI.PopupPanel(EInGamePanel.TEXTCHATTING); 
 
     public void OnClickRuleSettingBtn()
     {
-        if (PhotonNetwork.IsMasterClient) { inGameUI.TurnOnPanel(EInGamePanel.HOSTRULESETTING); }
-        else { inGameUI.TurnOnPanel(EInGamePanel.GUESTRULESETTING); }
+        if (PhotonNetwork.IsMasterClient) { inGameUI.PopupPanel(EInGamePanel.HOSTRULESETTING); }
+        else { inGameUI.PopupPanel(EInGamePanel.GUESTRULESETTING); }
     }
 
-    public void OnClickStartBtn() => inGameUI.TurnOnPanel(EInGamePanel.GAMESTART); 
+    public void OnClickStartBtn() => inGameUI.OpenPanel(EInGamePanel.GAMESTART, EInGamePanel.ROOM); 
 
     public void OnCurPlayerNumChanged(int value) => curPlayersText.text = value.ToString();
 

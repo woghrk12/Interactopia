@@ -8,14 +8,17 @@ public class TitleUI : UIBase
     {
         base.InitBase();
 
-        TurnOnPanel(ETitleUIPanel.START);
+        PopupPanel(ETitleUIPanel.START);
     }
 
-    public UIPanel GetPanel(ETitleUIPanel idxPanel) { return uiPanelList[(int)idxPanel]; }
+    public UIPanel GetPanel(ETitleUIPanel panel) { return uiPanelList[(int)panel]; }
 
-    public void TurnOnPanel(ETitleUIPanel panel) => TurnOnUIPanel((int)panel);
+    public void OpenPanel(ETitleUIPanel openPanel, ETitleUIPanel closePanel)
+        => OpenPanel((int)openPanel, (int)closePanel);
 
-    public void TurnOffPanel(ETitleUIPanel panel) => TurnOffUIPanel((int)panel);
+    public void ClosePanel(ETitleUIPanel panel) => ClosePanel((int)panel);
+
+    public void PopupPanel(ETitleUIPanel panel) => PopupPanel((int)panel);
 
     #endregion Methods
 }

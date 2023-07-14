@@ -60,7 +60,7 @@ public class AuthPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.AUTH);
+    public void OnClickCloseBtn() => titleUI.ClosePanel(ETitleUIPanel.AUTH);
 
     public void OnClickSetNicknameBtn() => setNicknamePanel.SetActive(true);
 

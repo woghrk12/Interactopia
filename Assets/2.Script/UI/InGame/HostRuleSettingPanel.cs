@@ -87,7 +87,7 @@ public class HostRuleSettingPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
+    public void OnClickCloseBtn() => inGameUI.ClosePanel(EInGamePanel.HOSTRULESETTING);
 
     public void OnClickNumOfPlayerBtn()
     {
@@ -127,7 +127,7 @@ public class HostRuleSettingPanel : UIPanel
 
     public void OnClickCancelBtn()
     {
-        inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
+        inGameUI.ClosePanel(EInGamePanel.HOSTRULESETTING);
     }
 
     public void OnClickConfirmBtn()
@@ -170,7 +170,7 @@ public class HostRuleSettingPanel : UIPanel
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomSetting);
 
-        inGameUI.TurnOffPanel(EInGamePanel.HOSTRULESETTING);
+        inGameUI.ClosePanel(EInGamePanel.HOSTRULESETTING);
     }
 
     #endregion Event Methods

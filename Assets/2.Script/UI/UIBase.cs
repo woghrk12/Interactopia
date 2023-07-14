@@ -9,7 +9,6 @@ public abstract class UIBase : MonoBehaviour
 
     public static UIBase Instance = null;
 
-    protected int curPanel = -1;
     protected UIPanel[] uiPanelList = new UIPanel[0];
 
     private Action yesBtnClicked = null;
@@ -19,7 +18,7 @@ public abstract class UIBase : MonoBehaviour
     [SerializeField] private Text alertText = null;
     [SerializeField] private Button yesBtn = null;
     [SerializeField] private Button noBtn = null;
-    [SerializeField] private Image fadeImg = null; 
+    [SerializeField] private Image fadeImg = null;
 
     #endregion Variables
 
@@ -48,60 +47,61 @@ public abstract class UIBase : MonoBehaviour
         }
     }
 
-    protected virtual void TurnOnUIPanel(int idxUIPanel)
+    protected void OpenPanel(int openIdx, int closeIdx)
     {
-        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
-        if (uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+        if (openIdx < 0 || openIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {openIdx}"); }
+        if (closeIdx < 0 || closeIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {closeIdx}"); }
 
-        int openPanel = idxUIPanel;
-        int closePanel = curPanel;
-
-        Sequence activeTween = uiPanelList[openPanel].ActiveAnimation();
-        activeTween.OnStart(() =>
-        {
-            uiPanelList[openPanel].gameObject.SetActive(true);
-            uiPanelList[openPanel].OnActive?.Invoke();
-        });
-
-        if (curPanel < 0)
-        {
-            curPanel = openPanel;
-            activeTween.Play();
-            return;
-        }
+        if (uiPanelList[openIdx].gameObject.activeSelf) { return; }
 
         Sequence sequence = DOTween.Sequence();
 
-        if (!uiPanelList[openPanel].IsPopup)
+        Sequence deactiveAnim = uiPanelList[closeIdx].DeactiveAnimation();
+        deactiveAnim.OnComplete(() =>
         {
-            Sequence deactiveTween = uiPanelList[closePanel].DeactiveAnimation();
-            deactiveTween.OnComplete(() =>
-            {
-                uiPanelList[closePanel].OnDeactive?.Invoke();
-                uiPanelList[closePanel].gameObject.SetActive(false);
-            });
-            sequence.Append(deactiveTween);
+            uiPanelList[closeIdx].OnDeactive?.Invoke();
+            uiPanelList[closeIdx].gameObject.SetActive(false);
+        });
+        sequence.Append(deactiveAnim);
 
-            curPanel = openPanel;
-        }
+        Sequence activeAnim = uiPanelList[openIdx].ActiveAnimation();
+        activeAnim.OnStart(() =>
+        {
+            uiPanelList[openIdx].gameObject.SetActive(true);
+            uiPanelList[openIdx].OnActive?.Invoke();
+        });
+        sequence.Append(activeAnim);
 
-        sequence.Append(activeTween);
         sequence.Play();
     }
 
-    protected virtual void TurnOffUIPanel(int idxUIPanel)
+    protected void ClosePanel(int closeIdx)
     {
-        if (idxUIPanel < 0 || idxUIPanel >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {idxUIPanel}"); }
-        if (!uiPanelList[idxUIPanel].gameObject.activeSelf) { return; }
+        if (closeIdx < 0 || closeIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {closeIdx}"); }
+        if (!uiPanelList[closeIdx].gameObject.activeSelf) { return; }
 
-        Sequence sequence = uiPanelList[idxUIPanel].DeactiveAnimation();
-        sequence.OnComplete(() =>
-        {
-            uiPanelList[idxUIPanel].OnDeactive?.Invoke();
-            uiPanelList[idxUIPanel].gameObject.SetActive(false);
-        });
+        uiPanelList[closeIdx].DeactiveAnimation()
+            .OnComplete(() =>
+                {
+                    uiPanelList[closeIdx].OnDeactive?.Invoke();
+                    uiPanelList[closeIdx].gameObject.SetActive(false);
+                })
+            .Play();
+    }
 
-        sequence.Play();
+    protected void PopupPanel(int popupIdx)
+    {
+        if (popupIdx < 0 || popupIdx >= uiPanelList.Length) { throw new Exception($"Out of range. Input idx : {popupIdx}"); }
+        if (uiPanelList[popupIdx].gameObject.activeSelf) { return; }
+
+        uiPanelList[popupIdx].ActiveAnimation()
+            .OnStart(() =>
+                {
+                    Debug.Log("Popup Panel");
+                    uiPanelList[popupIdx].gameObject.SetActive(true);
+                    uiPanelList[popupIdx].OnActive?.Invoke();
+                })
+            .Play();
     }
 
     public void Alert(string message, Action yesEvent = null, Action noEvent = null)
@@ -124,24 +124,19 @@ public abstract class UIBase : MonoBehaviour
 
     public Tween FadeIn(float duration)
     {
-        if (!fadeImg.gameObject.activeSelf) { fadeImg.gameObject.SetActive(true); }
-        Tween fadeInTween = fadeImg.DOColor(new Color(0f, 0f, 0f, 0f), duration);
-        fadeInTween.OnStart(() => fadeImg.color = new Color(0f, 0f, 0f, 1f));
-        fadeInTween.OnComplete(() => fadeImg.gameObject.SetActive(false));
-
-        return fadeInTween;
+        return fadeImg.DOColor(new Color(0f, 0f, 0f, 0f), duration)
+            .OnStart(() => fadeImg.color = new Color(0f, 0f, 0f, 1f))
+            .OnComplete(() => fadeImg.gameObject.SetActive(false));
     }
 
     public Tween FadeOut(float duration)
     {
-        Tween fadeOutTween = fadeImg.DOColor(new Color(0f, 0f, 0f, 1f), duration);
-        fadeOutTween.OnStart(() => 
-        {
-            fadeImg.gameObject.SetActive(true);
-            fadeImg.color = new Color(0f, 0f, 0f, 0f);
-        });
-
-        return fadeOutTween;
+        return fadeImg.DOColor(new Color(0f, 0f, 0f, 1f), duration)
+            .OnStart(() =>
+                {
+                    fadeImg.gameObject.SetActive(true);
+                    fadeImg.color = new Color(0f, 0f, 0f, 0f);
+                });
     }
 
     public void OnClickYesBtn()

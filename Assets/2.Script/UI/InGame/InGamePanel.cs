@@ -41,12 +41,12 @@ public class InGamePanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
+    public void OnClickSettingBtn() => inGameUI.PopupPanel(EInGamePanel.SETTING); 
 
     public void OnClickReportBtn() 
     {
         // TODO : only activated when the bodies is around the player
-        inGameUI.TurnOnPanel(EInGamePanel.MEETING);
+        inGameUI.PopupPanel(EInGamePanel.MEETING);
     }
 
     #endregion Event Methods

@@ -10,14 +10,17 @@ public class InGameUI : UIBase
     {
         base.InitBase();
 
-        TurnOnPanel((int)EInGamePanel.ROOM);
+        PopupPanel(EInGamePanel.ROOM);
     }
 
-    public UIPanel GetPanel(EInGamePanel idxPanel) { return uiPanelList[(int)idxPanel]; }
+    public UIPanel GetPanel(EInGamePanel panel) { return uiPanelList[(int)panel]; }
 
-    public void TurnOnPanel(EInGamePanel panel) => TurnOnUIPanel((int)panel);
+    public void OpenPanel(EInGamePanel openPanel, EInGamePanel closePanel)
+        => OpenPanel((int)openPanel, (int)closePanel);
 
-    public void TurnOffPanel(EInGamePanel panel) => TurnOffUIPanel((int)panel);
+    public void ClosePanel(EInGamePanel panel) => ClosePanel((int)panel);
+
+    public void PopupPanel(EInGamePanel panel) => PopupPanel((int)panel);
 
     #endregion Methods
 }

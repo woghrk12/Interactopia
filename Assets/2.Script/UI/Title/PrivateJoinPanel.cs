@@ -45,7 +45,7 @@ public class PrivateJoinPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickCloseBtn() => titleUI.TurnOffPanel(ETitleUIPanel.PRIVATEJOIN);
+    public void OnClickCloseBtn() => titleUI.ClosePanel(ETitleUIPanel.PRIVATEJOIN);
 
     public void OnClickEnterBtn() => PhotonNetwork.JoinRoom(roomCodeInputField.text);
 

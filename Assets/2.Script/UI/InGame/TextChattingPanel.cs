@@ -41,7 +41,7 @@ public class TextChattingPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickCloseBtn() { inGameUI.TurnOffPanel(EInGamePanel.TEXTCHATTING); }
+    public void OnClickCloseBtn() => inGameUI.ClosePanel(EInGamePanel.TEXTCHATTING); 
 
     #endregion Event Methods
 }

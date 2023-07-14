@@ -100,11 +100,11 @@ public class StartPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickStartBtn() => titleUI.TurnOnPanel(ETitleUIPanel.LOBBY);
+    public void OnClickStartBtn() => titleUI.OpenPanel(ETitleUIPanel.LOBBY, ETitleUIPanel.START);
 
-    public void OnClickSettingBtn() => titleUI.TurnOnPanel(ETitleUIPanel.SETTING); 
+    public void OnClickSettingBtn() => titleUI.PopupPanel(ETitleUIPanel.SETTING); 
 
-    public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
+    public void OnClickAuthBtn() => titleUI.PopupPanel(ETitleUIPanel.AUTH);
 
     #endregion Event Methods
 }

@@ -6,15 +6,7 @@ using DG.Tweening;
 
 public abstract class UIPanel : MonoBehaviourPunCallbacks
 {
-    #region Variables
-
-    [SerializeField] private bool isPopup = false;
-
-    #endregion Variables
-
     #region Properties
-
-    public bool IsPopup => isPopup;
     
     public Action OnActive { protected set; get; }
 

@@ -103,7 +103,7 @@ public class CreateRoomPanel : UIPanel
 
     public void OnClickCreateBtn() => CreateRoom();
 
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+    public void OnClickCancelBtn() => titleUI.OpenPanel(ETitleUIPanel.LOBBY, ETitleUIPanel.CREATEROOM);
 
     public void OnMaxPlayerChanged(float value) 
     {

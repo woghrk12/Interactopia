@@ -39,7 +39,7 @@ public class MeetingPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickSettingBtn() { inGameUI.TurnOnPanel(EInGamePanel.SETTING); }
+    public void OnClickSettingBtn() => inGameUI.PopupPanel(EInGamePanel.SETTING); 
 
     #endregion Event Methods
 }

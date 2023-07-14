@@ -47,15 +47,15 @@ public class LobbyPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickCreateRoomBtn() => titleUI.TurnOnPanel(ETitleUIPanel.CREATEROOM); 
+    public void OnClickCreateRoomBtn() => titleUI.OpenPanel(ETitleUIPanel.CREATEROOM, ETitleUIPanel.LOBBY); 
 
-    public void OnClickPublicJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PUBLICJOIN); 
+    public void OnClickPublicJoinBtn() => titleUI.OpenPanel(ETitleUIPanel.PUBLICJOIN, ETitleUIPanel.LOBBY); 
 
-    public void OnClickPrivateJoinBtn() => titleUI.TurnOnPanel(ETitleUIPanel.PRIVATEJOIN);
+    public void OnClickPrivateJoinBtn() => titleUI.PopupPanel(ETitleUIPanel.PRIVATEJOIN);
 
-    public void OnClickCancelBtn() => titleUI.TurnOnPanel(ETitleUIPanel.START);
+    public void OnClickCancelBtn() => titleUI.OpenPanel(ETitleUIPanel.START, ETitleUIPanel.LOBBY);
 
-    public void OnClickAuthBtn() => titleUI.TurnOnPanel(ETitleUIPanel.AUTH);
+    public void OnClickAuthBtn() => titleUI.PopupPanel(ETitleUIPanel.AUTH);
 
     #endregion Event Methods
 }

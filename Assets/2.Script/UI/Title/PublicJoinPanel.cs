@@ -115,7 +115,7 @@ public class PublicJoinPanel : UIPanel
 
     public void OnClickJoinBtn() => PhotonNetwork.JoinRoom(selectedRoomInfo.Name);
 
-    public void OnClickCancelBtn() { titleUI.TurnOnPanel(ETitleUIPanel.LOBBY); }
+    public void OnClickCancelBtn() => titleUI.OpenPanel(ETitleUIPanel.LOBBY, ETitleUIPanel.PUBLICJOIN);
 
     public void OnClickRoomItem(RoomInfo roomInfo) { selectedRoomInfo = roomInfo; }
 

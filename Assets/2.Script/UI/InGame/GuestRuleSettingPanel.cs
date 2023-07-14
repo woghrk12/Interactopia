@@ -89,7 +89,7 @@ public class GuestRuleSettingPanel : UIPanel
 
     #region Event Methods
 
-    public void OnClickCloseBtn() => inGameUI.TurnOffPanel(EInGamePanel.GUESTRULESETTING);
+    public void OnClickCloseBtn() => inGameUI.ClosePanel(EInGamePanel.GUESTRULESETTING);
 
     #endregion Event Methods
 

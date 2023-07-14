@@ -15,6 +15,7 @@ public class SettingPanel : UIPanel
     private UIBase uiBase = null;
 
     [SerializeField] private Image backgroundImg = null;
+    [SerializeField] private RectTransform panelRect = null;
     [SerializeField] private Button closeBtn = null;
     [SerializeField] private Button exitRoomBtn = null;
     [SerializeField] private Button exitGameBtn = null;
@@ -44,6 +45,8 @@ public class SettingPanel : UIPanel
         }
 
         exitGameBtn.onClick.AddListener(OnClickExitGameBtn);
+
+        panelRect.localScale = Vector3.zero;
     }
 
     #endregion Methods
@@ -52,12 +55,18 @@ public class SettingPanel : UIPanel
 
     public override Sequence ActiveAnimation()
     {
-        return DOTween.Sequence();
+        Tween panelTween = panelRect.DOScale(1f, 0.5f)
+            .SetEase(Ease.OutExpo);
+
+        return DOTween.Sequence().Append(panelTween);
     }
 
     public override Sequence DeactiveAnimation()
     {
-        return DOTween.Sequence();
+        Tween panelTween = panelRect.DOScale(0f, 0.5f)
+            .SetEase(Ease.OutExpo);
+
+        return DOTween.Sequence().Append(panelTween);
     }
 
     #endregion Override Methods
@@ -66,8 +75,8 @@ public class SettingPanel : UIPanel
 
     public void OnClickCloseBtn() 
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).TurnOffPanel(ETitleUIPanel.SETTING); }
-        else { ((InGameUI)uiBase).TurnOffPanel(EInGamePanel.SETTING); }
+        if (SceneManager.GetActiveScene().buildIndex == 0) { ((TitleUI)uiBase).ClosePanel(ETitleUIPanel.SETTING); }
+        else { ((InGameUI)uiBase).ClosePanel(EInGamePanel.SETTING); }
     }
 
     public void OnClickExitRoomBtn() 
