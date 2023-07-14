@@ -23,7 +23,7 @@ public class AuthPanel : UIPanel
 
     #endregion Varibles
 
-    #region Methods
+    #region Override Methods
 
     public override void InitPanel(UIBase uiBase)
     {
@@ -45,10 +45,6 @@ public class AuthPanel : UIPanel
         setNicknameBackgroundImg.SetActive(false);
     }
 
-    #endregion Methods
-
-    #region Override Methods
-
     public override Sequence ActiveAnimation()
     {
         Tween panelTween = infoPanelRect.DOAnchorPosX(0f, 0.5f)
@@ -67,42 +63,60 @@ public class AuthPanel : UIPanel
 
     #endregion Override Methods
 
-    #region Event Methods
+    #region Methods
 
-    public void OnClickCloseBtn() => titleUI.ClosePanel(ETitleUIPanel.AUTH);
-
-    public void OnClickSetNicknameBtn()
+    private void OpenSetNicknamePanel()
     {
         Tween panelTween = setNicknamePanelRect.DOScale(1f, 0.5f)
             .SetEase(Ease.OutExpo)
             .OnStart(() =>
-                {
-                    setNicknameBackgroundImg.SetActive(true);
-                    setNicknamePanel.SetActive(true);
-                })
+            {
+                setNicknameBackgroundImg.SetActive(true);
+                setNicknamePanel.SetActive(true);
+            })
             .Play();
     }
 
-    public void OnClickCancelBtn()
+    private void CloseSetNicknamePanel()
     {
         Tween panelTween = setNicknamePanelRect.DOScale(0f, 0.5f)
             .SetEase(Ease.OutExpo)
             .OnComplete(() =>
-                {
-                    setNicknameBackgroundImg.SetActive(false);
-                    setNicknamePanel.SetActive(false);
-                })
+            {
+                setNicknameBackgroundImg.SetActive(false);
+                setNicknamePanel.SetActive(false);
+            })
             .Play();
     }
 
+    #endregion Methods
+
+    #region Event Methods
+
+    public void OnClickCloseBtn() => titleUI.ClosePanel(ETitleUIPanel.AUTH);
+
+    public void OnClickSetNicknameBtn() => OpenSetNicknamePanel();
+
+    public void OnClickCancelBtn() => CloseSetNicknamePanel();
+
     public void OnClickConfirmBtn()
     {
+        if (nicknameInputfield.text == string.Empty)
+        {
+            titleUI.Alert("Nickname cannot be empty!!");
+            return;
+        }
+
         PhotonNetwork.LocalPlayer.NickName = nicknameValueText.text = nicknameInputfield.text;
-        setNicknamePanel.SetActive(false);
+        CloseSetNicknamePanel();
     }
 
-    public void OnNicknameEndEdit(string value) => nicknameInputfield.text = value.Substring(0, 10);
-    
+    public void OnNicknameEndEdit(string value)
+    {
+        if (value == string.Empty) { return; }
+
+        nicknameInputfield.text = value.Substring(0, 10);
+    }
 
     #endregion Event Methods
 }
